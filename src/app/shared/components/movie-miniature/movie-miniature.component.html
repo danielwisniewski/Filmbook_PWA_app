@@ -1,0 +1,14 @@
+<div class="row mt-2">
+  <div class="col-6">
+    <img [src]="filmData.poster ? filmData.poster : noImageUrl" alt="" />
+  </div>
+  <div class="col-6" style="margin: auto;">
+    <p class="title">{{ filmData.title }}</p>
+    <p>{{ filmData.year }}</p>
+    <p class="rating-icon">
+      <span class="fa fa-star"></span>
+      {{ filmData.rating }} / 10
+    </p>
+    <p>{{ filmData?.time }}</p>
+  </div>
+</div>

@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --movie-black: #111112;
+    --movie-dark: #1c1c1e;
+    --movie-dark-gray: #27272A;
+    --movie-gray: #5a5a5e;
+    --movie-red: #fa7777;
+    --movie-blue: #537ecc;
+}
+
+body {
+    background-color: var(--movie-black);
+    color: #f0f0f0;
+    font-size: 12px;
+    font-family: 'Karla', sans-serif;
+}
+
+h2.page-title {
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 20px 0 10px 15px;
+}
+
+div.page-content {
+    position: absolute;
+    height: calc(100% - 65px);
+    max-height: calc(100% - 65px);
+    width: 100%;
+    overflow-y: scroll;
+}
