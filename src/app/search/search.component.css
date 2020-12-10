@@ -1,8 +1,38 @@
 .form-inline {
-    margin: 0px 15px;
+    margin: 1rem 1rem;
+    position: relative;
 }
 
 .input-group > input {
     background-color: var(--movie-dark-gray);
     border: none;
+}
+
+.serach-result {
+    /* position: fixed;
+    top: 120px;
+    max-height: calc(100% - 185px); */
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.last-result-img {
+    display: flex;
+    margin-left: 1rem;
+}
+
+.last-result-img > img {
+    margin: 0.4rem;
+    height: 10rem;
+}
+
+.last-result-title {
+    margin-left: 1rem;
+    font-size: 1rem;
+}
+
+.component-content {
+    height: 100%;
+    overflow-y: scroll;
+    margin-bottom: 1rem;
 }

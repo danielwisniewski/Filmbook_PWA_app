@@ -1,30 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import "~firebaseui/dist/firebaseui.css";
+
 :root {
-    --movie-black: #111112;
-    --movie-dark: #1c1c1e;
-    --movie-dark-gray: #27272A;
-    --movie-gray: #5a5a5e;
-    --movie-red: #fa7777;
-    --movie-blue: #537ecc;
+  --movie-black: #111112;
+  --movie-dark: #1c1c1e;
+  --movie-dark-gray: #27272a;
+  --movie-gray: #5a5a5e;
+  --movie-red: #fa7777;
+  --movie-blue: #537ecc;
+}
+
+a:hover {
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
 body {
-    background-color: var(--movie-black);
-    color: #f0f0f0;
-    font-size: 12px;
-    font-family: 'Karla', sans-serif;
+  background-color: var(--movie-black);
+  color: #f0f0f0;
+  font-size: 12px;
+  font-family: "Karla", sans-serif;
 }
 
-h2.page-title {
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin: 20px 0 10px 15px;
+div.app-content {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
-div.page-content {
-    position: absolute;
-    height: calc(100% - 65px);
-    max-height: calc(100% - 65px);
-    width: 100%;
-    overflow-y: scroll;
+div.top-bar {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+}
+
+div.bottom-bar {
+  flex-shrink: 0;
+}
+
+div.component-content {
+  overflow-y: hidden;
+  flex-grow: 10;
+  margin: 0.5rem 0;
+}
+
+div.component-content > mat-tab-group {
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
 }

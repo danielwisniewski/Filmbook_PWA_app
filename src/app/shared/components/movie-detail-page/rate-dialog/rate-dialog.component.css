@@ -1,0 +1,17 @@
+button {
+    width: 2rem;
+    height: 2rem;
+}
+
+mat-dialog-content {
+    max-height: 75vh;
+    overflow-y: hidden;
+}
+
+::ng-deep .mat-dialog-container {
+    background-color: var(--movie-dark);
+}
+
+mat-dialog-actions > button {
+    width: 45%;
+}

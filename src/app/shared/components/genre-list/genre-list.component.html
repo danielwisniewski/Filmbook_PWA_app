@@ -1,0 +1,15 @@
+<h2 class="text-center mt-3 mb-3">{{ id }}</h2>
+
+  <div class="container">
+    <app-choose-view-bar
+    (size)="size = $event"
+    [moviesCounter]="
+      (filmsData | async) ? (filmsData | async | filter: filter).length : 0
+    "
+  ></app-choose-view-bar>
+    <app-movie-miniatures-list
+    [filmData]="filmsData | async | filter: filter"
+    [size]="size"
+    ></app-movie-miniatures-list>
+  </div>
+

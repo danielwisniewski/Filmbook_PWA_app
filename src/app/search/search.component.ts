@@ -1,6 +1,11 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { first, map } from 'rxjs/operators';
 import { FilmData } from '../shared/Models/film-data.model';
 import { SerachMoviesService } from './serach-movies.service';
 
@@ -9,29 +14,47 @@ import { SerachMoviesService } from './serach-movies.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   searchResult: FilmData[];
-  constructor(
-    private searchMoviesService: SerachMoviesService,
-    private http: HttpClient
-  ) {}
+  lastResult: FilmData[];
+  isLoading = false;
+  title = "Wyszukaj"
+  constructor(private searchMoviesService: SerachMoviesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.searchMoviesService.lastSearchResult.value) {
+      this.searchMoviesService.fetchSearchResult();
+    }
+
+    this.searchMoviesService.lastSearchResult
+      .pipe(first((val) => val != null))
+      .subscribe((val) => (this.lastResult = val));
+
+  }
 
   onKeydown(form: NgForm) {
     this.searchByTitle(form.value.serachMovie);
     form.reset();
   }
 
-  searchByTitle(text: string) {
-    const BASE_URL =
-      'https://homeautodaniel.eu-gb.mybluemix.net/filmweb-search';
-    return this.http
-      .get<FilmData[]>(BASE_URL, {
-        params: new HttpParams().set('q', text),
-      })
-      .subscribe((result) => {
+  searchByTitle(parameter: string) {
+    this.isLoading = true;
+    this.lastResult = null;
+    this.searchMoviesService.searchByTitle(parameter).subscribe(
+      (result) => {
+        this.isLoading = false;
         this.searchResult = result;
-      });
+      },
+      (error: HttpErrorResponse) => {
+        this.isLoading = false;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    if ( this.searchResult ) {
+      this.searchMoviesService.setLastSearchResult(this.searchResult);
+    }
+    
   }
 }

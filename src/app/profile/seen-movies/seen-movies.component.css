@@ -1,0 +1,14 @@
+.movie-counter {
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-counter > p {
+    margin-bottom: 0;
+    font-size: .8rem;
+}
+
+.movie-counter > span {
+    font-size: 0.7rem;
+}

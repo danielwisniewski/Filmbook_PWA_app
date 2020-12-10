@@ -2,30 +2,33 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { MoviesComponent } from './movies/movies.component';
-import { SearchComponent } from './search/search.component';
-import { ProfileComponent } from './profile/profile.component';
-import { BottomBarComponent } from './shared/components/bottom-bar/bottom-bar.component';
-import { InterceptorService } from './shared/services/interceptor.service';
-import { FormsModule } from '@angular/forms';
-import { MovieMiniatureComponent } from './shared/components/movie-miniature/movie-miniature.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SharedModule } from './shared/shared.module';
+import { MoviesModule } from './movies/movies.module';
+import { SearchModule } from './search/search.module';
+import { ProfileModule } from './profile/profile.module'
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MoviesComponent,
-    SearchComponent,
-    ProfileComponent,
-    BottomBarComponent,
-    MovieMiniatureComponent,
+    LoginComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SharedModule,
+    MoviesModule,
+    SearchModule,
+    ProfileModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

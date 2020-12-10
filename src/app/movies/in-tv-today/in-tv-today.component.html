@@ -1,0 +1,6 @@
+<div class="movies-list" *ngIf="!isLoading">
+    <app-movie-expandable-element *ngFor="let filmData of filmsData" [filmData]="filmData">
+    </app-movie-expandable-element>
+</div>
+
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>

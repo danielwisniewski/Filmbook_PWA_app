@@ -1,26 +1,48 @@
-<div class="page-content">
-  <h2 class="page-title">Search</h2>
+<div class="app-content">
+  <div class="top-bar">
+    <app-top-bar [title]="title"></app-top-bar>
+  </div>
 
-  <form class="form-inline" (keyup.enter)="onKeydown(f)" #f="ngForm">
-    <div class="input-group mb-2 mr-sm-2">
-      <input
-        type="text"
-        class="form-control"
-        id="searchMovie"
-        name="serachMovie"
-        placeholder="Wpisz tytuł filmu"
-        required
-        minlength="3"
-        ngModel
-      />
+  <div class="component-content">
+    <form class="form-inline" (keyup.enter)="onKeydown(f)" #f="ngForm">
+      <div class="input-group mb-2 mr-sm-2">
+        <input
+          type="text"
+          class="form-control"
+          id="searchMovie"
+          name="serachMovie"
+          placeholder="Wpisz tytuł filmu"
+          required
+          minlength="3"
+          ngModel
+        />
+      </div>
+    </form>
+
+    <div class="serach-result" *ngIf="!isLoading">
+      <div class="container">
+        <div class="row flex-column" *ngIf="lastResult">
+          <p class="last-result-title">Ostatnie wyniki</p>
+          <div class="last-result-img">
+            <img
+              [src]="result.poster"
+              alt=""
+              srcset=""
+              *ngFor="let result of lastResult"
+              [routerLink]="'/detailView/' + result.id"
+            />
+          </div>
+        </div>
+        <app-movie-miniatures-list size="col-6"
+          [filmData]="searchResult"
+        ></app-movie-miniatures-list>
+      </div>
     </div>
-  </form>
-  
-  <app-movie-miniature
-    *ngFor="let filmData of searchResult"
-    [filmData]="filmData"
-  ></app-movie-miniature>
+  </div>
+
+  <div class="bottom-bar">
+    <app-bottom-bar></app-bottom-bar>
+  </div>
 </div>
 
-
-<app-bottom-bar></app-bottom-bar>
+<app-loading-spinner *ngIf="isLoading"> </app-loading-spinner>

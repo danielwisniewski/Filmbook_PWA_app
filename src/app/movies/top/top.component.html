@@ -1,0 +1,15 @@
+<div class="container">
+    <app-choose-view-bar
+      #bar
+      (size)="size = $event"
+      [moviesCounter]="
+        (filmsData | async) ? (filmsData | async | filter: filter).length : 0
+      "
+    ></app-choose-view-bar>
+    <app-movie-miniatures-list *ngIf="bar.moviesCounter > 0"
+      [filmData]="filmsData | async | filter: filter"
+      [size]="size"
+    ></app-movie-miniatures-list>
+  </div>
+  
+  <app-loading-spinner *ngIf="!bar.moviesCounter"></app-loading-spinner>

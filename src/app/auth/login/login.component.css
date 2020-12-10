@@ -1,0 +1,32 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  justify-content: space-between;
+  height: 100vh;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.mat-form-field {
+  width: 100%;
+  max-width: 400px;
+}
+
+img {
+  width: 75%;
+  max-width: 20rem;
+}
+
+button {
+  width: 75%;
+  max-width: 20rem;
+  padding: 0.3rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}

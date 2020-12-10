@@ -1,0 +1,56 @@
+<div class="filter__page-content d-flex flex-column">
+  <div class="filter__page-title mt-3 text-center">
+    <h5>Ustaw filtry</h5>
+  </div>
+  <div class="filter__form mt-3 d-flex flex-column">
+    <mat-slide-toggle
+      class="mt-2"
+      color="primary"
+      [checked]="filter.isOnSeen"
+      [(ngModel)]="filter.isOnSeen"
+      *ngIf="!isProfile"
+      >Ukryj obejrzane</mat-slide-toggle
+    >
+    <mat-slide-toggle
+      class="mt-2"
+      color="primary"
+      [checked]="filter.isOnWatchlist"
+      [(ngModel)]="filter.isOnWatchlist"
+      *ngIf="!isProfile"
+      >Ukryj na liście do obejrzenia</mat-slide-toggle
+    >
+    <mat-slide-toggle
+      class="mt-2"
+      color="primary"
+      [checked]="filter.isOnService"
+      [(ngModel)]="filter.isOnService"
+      >Ukryj niedostępne na Netflix lub HBO</mat-slide-toggle
+    >
+
+    <h6 class="mt-4 text-center">Pokaż</h6>
+    <mat-button-toggle-group
+      aria-label="Font Style"
+      class="mt-3 filter__type-selector"
+    >
+      <mat-button-toggle class="filter__type-selector__element" value="film" (change)="filter.type = 'film'" [checked]="filter.type === 'film'"
+        >Filmy</mat-button-toggle
+      >
+      <mat-button-toggle class="filter__type-selector__element" value="serial" (change)="filter.type = 'serial'" [checked]="filter.type === 'serial'"
+        >Seriale</mat-button-toggle
+      >
+      <mat-button-toggle class="filter__type-selector__element" value='' (change)="filter.type = ''" [checked]="!filter.type"
+        >Wszystko</mat-button-toggle
+      >
+    </mat-button-toggle-group>
+
+    <button
+      mat-raised-button
+      color="accent"
+      class="mt-5 w-50 align-self-center"
+      type="button"
+      (click)="onSaveButton()"
+    >
+      Zastosuj filtry
+    </button>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+mat-button-toggle-group {
+  justify-content: center;
+  border: none;
+  margin-top: 0.4rem;
+}
+
+mat-button-toggle {
+  background-color: var(--movie-black);
+  border: none !important;
+}
+
+.top-bar__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+mat-icon {
+  align-self: center;
+}

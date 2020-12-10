@@ -1,8 +1,41 @@
-<div class="page-content">
-  <h2 class="page-title">Explore</h2>
+<div class="app-content">
+  <div class="top-bar">
+    <app-top-bar [title]="title"></app-top-bar>
+  </div>
 
-  <app-movie-miniature *ngFor="let filmData of filmsData" [filmData]="filmData">
-  </app-movie-miniature>
+  <div class="component-content d-flex flex-column">
+    <nav mat-tab-nav-bar mat-align-tabs="center" mat-stretch-tabs>
+      <a
+        mat-tab-link
+        routerLink="/movies/recommended"
+        [active]="rla1.isActive"
+        routerLinkActive
+        #rla1="routerLinkActive"
+        >Polecane</a
+      >
+      <a
+        mat-tab-link
+        routerLink="/movies/top"
+        [active]="rla2.isActive"
+        routerLinkActive
+        #rla2="routerLinkActive"
+        >Top</a
+      >
+      <a
+        mat-tab-link
+        routerLink="/movies/tv"
+        [active]="rla3.isActive"
+        routerLinkActive
+        #rla3="routerLinkActive"
+        >Tv</a
+      >
+    </nav>
+    <div class="d-flex flex-column overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <app-bottom-bar></app-bottom-bar>
+  </div>
 </div>
-
-<app-bottom-bar></app-bottom-bar>

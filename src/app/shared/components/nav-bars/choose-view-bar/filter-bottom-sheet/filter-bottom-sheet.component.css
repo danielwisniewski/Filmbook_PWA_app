@@ -1,0 +1,11 @@
+.filter__type-selector {
+    width: 100%;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    border: none;
+}
+
+.filter__type-selector__element {
+    flex-basis: 33%;
+}

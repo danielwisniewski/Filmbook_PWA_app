@@ -1,0 +1,24 @@
+<div class="row">
+  <div [class]="size" *ngFor="let film of filmData">
+    <mat-card [routerLink]="'/detailView/' + film.id">
+      <mat-card-content>
+        <img
+          mat-card-mat-card-sm-image
+          [src]="film.poster ? film.poster : noImageUrl"
+        />
+        <div class="additional-info text-center" *ngIf="size === 'col-12'">
+          <h5>{{ film.title }}</h5>
+          <mat-icon>star_rate</mat-icon
+          ><span style="vertical-align: super">{{
+            film.rating | number: "1.1-1"
+          }}</span>
+          <p>{{ film.genre }}</p>
+          <p>{{ film.plot }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-footer class="text-center" *ngIf="size !== 'col-12'">{{
+        film.title
+      }}</mat-card-footer>
+    </mat-card>
+  </div>
+</div>
