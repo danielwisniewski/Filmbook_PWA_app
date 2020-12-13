@@ -11,7 +11,7 @@ import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies
   styleUrls: ['./top.component.css'],
 })
 export class TopComponent implements OnInit, OnDestroy {
-  filmsData: Observable<FilmData[]>;
+  filmsData: FilmData[];
   size: string = 'col-6';
   sub: Subscription;
   filter: FilterModel;
@@ -25,20 +25,9 @@ export class TopComponent implements OnInit, OnDestroy {
     this.sub = this.filterService.moviesFilters.subscribe(
       (val: FilterModel) => {
         this.filter = val;
-        if (this.filter.type == 'serial') {
-          if (!this.db.topSerials.value) {
-            this.db.fetchTop('serial');
-          }
-          this.filmsData = this.db.topSerials;
-        } else {
-          if (!this.db.topMovies.value) {
-            this.db.fetchTop('film');
-          }
-          this.filmsData = this.db.topMovies;
-        }
-        return this.filter;
       }
     );
+    this.filmsData = this.db.getTop();
   }
 
   ngOnDestroy() {

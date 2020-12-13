@@ -21,6 +21,7 @@ export class FilmData {
         public longPlot?: string,
         public seen?: boolean,
         public watchlist?: boolean,
+        public ignore?: boolean,
         public cast?: {
             actor: string,
             link: string,

@@ -19,6 +19,16 @@ export class FiltersService {
       .set(filters);
   }
 
+  getFilter( path : string ) : FilterModel {
+    let userFIlters = JSON.parse(localStorage.getItem('userFilters')) || {};
+    console.log(!userFIlters[path])
+    if ( !userFIlters[path] ) {
+      userFIlters[path] = new FilterModel();
+      localStorage.setItem('userFilters', JSON.stringify(userFIlters))
+    } 
+    return userFIlters[path]
+  }
+
   fetchFilters() {
     if (!this.moviesFilters.value) {
       this.subs.push(
@@ -35,6 +45,8 @@ export class FiltersService {
                   isOnWatchlist: null,
                   isOnService: null,
                   type: null,
+                  isOnIgnore: true,
+                  trigger: false,
                 },
                 'movies'
               );
@@ -56,6 +68,8 @@ export class FiltersService {
                   isOnWatchlist: null,
                   isOnService: null,
                   type: null,
+                  isOnIgnore: true,
+                  trigger: false,
                 },
                 'profile'
               );
@@ -63,6 +77,12 @@ export class FiltersService {
       );
     }
   }
+
+  refreshFilter() {
+    this.setFilters(this.moviesFilters.value, "movies");
+    this.setFilters(this.profileFilters.value, "profile");
+  }
+
   cancelSubscriptions() {
     this.subs.forEach((sub) => sub.unsubscribe());
     this.moviesFilters.next(null)

@@ -1,6 +1,9 @@
 <div class="row">
   <div [class]="size" *ngFor="let film of filmData">
-    <mat-card [routerLink]="'/detailView/' + film.id">
+    <mat-card
+      [routerLink]="'/detailView/' + film.id"
+      (contextmenu)="onRightClick($event, film)"
+    >
       <mat-card-content>
         <img
           mat-card-mat-card-sm-image
@@ -19,6 +22,42 @@
       <mat-card-footer class="text-center" *ngIf="size !== 'col-12'">{{
         film.title
       }}</mat-card-footer>
+      <!-- Element do wywołania menu -->
+      <div style="visibility: hidden; position: fixed"
+      [style.left]="contextMenuPosition.x"
+      [style.top]="contextMenuPosition.y"
+      [matMenuTriggerFor]="contextMenu">
+  </div>
+      <!-- Element do wywołania menu -->
+
     </mat-card>
   </div>
 </div>
+
+<!-- [routerLink]="'/detailView/' + film.id" -->
+<mat-menu #contextMenu="matMenu" aria-label="Wybierz akcję">
+  <ng-template matMenuContent let-film="film">
+    <button mat-menu-item (click)="onSeen(film)">
+      <mat-icon>{{ film.seen ? "delete" : "done_outline" }}</mat-icon>
+      <span>{{
+        film.seen ? "Usuń z obejrzanych" : "Oznacz jako obejrzany"
+      }}</span>
+    </button>
+    <button mat-menu-item (click)="onWatchlist(film)" *ngIf="!film.seen">
+      <mat-icon>{{
+        film.watchlist ? "visibility_off" : "visibility"
+      }}</mat-icon>
+      <span>{{
+        film.watchlist ? "Usuń z listy do obejrzenia" : "Chcę obejrzeć!"
+      }}</span>
+    </button>
+    <button mat-menu-item (click)="onIgnore(film)">
+      <mat-icon>{{
+        film.ignore ? "thumb_up" : "thumb_down"
+      }}</mat-icon>
+      <span>{{
+        film.ignore ? "Pokaż na liście" : "Nie interesuje mnie"
+      }}</span>
+    </button>
+  </ng-template>
+</mat-menu>

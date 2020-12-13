@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FilmData } from 'src/app/shared/Models/film-data.model';
-import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies.service';
+import { MovieDetailService } from '../movie-detail.service';
 
 @Component({
   selector: 'app-rate-dialog',
@@ -18,7 +18,7 @@ export class RateDialogComponent implements OnInit {
   ratingArr = [];
 
   constructor(
-    private db: FirestoreMoviesService,
+    private db: MovieDetailService,
     private _dialogRef: MatDialogRef<RateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: FilmData
   ) {}
@@ -45,12 +45,14 @@ export class RateDialogComponent implements OnInit {
   }
 
   onDelete() {
-    this.db.deleteFromMyProfile(this.data.id, 'seen');
+    this.data.seen = false;
+    this.db.updateMovieOnProfile(this.data, 'seen');
     this._dialogRef.close()
   }
 
   onSaveRating() {
-    this.db.addToMyProfile(this.data, 'seen');
+    this.data.seen = true;
+    this.db.updateMovieOnProfile(this.data, 'seen');
     this._dialogRef.close();
   }
 }

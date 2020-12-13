@@ -37,7 +37,7 @@
           mat-raised-button
           class="action-button"
           [color]="filmData.watchlist ? 'primary' : 'accent'"
-          (click)="addToWatchlist()"
+          (click)="onWatchlist()"
           [disabled]="filmData.seen"
         >
           Chcę obejrzeć!

@@ -11,10 +11,10 @@ import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies
   styleUrls: ['./seen-movies.component.css'],
 })
 export class SeenMoviesComponent implements OnInit, OnDestroy {
-  filmsData: Observable<FilmData[]>;
+  filmsData: FilmData[];
   isLoading: boolean;
   size: string = 'col-4';
-  sub: Subscription;
+  subs: Subscription[] = [];
   filter: FilterModel;
   constructor(
     private db: FirestoreMoviesService,
@@ -23,18 +23,20 @@ export class SeenMoviesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
-    if (!this.db.seenMovies.value) {
-      this.db.fetchSeenMovies();
-    }
-    this.sub = this.filterService.profileFilters.subscribe(
-      (val) => (this.filter = val)
+    this.subs.push(
+      this.filterService.profileFilters.subscribe((val) => (this.filter = val))
     );
-    this.filmsData = this.db.seenMovies;
-
-    if (typeof this.filmsData != undefined) this.isLoading = false;
+    this.subs.push(
+      this.db.seenMovies.subscribe((val) => {
+        this.isLoading = false;
+        this.filmsData = val;
+      })
+    );
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    if (this.subs) {
+      this.subs.forEach((sub) => sub.unsubscribe());
+    }
   }
 }

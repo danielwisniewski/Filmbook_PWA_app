@@ -16,6 +16,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatListModule,
     MatDividerModule,
     MatSlideToggleModule,
+    MatMenuModule,
   ],
   exports: [
     MatButtonModule,
@@ -55,6 +57,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatListModule,
     MatDividerModule,
     MatSlideToggleModule,
+    MatMenuModule,
   ],
 })
 export class MaterialModule {}

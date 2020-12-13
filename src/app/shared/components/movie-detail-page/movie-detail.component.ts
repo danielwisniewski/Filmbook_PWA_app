@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { map, take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FilmData } from '../../Models/film-data.model';
-import { FirestoreMoviesService } from '../../services/firestore-movies.service';
+import { MovieDetailService } from './movie-detail.service';
 import { RateDialogComponent } from './rate-dialog/rate-dialog.component';
 
 @Component({
@@ -12,64 +12,43 @@ import { RateDialogComponent } from './rate-dialog/rate-dialog.component';
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.css'],
 })
-export class MovieDetailPageComponent implements OnInit {
+export class MovieDetailPageComponent implements OnInit, OnDestroy {
   isLoading = false;
   filmData: FilmData;
-
+  sub: Subscription;
   constructor(
     private route: ActivatedRoute,
-    private _snackBar: MatSnackBar,
-    private db: FirestoreMoviesService,
+    private db : MovieDetailService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.route.data
+    this.isLoading = true;
+    this.sub = this.route.data
       .pipe(
-        take(1),
         map((val) => val.movies)
       )
       .subscribe((val) => {
+        this.isLoading = false;
         this.filmData = val;
       });
   }
 
-  addToWatchlist() {
-    if (!this.filmData.watchlist) {
-      this.db.addToMyProfile(this.filmData, 'watchlist').subscribe(() => {
-        this.showSnackbar('Dodano do listy');
-        this.getData()
-      });
-    } else {
-      this.db.deleteFromMyProfile(this.filmData.id, 'watchlist');
-      this.getData();
-      this.showSnackbar('Film został usunięty z Twojej listy');
-    }
+  onWatchlist() {
+    this.filmData.watchlist = !this.filmData.watchlist;
+    this.db.updateMovieOnProfile(this.filmData, 'watchlist')
   }
 
-  private getData() {
-    this.db
-      .fetchMovieDetailData(this.filmData.id)
-      .pipe(take(1))
-      .subscribe((val:FilmData) => {
-        this.filmData = val;
-      });
-  }
 
   addToSeenClicked() {
-    const _dialog = this.dialog.open(RateDialogComponent, {
+    this.dialog.open(RateDialogComponent, {
       data: this.filmData,
     });
-    _dialog
-      .afterClosed()
-      .toPromise()
-      .then(() => this.getData());
   }
 
-  private showSnackbar(text: string) {
-    this._snackBar.open(text, 'Ok', {
-      duration: 3000,
-      verticalPosition: 'bottom',
-    });
+  ngOnDestroy() {
+    if ( this.sub ) {
+      this.sub.unsubscribe();
+    }
   }
 }

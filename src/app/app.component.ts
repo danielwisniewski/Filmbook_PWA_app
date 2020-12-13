@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { MoviesServiceService } from './movies/movies-service.service';
 import { FirestoreMoviesService } from './shared/services/firestore-movies.service';
 
 @Component({

@@ -1,33 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { finalize, first, map, take } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FilmData } from 'src/app/shared/Models/film-data.model';
-import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies.service';
-import { MoviesServiceService } from '../movies-service.service';
+import { MoviesInTvService } from './movies-in-tv.service';
+
 
 @Component({
   selector: 'app-in-tv-today',
   templateUrl: './in-tv-today.component.html',
   styleUrls: ['./in-tv-today.component.css'],
 })
-export class InTvTodayComponent implements OnInit {
+export class InTvTodayComponent implements OnInit, OnDestroy {
   filmsData: FilmData[];
-  isLoading = false;
-  constructor(private movieService: MoviesServiceService) {}
+  isLoading: boolean;
+  sub: Subscription;
+  constructor(private movieService: MoviesInTvService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    if (!this.movieService.filmsInTv.value) {
-      this.movieService.fetchFilmsInTv();
+
+    this.movieService.filmsInTv.subscribe((val: FilmData[]) => {
+      this.isLoading = false;
+      this.filmsData = val;
+    });
+    this.movieService.fetchFilmsInTv();
+  }
+
+  ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe();
     }
-    this.movieService.filmsInTv
-      .pipe(
-        first( val => val !== null ),
-        finalize(() => (this.isLoading = false))
-      )
-      .subscribe((val: FilmData[]) => {
-        this.filmsData = val;
-      });
   }
 }

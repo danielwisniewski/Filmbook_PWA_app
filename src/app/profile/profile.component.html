@@ -7,7 +7,7 @@
     ></app-top-bar>
   </div>
 
-  <div class="component-content d-flex flex-column">
+  <div class="component-content">
     <nav mat-tab-nav-bar mat-align-tabs="center" mat-stretch-tabs>
       <a
         mat-tab-link
@@ -26,7 +26,7 @@
         >Obejrzane</a
       >
     </nav>
-    <div class="d-flex flex-column overflow-auto">
+    <div class="router-outlet">
       <router-outlet></router-outlet>
     </div>
     

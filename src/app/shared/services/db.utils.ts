@@ -1,9 +1,10 @@
-export function checkOnProfileLists<FilmData>(snaps, watchlist, seen) {
+export function checkOnProfileLists<FilmData>(snaps, watchlist, seen, ignore) {
   return snaps.map((snap) => {
     return <FilmData>{
-      seen: seen.value.some((val) => val.id === snap.id),
-      watchlist: watchlist.value.some((val) => val.id === snap.id),
-      myRating: seen.value.some((val) => val.id === snap.id)
+      seen: seen.value?.some((val) => val.id === snap.id),
+      watchlist: watchlist.value?.some((val) => val.id === snap.id),
+      ignore: ignore.value?.some((val) => val.id === snap.id),
+      myRating: seen.value?.some((val) => val.id === snap.id)
         ? seen.value.find((val) => val.id === snap.id).myRating
         : null,
       ...snap,
@@ -13,9 +14,9 @@ export function checkOnProfileLists<FilmData>(snaps, watchlist, seen) {
 
 export function convertMovieDetail<FilmData>(snap, watchlist, seen) {
   return <FilmData>{
-    seen: seen.value.some((val) => val.id === snap.id),
-    watchlist: watchlist.value.some((val) => val.id === snap.id),
-    myRating: seen.value.some((val) => val.id === snap.id)
+    seen: seen.value?.some((val) => val.id === snap.id),
+    watchlist: watchlist.value?.some((val) => val.id === snap.id),
+    myRating: seen.value?.some((val) => val.id === snap.id)
       ? seen.value.find((val) => val.id === snap.id).myRating
       : null,
     ...snap,

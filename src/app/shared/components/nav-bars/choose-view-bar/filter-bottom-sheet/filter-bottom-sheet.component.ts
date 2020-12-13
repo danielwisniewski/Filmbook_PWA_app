@@ -25,6 +25,8 @@ export class FilterBottomSheetComponent implements OnInit {
     } else {
       this.filter = this.filterService.moviesFilters.value
     }
+    const test = this.filterService.getFilter(this.router.url);
+    console.log(test);
   }
 
   onSaveButton() {

@@ -7,7 +7,7 @@ import { FilterModel } from '../Models/filter.model';
 })
 export class FilterPipe implements PipeTransform {
   transform(value: FilmData[], filter: FilterModel): FilmData[] {
-    if (value) {
+    if (value && filter) {
       if (!Object.values(filter).some((val) => val)) {
         return value;
       } else {
@@ -29,6 +29,12 @@ export class FilterPipe implements PipeTransform {
         }
         if (filter.isOnSeen) {
           filterResult = filterResult.filter((film) => !film.seen);
+        }
+        if (filter.isOnWatchlist) {
+          filterResult = filterResult.filter((film) => !film.watchlist);
+        }
+        if (filter.isOnIgnore) {
+          filterResult = filterResult.filter((film) => !film.ignore);
         }
         return filterResult;
       }

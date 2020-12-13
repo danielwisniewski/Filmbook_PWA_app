@@ -18,12 +18,17 @@ import { ResolveMovieDetailService } from './shared/services/resolve-movie-detai
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'movies', component: MoviesComponent, canActivate: [AuthGuard], children: [
-    { path: '', redirectTo: 'recommended', pathMatch: 'full' },
-    { path: 'recommended', component: RecommendedComponent },
-    { path: 'top', component: TopComponent },
-    { path: 'tv', component: InTvTodayComponent },
-  ] },
+  {
+    path: 'movies',
+    component: MoviesComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'recommended', pathMatch: 'full' },
+      { path: 'recommended', component: RecommendedComponent },
+      { path: 'top', component: TopComponent },
+      { path: 'tv', component: InTvTodayComponent },
+    ],
+  },
   {
     path: 'search',
     component: SearchComponent,
@@ -59,7 +64,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

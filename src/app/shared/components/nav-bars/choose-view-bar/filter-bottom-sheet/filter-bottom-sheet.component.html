@@ -27,6 +27,14 @@
       >Ukryj niedostępne na Netflix lub HBO</mat-slide-toggle
     >
 
+    <mat-slide-toggle
+    class="mt-2"
+    color="primary"
+    [checked]="filter.isOnIgnore"
+    [(ngModel)]="filter.isOnIgnore"
+    >Ukryj będące na liście ignorowanych</mat-slide-toggle
+  >
+
     <h6 class="mt-4 text-center">Pokaż</h6>
     <mat-button-toggle-group
       aria-label="Font Style"

@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { finalize, first } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { FilmData } from 'src/app/shared/Models/film-data.model';
 import { FilterModel } from 'src/app/shared/Models/filter.model';
 import { FiltersService } from 'src/app/shared/services/filters.service';
@@ -12,10 +11,10 @@ import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies
   styleUrls: ['./watchlist.component.css'],
 })
 export class WatchlistComponent implements OnInit, OnDestroy {
-  filmsData: Observable<FilmData[]>;
+  filmsData: FilmData[];
   isLoading: boolean;
   size: string = 'col-12';
-  sub: Subscription;
+  subs: Subscription[] = [];
   filter: FilterModel;
   constructor(
     private db: FirestoreMoviesService,
@@ -24,20 +23,19 @@ export class WatchlistComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
-
-    if (!this.db.watchlist.value) {
-      this.db.fetchWatchlist();
-    }
-
-    this.sub = this.filterService.profileFilters.subscribe(
-      (val) => (this.filter = val)
+    this.subs.push(
+      this.filterService.profileFilters.subscribe((val) => (this.filter = val))
     );
+    this.subs.push(this.db.watchlist.subscribe( val => {
+      this.isLoading = false;
+      this.filmsData = val;
+    } ))
 
-    this.filmsData = this.db.watchlist;
-    if (typeof this.filmsData != undefined) this.isLoading = false;
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    if (this.subs) {
+      this.subs.forEach( sub => sub.unsubscribe() )
+    }
   }
 }

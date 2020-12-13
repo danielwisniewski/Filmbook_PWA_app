@@ -18,18 +18,16 @@ export class FirestoreMoviesService {
   seenMovies = new BehaviorSubject<FilmData[]>(null);
   watchlist = new BehaviorSubject<FilmData[]>(null);
   recommended = new BehaviorSubject<FilmData[]>(null);
-  topMovies = new BehaviorSubject<FilmData[]>(null);
-  topSerials = new BehaviorSubject<FilmData[]>(null);
-  subs: Subscription[] = [];
+  ignore = new BehaviorSubject<FilmData[]>(null);
+  private topMovies = new BehaviorSubject<FilmData[]>(null);
+  private topSerials = new BehaviorSubject<FilmData[]>(null);
+  private subs: Subscription[] = [];
   constructor(
     private firestore: AngularFirestore,
     private filterService: FiltersService
   ) {}
 
   fetchMovieDetailData(id: string) {
-    if (!this.seenMovies.value) this.fetchSeenMovies();
-    if (!this.watchlist.value) this.fetchWatchlist();
-
     return this.firestore
       .doc('/movies/' + id)
       .snapshotChanges()
@@ -53,79 +51,65 @@ export class FirestoreMoviesService {
         take(1),
         map((snaps) => convertSnaps(snaps)),
         map((snaps) =>
-          checkOnProfileLists(snaps, this.watchlist, this.seenMovies)
+          checkOnProfileLists(snaps, this.watchlist, this.seenMovies, this.ignore)
         )
       );
   }
 
-  fetchTop(type: string) {
+  fetchTop() {
     this.firestore
       .collection('movies', (ref) =>
-        ref.where('type', '==', type).orderBy('rating', 'desc').limit(100)
+        ref.where('type', '==', 'film').orderBy('rating', 'desc').limit(100)
       )
       .snapshotChanges()
       .pipe(
-        take(1),
         map((snaps) => convertSnaps(snaps)),
         map((snaps) =>
-          checkOnProfileLists(snaps, this.watchlist, this.seenMovies)
+          checkOnProfileLists(snaps, this.watchlist, this.seenMovies, this.ignore)
         )
       )
       .subscribe((val) => {
-        if (type === 'serial') this.topSerials.next(val);
-        else this.topMovies.next(val);
+        this.topMovies.next(val);
       });
+
+    this.firestore
+      .collection('movies', (ref) =>
+        ref.where('type', '==', 'serial').orderBy('rating', 'desc').limit(100)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((snaps) => convertSnaps(snaps)),
+        map((snaps) =>
+          checkOnProfileLists(snaps, this.watchlist, this.seenMovies, this.ignore)
+        )
+      )
+      .subscribe((val) => {
+        this.topSerials.next(val);
+      });
+  }
+
+  getTop() : FilmData[] {
+    return this.topMovies.value.concat(this.topSerials.value)
   }
 
   fetchRecomended() {
     this.filterService.fetchFilters();
-    if (!this.seenMovies.value) this.fetchSeenMovies();
-    if (!this.watchlist.value) this.fetchWatchlist();
-    this.subs.push(
-      this.firestore
-        .collection('recommended', (ref) => ref.orderBy('rating', 'desc'))
-        .snapshotChanges()
-        .pipe(
-          map((snaps) => convertSnaps(snaps)),
-          map((snaps) =>
-            checkOnProfileLists(snaps, this.watchlist, this.seenMovies)
-          )
-        )
-        .subscribe((val: FilmData[]) => {
-          this.recommended.next(val);
-        })
-    );
-  }
-
-  addToMyProfile(film: FilmData, collection: string) {
-    const addInfo =
-      collection === 'seen'
-        ? { seen: true, watchlist: false }
-        : { seen: false, watchlist: true };
-    return from(
-      this.firestore
-        .doc(
-          'users/' +
-            localStorage.getItem('userId') +
-            '/' +
-            collection +
-            '/' +
-            film.id
-        )
-        .set({ ...film, ...addInfo })
-    );
-  }
-
-  deleteFromMyProfile(id: string, collection: string) {
     this.firestore
-      .doc(
-        'users/' + localStorage.getItem('userId') + '/' + collection + '/' + id
+      .collection('recommended', (ref) => ref.orderBy('rating', 'desc'))
+      .snapshotChanges()
+      .pipe(
+        map((snaps) => convertSnaps(snaps)),
+        map((snaps) =>
+          checkOnProfileLists(snaps, this.watchlist, this.seenMovies, this.ignore)
+        )
       )
-      .delete();
+      .subscribe((val: FilmData[]) => {
+        this.recommended.next(val);
+
+      });
   }
 
-  fetchSeenMovies() {
-    this.filterService.fetchFilters();
+  private fetchSeenMovies() {
     this.subs.push(
       this.firestore
         .collection(
@@ -140,8 +124,7 @@ export class FirestoreMoviesService {
     );
   }
 
-  fetchWatchlist() {
-    this.filterService.fetchFilters();
+  private fetchWatchlist() {
     this.subs.push(
       this.firestore
         .collection(
@@ -150,16 +133,36 @@ export class FirestoreMoviesService {
         )
         .snapshotChanges()
         .pipe(map((snaps) => convertSnaps(snaps)))
-        .subscribe((val: any) => {
+        .subscribe((val: FilmData[]) => {
           this.watchlist.next(val);
         })
     );
   }
 
+  private fetchIgnore() {
+    this.subs.push(
+      this.firestore
+        .collection('users/' + localStorage.getItem('userId') + '/ignore')
+        .snapshotChanges()
+        .pipe(map((snaps) => convertSnaps(snaps)))
+        .subscribe((val: FilmData[]) => {
+          this.ignore.next(val);
+        })
+    )
+  }
+
+  initialFetch() {
+    this.fetchWatchlist();
+    this.fetchSeenMovies();
+    this.fetchIgnore();
+    this.fetchRecomended();
+    this.fetchTop();
+  }
+
   cancelSubscriptions() {
     this.subs.forEach((sub) => sub.unsubscribe());
     this.seenMovies.next(null);
-    this.watchlist.next(null)
+    this.watchlist.next(null);
     this.filterService.cancelSubscriptions();
   }
 }
