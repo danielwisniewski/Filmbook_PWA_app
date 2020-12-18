@@ -1,0 +1,16 @@
+<div class="app-content">
+  <div class="top-bar">
+    <app-top-bar [title]="title"> </app-top-bar>
+  </div>
+  <div class="component-content">
+    <div class="actor mt-2 d-flex" *ngFor="let actor of cast">
+      <div class="image">
+        <img [src]="actor.picture ? actor.picture : '../../../../../assets/images/no-user-picture.png'" />
+      </div>
+      <div class="description">
+          <h5>{{ actor.actor }}</h5>
+          <p>{{ actor.role }}</p>
+      </div>
+    </div>
+  </div>
+</div>

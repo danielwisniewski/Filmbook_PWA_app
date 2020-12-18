@@ -54,6 +54,16 @@ mat-icon {
   font-size: 24px;
 }
 
+#awardsLink {
+  color: white;
+}
+
+.cast-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 span.rating {
   font-size: 16px;
   margin-left: 10px;
@@ -82,7 +92,7 @@ span.rating {
 
 .cast {
   position: relative;
-  width: 100vw;
+  width: 100%;
   overflow-x: scroll;
   display: flex;
 }

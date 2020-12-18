@@ -1,0 +1,10 @@
+img {
+    height: 60px;
+    width: auto;
+    filter: invert(1);
+}
+
+p {
+    margin-bottom: 0;
+    font-size: .9rem;
+}

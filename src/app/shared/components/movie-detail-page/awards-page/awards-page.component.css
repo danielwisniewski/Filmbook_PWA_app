@@ -1,0 +1,15 @@
+mat-card {
+    background-color: var(--movies-black);
+    box-shadow: none !important;
+    border: none;
+}
+
+.component-content {
+    overflow-y: scroll !important;
+}
+
+mat-card-header {
+    margin: .5rem 0;
+    text-align: center;
+    font-size: 1.5rem;
+}

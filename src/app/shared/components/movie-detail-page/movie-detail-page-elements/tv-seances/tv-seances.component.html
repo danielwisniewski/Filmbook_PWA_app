@@ -1,0 +1,25 @@
+<mat-grid-list
+  [cols]="tvSeances.length > 1 ? 10 : 1"
+  rowHeight="30px"
+  class="mt-4"
+>
+  <mat-grid-tile [colspan]="tvSeances.length > 1 ? 9 : 1"
+    ><h5 class="w-100 text-center">W najbliższym czasie w TV</h5></mat-grid-tile
+  >
+  <mat-grid-tile *ngIf="tvSeances.length > 1"
+    ><mat-icon> keyboard_arrow_right </mat-icon></mat-grid-tile
+  >
+</mat-grid-list>
+<mat-grid-list cols="4" rowHeight="70px">
+  <mat-grid-tile><img [src]="tvSeances[0].logo" /></mat-grid-tile>
+  <mat-grid-tile
+    ><p>{{ tvSeances[0].channel }}</p></mat-grid-tile
+  >
+  <mat-grid-tile
+    ><p>{{ tvSeances[0].date }}</p></mat-grid-tile
+  >
+  <mat-grid-tile
+    ><p>{{ tvSeances[0].seances[0].time }}</p></mat-grid-tile
+  >
+</mat-grid-list>
+<mat-divider class="mb-3"></mat-divider>

@@ -18,6 +18,10 @@ import { TopBarComponent } from './components/nav-bars/top-bar/top-bar.component
 import { ChooseViewBarComponent } from './components/nav-bars/choose-view-bar/choose-view-bar.component';
 import { FilterBottomSheetComponent } from './components/nav-bars/choose-view-bar/filter-bottom-sheet/filter-bottom-sheet.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { AwardsPageComponent } from './components/movie-detail-page/awards-page/awards-page.component';
+import { FullCastPageComponent } from './components/movie-detail-page/full-cast-page/full-cast-page.component';
+import { TvSeancesComponent } from './components/movie-detail-page/movie-detail-page-elements/tv-seances/tv-seances.component';
+import { InitialViewComponent } from './components/movie-detail-page/movie-detail-page-elements/initial-view/initial-view.component';
 
 @NgModule({
   imports: [
@@ -62,6 +66,10 @@ import { FilterPipe } from './pipes/filter.pipe';
     ChooseViewBarComponent,
     FilterBottomSheetComponent,
     FilterPipe,
+    AwardsPageComponent,
+    FullCastPageComponent,
+    TvSeancesComponent,
+    InitialViewComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

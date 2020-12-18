@@ -1,60 +1,91 @@
 <div class="filter__page-content d-flex flex-column">
   <div class="filter__page-title mt-3 text-center">
-    <h5>Ustaw filtry</h5>
+    <h5>Filtry</h5>
   </div>
   <div class="filter__form mt-3 d-flex flex-column">
+    <h6>Ukryj:</h6>
     <mat-slide-toggle
       class="mt-2"
       color="primary"
+      labelPosition="before"
       [checked]="filter.isOnSeen"
       [(ngModel)]="filter.isOnSeen"
       *ngIf="!isProfile"
-      >Ukryj obejrzane</mat-slide-toggle
+      >Obejrzane</mat-slide-toggle
     >
     <mat-slide-toggle
       class="mt-2"
       color="primary"
+      labelPosition="before"
       [checked]="filter.isOnWatchlist"
       [(ngModel)]="filter.isOnWatchlist"
       *ngIf="!isProfile"
-      >Ukryj na liście do obejrzenia</mat-slide-toggle
+      >Na liście do obejrzenia</mat-slide-toggle
     >
     <mat-slide-toggle
       class="mt-2"
       color="primary"
+      labelPosition="before"
       [checked]="filter.isOnService"
       [(ngModel)]="filter.isOnService"
-      >Ukryj niedostępne na Netflix lub HBO</mat-slide-toggle
+      >Niedostępne na Netflix lub HBO</mat-slide-toggle
     >
 
     <mat-slide-toggle
-    class="mt-2"
-    color="primary"
-    [checked]="filter.isOnIgnore"
-    [(ngModel)]="filter.isOnIgnore"
-    >Ukryj będące na liście ignorowanych</mat-slide-toggle
-  >
+      class="mt-2"
+      color="primary"
+      labelPosition="before"
+      [checked]="filter.isOnIgnore"
+      [(ngModel)]="filter.isOnIgnore"
+      >Nie interesujące mnie</mat-slide-toggle
+    >
 
-    <h6 class="mt-4 text-center">Pokaż</h6>
+    <h6 class="mt-3">Pokaż:</h6>
     <mat-button-toggle-group
       aria-label="Font Style"
       class="mt-3 filter__type-selector"
     >
-      <mat-button-toggle class="filter__type-selector__element" value="film" (change)="filter.type = 'film'" [checked]="filter.type === 'film'"
+      <mat-button-toggle
+        id="leftButton"
+        class="filter__type-selector__element"
+        value="film"
+        (change)="filter.type = 'film'"
+        [class.active]="filter.type === 'film'"
         >Filmy</mat-button-toggle
       >
-      <mat-button-toggle class="filter__type-selector__element" value="serial" (change)="filter.type = 'serial'" [checked]="filter.type === 'serial'"
+      <mat-button-toggle
+        class="filter__type-selector__element"
+        value="serial"
+        (change)="filter.type = 'serial'"
+        [class.active]="filter.type === 'serial'"
         >Seriale</mat-button-toggle
       >
-      <mat-button-toggle class="filter__type-selector__element" value='' (change)="filter.type = ''" [checked]="!filter.type"
+      <mat-button-toggle
+        id="rightButton"
+        class="filter__type-selector__element"
+        value=""
+        (change)="filter.type = ''"
+        [class.active]="!filter.type"
         >Wszystko</mat-button-toggle
       >
     </mat-button-toggle-group>
 
+    <h6 class="mt-3">Minimalna ocena:</h6>
+    <div class="filter__min-rating-slider">
+      <mat-slider
+        min="1"
+        max="10"
+        step="0.1"
+        thumbLabel="true"
+        [(ngModel)]="filter.minRating"
+      ></mat-slider>
+      <span>{{ filter.minRating }}</span>
+    </div>
+
     <button
       mat-raised-button
       color="accent"
-      class="mt-5 w-50 align-self-center"
+      class="mt-3 w-50 align-self-center"
       type="button"
       (click)="onSaveButton()"
     >

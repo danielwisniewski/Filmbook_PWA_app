@@ -14,29 +14,20 @@ export class SeenMoviesComponent implements OnInit, OnDestroy {
   filmsData: FilmData[];
   isLoading: boolean;
   size: string = 'col-4';
-  subs: Subscription[] = [];
-  filter: FilterModel;
-  constructor(
-    private db: FirestoreMoviesService,
-    private filterService: FiltersService
-  ) {}
+  sub: Subscription;
+  constructor(private db: FirestoreMoviesService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.subs.push(
-      this.filterService.profileFilters.subscribe((val) => (this.filter = val))
-    );
-    this.subs.push(
-      this.db.seenMovies.subscribe((val) => {
-        this.isLoading = false;
-        this.filmsData = val;
-      })
-    );
+    this.sub = this.db.seenMovies.subscribe((val) => {
+      this.isLoading = false;
+      this.filmsData = val;
+    });
   }
 
   ngOnDestroy() {
-    if (this.subs) {
-      this.subs.forEach((sub) => sub.unsubscribe());
+    if (this.sub) {
+      this.sub.unsubscribe();
     }
   }
 }

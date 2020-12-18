@@ -1,11 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { FilmData } from '../Models/film-data.model';
 import { FilterModel } from '../Models/filter.model';
+import { FiltersService } from '../services/filters.service';
 
 @Pipe({
   name: 'filter',
+  pure: false,
 })
 export class FilterPipe implements PipeTransform {
+  constructor(private filterService: FiltersService) {}
+
   transform(value: FilmData[], filter: FilterModel): FilmData[] {
     if (value && filter) {
       if (!Object.values(filter).some((val) => val)) {
@@ -36,6 +40,12 @@ export class FilterPipe implements PipeTransform {
         if (filter.isOnIgnore) {
           filterResult = filterResult.filter((film) => !film.ignore);
         }
+        if (filter.minRating) {
+          filterResult = filterResult.filter(
+            (film) => film.rating >= filter.minRating
+          );
+        }
+        this.filterService.elementCounter.next(filterResult.length);
         return filterResult;
       }
     }

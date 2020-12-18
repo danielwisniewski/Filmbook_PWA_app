@@ -19,19 +19,16 @@ export class FilterBottomSheetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isProfile = this.router.url.includes('profile') ? true : false;
-    if ( this.isProfile ) {
-      this.filter = this.filterService.profileFilters.value
-    } else {
-      this.filter = this.filterService.moviesFilters.value
-    }
-    const test = this.filterService.getFilter(this.router.url);
-    console.log(test);
+    this.isProfile = this.router.url.includes('profile');
+    this.filter = this.filterService.activeFilter.value;
   }
 
   onSaveButton() {
-    const document = this.isProfile ? 'profile' : 'movies';
-    this.filterService.setFilters(this.filter, document);
+    this.filterService.setFilters(this.filter, this.router.url);
     this._bottomSheet.dismiss();
+  }
+
+  onSliderChange(event) {
+    console.log(event);
   }
 }

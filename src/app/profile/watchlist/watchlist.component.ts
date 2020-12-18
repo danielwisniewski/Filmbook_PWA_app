@@ -14,28 +14,20 @@ export class WatchlistComponent implements OnInit, OnDestroy {
   filmsData: FilmData[];
   isLoading: boolean;
   size: string = 'col-12';
-  subs: Subscription[] = [];
-  filter: FilterModel;
-  constructor(
-    private db: FirestoreMoviesService,
-    private filterService: FiltersService
-  ) {}
+  sub: Subscription;
+  constructor(private db: FirestoreMoviesService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.subs.push(
-      this.filterService.profileFilters.subscribe((val) => (this.filter = val))
-    );
-    this.subs.push(this.db.watchlist.subscribe( val => {
+    this.sub = this.db.watchlist.subscribe((val) => {
       this.isLoading = false;
       this.filmsData = val;
-    } ))
-
+    });
   }
 
   ngOnDestroy() {
-    if (this.subs) {
-      this.subs.forEach( sub => sub.unsubscribe() )
+    if (this.sub) {
+      this.sub.unsubscribe();
     }
   }
 }

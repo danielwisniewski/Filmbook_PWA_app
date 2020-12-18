@@ -81,6 +81,11 @@ div.router-outlet {
   overflow: hidden;
 }
 
+.nav__filter-bottom-sheet {
+  background-color: var(--movie-dark-gray);
+  border-radius: 20px 20px 0 0;
+}
+
 html,
 body {
   height: 100%;

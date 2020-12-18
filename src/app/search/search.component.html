@@ -33,9 +33,15 @@
             />
           </div>
         </div>
-        <app-movie-miniatures-list size="col-6"
-          [filmData]="searchResult"
-        ></app-movie-miniatures-list>
+        <div class="router-outlet">
+          <div class="container h-100 d-flex flex-column">
+            <app-movie-miniatures-list size="col-6"
+            [filmData]="searchResult"
+            size='col-6'
+          ></app-movie-miniatures-list>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 .filter__type-selector {
-    width: 100%;
+    width: 80%;
     display: flex;
     align-self: center;
     justify-content: center;
@@ -8,4 +8,37 @@
 
 .filter__type-selector__element {
     flex-basis: 33%;
+    background-color: var(--movie-gray);
+}
+
+.active {
+    background-color: rgb(194,24,91);
+}
+
+#leftButton {
+    border-radius: 15px 0 0 15px;
+}
+
+#rightButton {
+    border-radius: 0 15px 15px 0;
+}
+
+::ng-deep .mat-slide-toggle-label {
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+}
+
+.filter__min-rating-slider {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.filter__min-rating-slider > mat-slider {
+    flex-grow: 10;
+}
+
+.filter__min-rating-slider > span {
+    margin-left: 10px;
 }

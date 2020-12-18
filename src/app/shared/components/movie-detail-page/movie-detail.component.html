@@ -1,7 +1,7 @@
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
 <div class="container" *ngIf="!isLoading">
-  <div class="first-view-content">
+  <!-- <div class="first-view-content">
     <mat-card class="card">
       <mat-card-header class="first-view-header">
         <img mat-card-xl-image [src]="filmData.poster " />
@@ -28,7 +28,11 @@
             colspan="2"
             *ngIf="filmData.awards"
             class="text-center"
-            >{{ filmData.awards }}</mat-grid-tile
+            routerLink="awards"
+            >{{ filmData.awards }}
+            <mat-icon id="awardsLink">
+              keyboard_arrow_right
+            </mat-icon></mat-grid-tile
           >
         </mat-grid-list>
       </mat-card-content>
@@ -52,8 +56,10 @@
         </button>
       </mat-card-actions>
     </mat-card>
-  </div>
+  </div> -->
+  <app-initial-view [filmData]="filmData"></app-initial-view>
   <div class="second-view-content">
+    <app-tv-seances *ngIf="tvSeances?.length > 0" [tvSeances]="tvSeances" ></app-tv-seances>
     <div class="mt-2 mb-2 genre">
       <h5 class="text-center">Gatunek</h5>
       <mat-chip-list>
@@ -80,7 +86,9 @@
       </mat-expansion-panel>
     </div>
     <div class="mt-2 cast-container">
-      <h5 class="text-center">Obsada</h5>
+      <h5 class="text-center cast-title" (click)="onCast()">Obsada <mat-icon id="awardsLink">
+        keyboard_arrow_right
+      </mat-icon></h5>
       <div class="cast">
         <mat-card *ngFor="let person of filmData.cast" class="cast-element">
           <img mat-card-avatar [src]="person.picture" />

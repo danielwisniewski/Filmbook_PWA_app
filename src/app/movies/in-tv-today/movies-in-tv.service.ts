@@ -18,7 +18,6 @@ export class MoviesInTvService {
       .collection('television')
       .snapshotChanges()
       .pipe(
-        take(1),
         map((snaps) => convertSnaps(snaps))
       )
       .subscribe((val) => {

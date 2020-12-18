@@ -11,6 +11,10 @@ import { SeenMoviesComponent } from './profile/seen-movies/seen-movies.component
 import { WatchlistComponent } from './profile/watchlist/watchlist.component';
 import { SearchComponent } from './search/search.component';
 import { GenreListComponent } from './shared/components/genre-list/genre-list.component';
+import { AwardsPageComponent } from './shared/components/movie-detail-page/awards-page/awards-page.component';
+import { AwardsResolveService } from './shared/components/movie-detail-page/awards-page/resolve-awards.service';
+import { FullCastPageComponent } from './shared/components/movie-detail-page/full-cast-page/full-cast-page.component';
+import { FullCastResolveService } from './shared/components/movie-detail-page/full-cast-page/resolve-full-cast.service';
 import { MovieDetailPageComponent } from './shared/components/movie-detail-page/movie-detail.component';
 import { ResolveGenreService } from './shared/services/resolve-genre.service';
 import { ResolveMovieDetailService } from './shared/services/resolve-movie-detail.service';
@@ -52,6 +56,20 @@ const routes: Routes = [
     resolve: {
       movies: ResolveMovieDetailService,
     },
+  },
+  {
+    path: 'detailView/:id/awards',
+    component: AwardsPageComponent,
+    resolve: {
+      awards: AwardsResolveService
+    }
+  },
+  {
+    path: 'detailView/:id/fullCast',
+    component: FullCastPageComponent,
+    resolve: {
+      cast: FullCastResolveService
+    }
   },
   {
     path: 'genre/:id',

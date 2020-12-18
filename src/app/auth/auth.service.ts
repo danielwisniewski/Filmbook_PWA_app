@@ -17,7 +17,6 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private router: Router,
     private moviesService: FirestoreMoviesService,
-    private filterService: FiltersService
   ) {}
 
   initAuthListener() {
@@ -29,7 +28,6 @@ export class AuthService {
         this.userData.next(user);
         this.router.navigate(['/movies']);
         this.moviesService.initialFetch();
-        this.filterService.fetchFilters();
       } else {
         this.moviesService.cancelSubscriptions();
         this.authChange.next(false);

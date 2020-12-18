@@ -1,5 +1,5 @@
 <div class="row">
-  <div [class]="size" *ngFor="let film of filmData">
+  <div [class]="size" *ngFor="let film of filmData | filter:filter ">
     <mat-card
       [routerLink]="'/detailView/' + film.id"
       (contextmenu)="onRightClick($event, film)"

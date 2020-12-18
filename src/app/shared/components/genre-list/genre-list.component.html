@@ -2,14 +2,9 @@
 
   <div class="container">
     <app-choose-view-bar
-    (size)="size = $event"
-    [moviesCounter]="
-      (filmsData | async) ? (filmsData | async | filter: filter).length : 0
-    "
   ></app-choose-view-bar>
     <app-movie-miniatures-list
-    [filmData]="filmsData | async | filter: filter"
-    [size]="size"
+    [filmData]="filmsData | async"
     ></app-movie-miniatures-list>
   </div>
 

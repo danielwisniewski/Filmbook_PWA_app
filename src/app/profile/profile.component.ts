@@ -16,7 +16,9 @@ export class ProfileComponent implements OnInit {
   }
 
   userImageClicked() {
-    this._bottomSheet.open(ProfileDetailBottomSheetComponent)
+    this._bottomSheet.open(ProfileDetailBottomSheetComponent, {
+      panelClass: 'nav__filter-bottom-sheet'
+    })
   }
 
 }

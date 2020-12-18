@@ -1,11 +1,8 @@
 <div class="container h-100 d-flex flex-column" *ngIf="!isLoading">
   <app-choose-view-bar
-    (size)="size = $event"
-    [moviesCounter]="filmsData ? (filmsData | filter: filter).length : 0"
   ></app-choose-view-bar>
   <app-movie-miniatures-list
-    [filmData]="filmsData | filter: filter"
-    [size]="size"
+    [filmData]="filmsData"
   ></app-movie-miniatures-list>
 </div>
 

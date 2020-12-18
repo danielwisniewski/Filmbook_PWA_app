@@ -5,6 +5,6 @@ export class FilterModel {
         public isOnSeen: boolean = false,
         public isOnWatchlist: boolean = false,
         public isOnIgnore: boolean = true,
-        public trigger: boolean = false,
+        public minRating: number = 0
     ) {}
 }

@@ -1,17 +1,17 @@
 <div class="top-bar__content">
-  <p>Liczba filmów: {{ moviesCounter }}</p>
+  <p>Liczba elementów: {{ moviesCounter }}</p>
   <mat-button-toggle-group
     #group="matButtonToggleGroup"
     (change)="valueChanged($event)"
   >
     <mat-button-toggle value="col-4">
-      <mat-icon>view_module</mat-icon>
+      <mat-icon [color]="size === 'col-4' ? 'primary' : ''">view_module</mat-icon>
     </mat-button-toggle>
     <mat-button-toggle value="col-6">
-      <mat-icon>view_stream</mat-icon>
+      <mat-icon [color]="size === 'col-6' ? 'primary' : ''">view_stream</mat-icon>
     </mat-button-toggle>
     <mat-button-toggle value="col-12">
-      <mat-icon svgIcon="view_sidebar"></mat-icon>
+      <mat-icon svgIcon="view_sidebar" [color]="size === 'col-12' ? 'primary' : ''"></mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>
   <button mat-icon-button (click)="onFilterButton()">

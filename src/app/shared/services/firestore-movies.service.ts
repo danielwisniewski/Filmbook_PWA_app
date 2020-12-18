@@ -9,7 +9,6 @@ import {
   convertMovieDetail,
   convertSnaps,
 } from './db.utils';
-import { FiltersService } from './filters.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,10 +21,7 @@ export class FirestoreMoviesService {
   private topMovies = new BehaviorSubject<FilmData[]>(null);
   private topSerials = new BehaviorSubject<FilmData[]>(null);
   private subs: Subscription[] = [];
-  constructor(
-    private firestore: AngularFirestore,
-    private filterService: FiltersService
-  ) {}
+  constructor(private firestore: AngularFirestore) {}
 
   fetchMovieDetailData(id: string) {
     return this.firestore
@@ -51,7 +47,12 @@ export class FirestoreMoviesService {
         take(1),
         map((snaps) => convertSnaps(snaps)),
         map((snaps) =>
-          checkOnProfileLists(snaps, this.watchlist, this.seenMovies, this.ignore)
+          checkOnProfileLists(
+            snaps,
+            this.watchlist,
+            this.seenMovies,
+            this.ignore
+          )
         )
       );
   }
@@ -65,7 +66,12 @@ export class FirestoreMoviesService {
       .pipe(
         map((snaps) => convertSnaps(snaps)),
         map((snaps) =>
-          checkOnProfileLists(snaps, this.watchlist, this.seenMovies, this.ignore)
+          checkOnProfileLists(
+            snaps,
+            this.watchlist,
+            this.seenMovies,
+            this.ignore
+          )
         )
       )
       .subscribe((val) => {
@@ -80,7 +86,12 @@ export class FirestoreMoviesService {
       .pipe(
         map((snaps) => convertSnaps(snaps)),
         map((snaps) =>
-          checkOnProfileLists(snaps, this.watchlist, this.seenMovies, this.ignore)
+          checkOnProfileLists(
+            snaps,
+            this.watchlist,
+            this.seenMovies,
+            this.ignore
+          )
         )
       )
       .subscribe((val) => {
@@ -88,24 +99,27 @@ export class FirestoreMoviesService {
       });
   }
 
-  getTop() : FilmData[] {
-    return this.topMovies.value.concat(this.topSerials.value)
+  getTop(): FilmData[] {
+    return this.topMovies.value.concat(this.topSerials.value);
   }
 
   fetchRecomended() {
-    this.filterService.fetchFilters();
     this.firestore
       .collection('recommended', (ref) => ref.orderBy('rating', 'desc'))
       .snapshotChanges()
       .pipe(
         map((snaps) => convertSnaps(snaps)),
         map((snaps) =>
-          checkOnProfileLists(snaps, this.watchlist, this.seenMovies, this.ignore)
+          checkOnProfileLists(
+            snaps,
+            this.watchlist,
+            this.seenMovies,
+            this.ignore
+          )
         )
       )
       .subscribe((val: FilmData[]) => {
         this.recommended.next(val);
-
       });
   }
 
@@ -148,7 +162,7 @@ export class FirestoreMoviesService {
         .subscribe((val: FilmData[]) => {
           this.ignore.next(val);
         })
-    )
+    );
   }
 
   initialFetch() {
@@ -163,6 +177,5 @@ export class FirestoreMoviesService {
     this.subs.forEach((sub) => sub.unsubscribe());
     this.seenMovies.next(null);
     this.watchlist.next(null);
-    this.filterService.cancelSubscriptions();
   }
 }
