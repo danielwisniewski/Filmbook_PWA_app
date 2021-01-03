@@ -1,28 +1,24 @@
 <mat-expansion-panel hideToggle class="m-3">
   <mat-expansion-panel-header>
     <mat-panel-title
-      >{{ filmData.title }} ({{ filmData.year }})</mat-panel-title
+      >{{ filmData?.title }}</mat-panel-title
     >
     <mat-panel-description>
-      <span>{{ filmData.time.substring(0, filmData.time.indexOf(",")) }}</span>
+      <span>{{ filmData?.time }}</span>
       <span style="font-size: 0.7rem">{{
-        filmData.time.substring(filmData.time.indexOf(",") + 1)
+        filmData?.channel
       }}</span>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="row">
-    <div class="col-12" [routerLink]="'/detailView/' + filmData.id">
-      <img
-        class="float-left"
-        [src]="filmData.poster ? filmData.poster : noImageUrl"
-        alt=""
-      />
+    <div class="col-12">
       <mat-icon>star_rate</mat-icon
       ><span style="vertical-align: super">{{
-        filmData.rating | number: "1.1-1"
+        filmData?.rating | number: "1.1-1"
       }}</span>
-      <p>{{ filmData.genre }}</p>
-      <p>{{ filmData.plot }}</p>
+      <mat-icon [routerLink]="'/detailView/' + filmData?.id">navigate_next</mat-icon>
+      <p>{{ filmData?.genre }}</p>
+      <p>{{ filmData?.plot }}</p>
     </div>
   </div>
 </mat-expansion-panel>
