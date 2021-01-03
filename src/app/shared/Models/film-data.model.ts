@@ -3,12 +3,12 @@ import { TelevisionSeancesModel } from "../components/movie-detail-page/televisi
 
 export class FilmData {
     constructor(
-        public link: string,
-        public poster: string,
-        public rating: number,
-        public title: string,
-        public year: number,
-        public type: string,
+        public link?: string,
+        public poster?: string,
+        public rating?: number,
+        public title?: string,
+        public year?: number,
+        public type?: string,
         public id?: string,
         public myRating?: number,
         public country?: string,
@@ -28,6 +28,7 @@ export class FilmData {
         public timeAdded?: number,
         public timeSeen?: number,
         public tvSeances?: TelevisionSeancesModel[],
+        public channel?: string,
         public servicesAvailibility?: StreamingServicesModel[],
         public cast?: {
             actor: string,
