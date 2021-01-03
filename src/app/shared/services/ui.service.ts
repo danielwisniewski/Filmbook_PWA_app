@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UIService {
   loading = new Subject<boolean>()
+  lastIndex = new BehaviorSubject<number>(0)
   constructor(private _snackBar: MatSnackBar) { }
 
 

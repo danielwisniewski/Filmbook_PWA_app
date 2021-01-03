@@ -19,29 +19,29 @@
       </div>
     </form>
 
-    <div class="serach-result" *ngIf="!isLoading">
-      <div class="container">
+    <div class="serach-result h-100" *ngIf="!isLoading">
+      <div class="container h-100">
         <div class="row flex-column" *ngIf="lastResult">
           <p class="last-result-title">Ostatnie wyniki</p>
           <div class="last-result-img">
             <img
               [src]="result.poster"
-              alt=""
-              srcset=""
               *ngFor="let result of lastResult"
               [routerLink]="'/detailView/' + result.id"
             />
           </div>
         </div>
-        <div class="router-outlet">
+        <div class="container h-100 d-flex flex-column" *ngIf="!isLoading">
+          <app-movie-miniatures-list [filmData]="searchResult"></app-movie-miniatures-list>
+        </div>
+        <!-- <div class="router-outlet">
           <div class="container h-100 d-flex flex-column">
-            <app-movie-miniatures-list size="col-6"
+            <app-movie-miniatures-list
             [filmData]="searchResult"
-            size='col-6'
           ></app-movie-miniatures-list>
           </div>
 
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

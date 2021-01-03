@@ -1,0 +1,14 @@
+.data-content {
+    font-size: 0.8rem !important;
+    font-family: "KARLA" !important;
+    white-space: break-spaces !important;
+    margin: 0 !important;
+  }
+  
+  mat-list-item {
+    height: auto !important;
+    background-color: var(--movie-dark-gray) !important;
+    padding: 1rem !important;
+    border-radius: 20px !important;
+    margin: 1rem 0 1rem 0 !important;
+  }

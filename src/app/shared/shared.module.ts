@@ -22,6 +22,14 @@ import { AwardsPageComponent } from './components/movie-detail-page/awards-page/
 import { FullCastPageComponent } from './components/movie-detail-page/full-cast-page/full-cast-page.component';
 import { TvSeancesComponent } from './components/movie-detail-page/movie-detail-page-elements/tv-seances/tv-seances.component';
 import { InitialViewComponent } from './components/movie-detail-page/movie-detail-page-elements/initial-view/initial-view.component';
+import { OverviewComponent } from './components/movie-detail-page/movie-detail-page-elements/overview/overview.component';
+import { StreamingServicesComponent } from './components/movie-detail-page/movie-detail-page-elements/streaming-services/streaming-services.component';
+import { SearchPipe } from './pipes/search.pipe';
+import { SearchInListComponent } from './components/nav-bars/search-in-list/search-in-list.component';
+import { SimilarMoviesComponent } from './components/movie-detail-page/movie-detail-page-elements/similar-movies/similar-movies.component';
+import { SharedRoutingModule } from './shared-routing.module';
+import { FactsPageComponent } from './components/movie-detail-page/movie-detail-page-elements/facts-page/facts-page.component';
+
 
 @NgModule({
   imports: [
@@ -32,6 +40,7 @@ import { InitialViewComponent } from './components/movie-detail-page/movie-detai
     MaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    SharedRoutingModule,
     AngularFirestoreModule.enablePersistence(),
   ],
   exports: [
@@ -53,6 +62,8 @@ import { InitialViewComponent } from './components/movie-detail-page/movie-detai
     ChooseViewBarComponent,
     FilterBottomSheetComponent,
     FilterPipe,
+    SearchPipe,
+    SearchInListComponent,
   ],
   declarations: [
     BottomBarComponent,
@@ -70,6 +81,12 @@ import { InitialViewComponent } from './components/movie-detail-page/movie-detai
     FullCastPageComponent,
     TvSeancesComponent,
     InitialViewComponent,
+    OverviewComponent,
+    StreamingServicesComponent,
+    SearchPipe,
+    SearchInListComponent,
+    SimilarMoviesComponent,
+    FactsPageComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

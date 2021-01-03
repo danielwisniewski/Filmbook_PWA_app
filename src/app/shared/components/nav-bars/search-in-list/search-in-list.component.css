@@ -1,0 +1,17 @@
+.top-bar__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .form-inline {
+    margin: 1rem 1rem 0 1rem;
+    position: relative;
+    width: 100%;
+}
+
+.input-group > input {
+    background-color: var(--movie-dark-gray);
+    border: none;
+    color: var(--light);
+}

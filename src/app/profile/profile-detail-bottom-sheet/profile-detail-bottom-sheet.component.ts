@@ -16,7 +16,7 @@ export class ProfileDetailBottomSheetComponent implements OnInit {
     photoURL: string,
     uid: string,
   }
-  constructor(private authService: AuthService, private _bottomSheetRef: MatBottomSheetRef<ProfileDetailBottomSheetComponent>) { }
+  constructor(private authService: AuthService, public _bottomSheetRef: MatBottomSheetRef<ProfileDetailBottomSheetComponent>) { }
 
   ngOnInit(): void {
 

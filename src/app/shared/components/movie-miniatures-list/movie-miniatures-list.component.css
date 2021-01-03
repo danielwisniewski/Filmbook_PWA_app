@@ -1,41 +1,63 @@
-img {
+.movieMiniatureList__viewport {
   height: 100%;
   width: 100%;
-  margin-right: 6px;
-  margin-bottom: 4px;
-  max-width: 40vw;
-}
-mat-card {
-    background-color: inherit;
-    border: none;
-    box-shadow: none !important;
-    padding: 1rem 0;
-}
-
-mat-card-content {
-  display: flex;
-}
-
-.row  {
-  max-height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
 }
 
-.rating-icon {
-  font-size: 18px;
+p {
+  font-size: 0.75rem;
+}
+
+.miniatureList__filmElement {
+  height: 275px;
+  display: flex;
+  align-items: center;
+}
+
+.miniatureList__filmElement__small {
+  display: inline-flex;
+  max-width: 50%;
+}
+
+p.filmInfo__title {
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
 mat-icon {
   margin-right: 5px;
-  color: var(--movie-red);
+  color: #e4a424 !important;
 }
 
-.col-12 {
-  padding-left: .5rem;
-  padding-right: .5rem;
+.filmElement__film-poster,
+.filmElement__film-info {
+  max-width: 50%;
+  max-height: 250px;
+  padding: 0.5rem;
 }
 
-.additional-info {
-  padding: 0 .5rem 0 .5rem;
+.filmElement__film-poster__small {
+  max-width: 100%;
+}
+
+.filmPoster__rating {
+  position: absolute;
+  left: 0.5rem;
+  background-color: var(--movie-dark);
+  height: 10%;
+  text-align: center;
+  width: 3.5rem;
+  color: #e4a424;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+}
+
+img {
+  height: 250px;
+  width: 100%;
+}
+
+.animate__animated {
+  animation-duration: 0.70s;
 }

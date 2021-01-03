@@ -10,17 +10,21 @@ import { FiltersService } from '../services/filters.service';
 export class FilterPipe implements PipeTransform {
   constructor(private filterService: FiltersService) {}
 
-  transform(value: FilmData[], filter: FilterModel): FilmData[] {
+  transform(
+    value: FilmData[],
+    filter: FilterModel,
+    ignore: boolean
+  ): FilmData[] {
     if (value && filter) {
       if (!Object.values(filter).some((val) => val)) {
         return value;
       } else {
         let filterResult: FilmData[] = value;
-        if (filter.isOnService) {
-          filterResult = filterResult.filter((film) => {
-            return film.service === 'hbo' || film.service === 'netflix';
-          });
-        }
+        // if (filter.isOnService) {
+        //   filterResult = filterResult.filter((film) => {
+        //     return film.service === 'hbo' || film.service === 'netflix';
+        //   });
+        // }
         if (filter.type === 'serial') {
           filterResult = filterResult.filter((film) => {
             return film.type === 'serial';
@@ -37,14 +41,15 @@ export class FilterPipe implements PipeTransform {
         if (filter.isOnWatchlist) {
           filterResult = filterResult.filter((film) => !film.watchlist);
         }
-        if (filter.isOnIgnore) {
-          filterResult = filterResult.filter((film) => !film.ignore);
-        }
         if (filter.minRating) {
           filterResult = filterResult.filter(
             (film) => film.rating >= filter.minRating
           );
         }
+        if (!ignore) {
+          filterResult = filterResult.filter((film) => !film.ignore);
+        }
+
         this.filterService.elementCounter.next(filterResult.length);
         return filterResult;
       }

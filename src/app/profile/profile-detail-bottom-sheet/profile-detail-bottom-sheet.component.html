@@ -1,25 +1,39 @@
 <div class="profile__page-content">
-    <div class="profile__header text-center">
-        <img [src]="userData.photoURL ? userData.photoURL : '../../../assets/images/guest.png'">
-        <h4>{{ userData.displayName ? userData.displayName : userData.email ? userData.email : 'Anonimowy użytkownik' }}</h4> 
-    </div>
-    <div class="profile__content_buttons">
-        <!-- <mat-list>
-            <mat-list-item>
+  <div class="profile__header text-center">
+    <img
+      [src]="
+        userData.photoURL
+          ? userData.photoURL
+          : '../../../assets/images/guest.png'
+      "
+    />
+    <h4>
+      {{
+        userData.displayName
+          ? userData.displayName
+          : userData.email
+          ? userData.email
+          : "Anonimowy użytkownik"
+      }}
+    </h4>
+  </div>
+  <div class="profile__content_buttons">
+    <mat-list>
+      <mat-list-item>
+        <a routerLink="/ignore" (click)="_bottomSheetRef.dismiss()">
+          <mat-icon>thumb_down</mat-icon> <span>Nie interesujące mnie</span>
+        </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <!-- <mat-list-item>
                 <button mat-icon-button>
                     <mat-icon>info</mat-icon>
                  </button>
             </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item>
-                <button mat-icon-button>
-                    <mat-icon>info</mat-icon>
-                 </button>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-        </mat-list> -->
-    </div>
-    <div class="profile__footer text-center mt-4">
-        <button mat-raised-button color="warn" (click)="onLogout()">Wyloguj</button>
-    </div>
+            <mat-divider></mat-divider> -->
+    </mat-list>
+  </div>
+  <div class="profile__footer text-center mt-4">
+    <button mat-raised-button color="warn" (click)="onLogout()">Wyloguj</button>
+  </div>
 </div>

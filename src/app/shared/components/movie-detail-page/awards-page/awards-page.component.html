@@ -1,22 +1,25 @@
-<div class="app-content">
-  <div class="top-bar">
-    <app-top-bar [title]="title"> </app-top-bar>
+<div class="component-content">
+  <div class="awardsPage__header d-flex w-100">
+    <mat-icon (click)="location.back()">navigate_before</mat-icon>
+    <h5 class="w-100 text-center">Nagrody</h5>
   </div>
-  <div class="component-content">
-    <mat-card *ngFor="let award of awards" class="mt-3">
-      <mat-card-header>{{ award.title }}</mat-card-header>
-      <mat-card-content *ngIf="award.won.length > 0">
-        <mat-card-subtitle>Wygrane</mat-card-subtitle>
-        <mat-card-content>
-          <p *ngFor="let win of award.won">{{ win }}</p>
-        </mat-card-content>
-      </mat-card-content>
-      <mat-card-content *ngIf="award.nominations.length > 0">
-        <mat-card-subtitle>Nominacje</mat-card-subtitle>
-        <mat-card-content>
-          <p *ngFor="let nomination of award.nominations">{{ nomination }}</p>
-        </mat-card-content>
-      </mat-card-content>
-    </mat-card>
-  </div>
+  <mat-list>
+    <div class="awardsPage__awardElement mt-3 mb-3 shadow-sm" *ngFor="let award of awards">
+      <div mat-subheader>
+        <img [src]="award.image" mat-card-avatar *ngIf="award.image" />{{
+          award.title
+        }}
+      </div>
+      <mat-list-item *ngFor="let win of award.won">
+        <div mat-line class="dataValue">{{ win.name }}</div>
+        <div mat-line class="dataDesc">{{ win.desc }}</div>
+        <div mat-line class="dataDesc">Wygrana</div>
+      </mat-list-item>
+      <mat-list-item *ngFor="let nomination of award.nominations">
+        <div mat-line class="dataValue">{{ nomination.name }}</div>
+        <div mat-line class="dataDesc">{{ nomination.desc }}</div>
+        <div mat-line class="dataDesc">Nominacja</div>
+      </mat-list-item>
+    </div>
+  </mat-list>
 </div>

@@ -31,6 +31,7 @@ app-top {
 app-movie-miniatures-list, app-in-tv-today {
   overflow-y: auto;
   overflow-x: hidden;
+  display: contents;
 }
 
 ::ng-deep mat-bottom-sheet-container {

@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { FiltersService } from '../shared/services/filters.service';
 import { FirestoreMoviesService } from '../shared/services/firestore-movies.service';
-import { UIService } from '../shared/services/ui.service';
 
 @Injectable({
   providedIn: 'root',

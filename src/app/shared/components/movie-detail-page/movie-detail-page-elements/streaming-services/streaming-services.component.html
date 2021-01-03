@@ -1,0 +1,20 @@
+<div class="streaminService__content" *ngIf="!isLoading">
+  <mat-card class="mt-2" *ngFor="let streamingService of streamingServices">
+    <mat-card-header>
+      <img [src]="streamingService.serviceLogo" />
+    </mat-card-header>
+    <mat-card-content>
+      <table class="w-100">
+        <tr class="d-flex" *ngFor="let row of streamingService.rows">
+          <td *ngFor="let rowElement of row" class="w-100 text-center">{{ rowElement | uppercase }}</td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="streaminService__content" *ngIf="isLoading">
+  <mat-progress-bar mode="indeterminate" [color]="'accent'"></mat-progress-bar>
+</div>
+<div class="streaminService__content" *ngIf="!isLoading && !streamingServices">
+  <p class="text-center">Nieznaleziono filmu w serwisach streamingowych.</p>
+</div>

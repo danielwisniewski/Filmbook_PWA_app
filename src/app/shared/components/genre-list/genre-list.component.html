@@ -1,10 +1,7 @@
-<h2 class="text-center mt-3 mb-3">{{ id }}</h2>
-
-  <div class="container">
-    <app-choose-view-bar
-  ></app-choose-view-bar>
-    <app-movie-miniatures-list
-    [filmData]="filmsData | async"
-    ></app-movie-miniatures-list>
-  </div>
-
+<div class="container h-100 d-flex flex-column">
+  <h2 class="text-center mt-3 mb-3 d-flex align-items-center">
+    <mat-icon (click)="location.back()">navigate_before</mat-icon>{{ id }}
+  </h2>
+  <app-choose-view-bar></app-choose-view-bar>
+  <app-movie-miniatures-list [filmData]="filmsData"></app-movie-miniatures-list>
+</div>

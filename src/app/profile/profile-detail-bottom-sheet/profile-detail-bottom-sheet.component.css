@@ -19,3 +19,12 @@
 .profile__footer > button {
     width: 128px;
 }
+
+mat-list-item a {
+    color: var(--light);
+    display: flex;
+}
+
+mat-list-item span {
+    margin-left: 1rem;
+}

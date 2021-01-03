@@ -1,40 +1,43 @@
-<div class="row">
-  <div [class]="size" *ngFor="let film of filmData | filter:filter ">
-    <mat-card
-      [routerLink]="'/detailView/' + film.id"
-      (contextmenu)="onRightClick($event, film)"
+<cdk-virtual-scroll-viewport
+  [itemSize]="size == 'col-12' ? 275 : 138"
+  (scrolledIndexChange)="indexChanged($event)"
+  class="movieMiniatureList__viewport"
+>
+  <div
+    class="miniatureList__filmElement animate__animated"
+    *cdkVirtualFor="let film of filmData | filter: filter: isIgnore; let even = even"
+    [ngClass]="{ 'miniatureList__filmElement__small': size !== 'col-12', 'animate__backInRight': !even, 'animate__backInLeft': even }"
+    (contextmenu)="onRightClick($event, film)"
+    (click)="navigateTo(film.id, film.title, film.year)"
+  
+  >
+    <div
+      class="filmElement__film-poster"
+      [ngClass]="{ 'filmElement__film-poster__small': size !== 'col-12' }"
     >
-      <mat-card-content>
-        <img
-          mat-card-mat-card-sm-image
-          [src]="film.poster ? film.poster : noImageUrl"
-        />
-        <div class="additional-info text-center" *ngIf="size === 'col-12'">
-          <h5>{{ film.title }}</h5>
-          <mat-icon>star_rate</mat-icon
-          ><span style="vertical-align: super">{{
-            film.rating | number: "1.1-1"
-          }}</span>
-          <p>{{ film.genre }}</p>
-          <p>{{ film.plot }}</p>
-        </div>
-      </mat-card-content>
-      <mat-card-footer class="text-center" *ngIf="size !== 'col-12'">{{
-        film.title
-      }}</mat-card-footer>
-      <!-- Element do wywołania menu -->
-      <div style="visibility: hidden; position: fixed"
-      [style.left]="contextMenuPosition.x"
-      [style.top]="contextMenuPosition.y"
-      [matMenuTriggerFor]="contextMenu">
+      <img [src]="film.poster ? film.poster : noImageUrl" />
+      <span class="filmPoster__rating" *ngIf="film.rating"
+        ><mat-icon>star_rate</mat-icon>{{ film.rating | number: "1.1-1" }}</span
+      >
+    </div>
+    <div class="filmElement__film-info" *ngIf="size == 'col-12'">
+      <p class="filmInfo__title">{{ film.title }} ({{ film.year }})</p>
+      <p *ngIf="film.time">{{ film.time }}</p>
+      <p>{{ film.plot }}</p>
+    </div>
   </div>
-      <!-- Element do wywołania menu -->
-
-    </mat-card>
-  </div>
-</div>
-
+</cdk-virtual-scroll-viewport>
 <!-- [routerLink]="'/detailView/' + film.id" -->
+
+<!-- Element do wywołania menu -->
+<div
+  style="visibility: hidden; position: fixed"
+  [style.left]="contextMenuPosition.x"
+  [style.top]="contextMenuPosition.y"
+  [matMenuTriggerFor]="contextMenu"
+></div>
+<!-- Element do wywołania menu -->
+
 <mat-menu #contextMenu="matMenu" aria-label="Wybierz akcję">
   <ng-template matMenuContent let-film="film">
     <button mat-menu-item (click)="onSeen(film)">
@@ -52,12 +55,8 @@
       }}</span>
     </button>
     <button mat-menu-item (click)="onIgnore(film)">
-      <mat-icon>{{
-        film.ignore ? "thumb_up" : "thumb_down"
-      }}</mat-icon>
-      <span>{{
-        film.ignore ? "Pokaż na liście" : "Nie interesuje mnie"
-      }}</span>
+      <mat-icon>{{ film.ignore ? "thumb_up" : "thumb_down" }}</mat-icon>
+      <span>{{ film.ignore ? "Pokaż na liście" : "Nie interesuje mnie" }}</span>
     </button>
   </ng-template>
 </mat-menu>

@@ -3,6 +3,14 @@ button {
     height: 2rem;
 }
 
+p {
+    font-size: .9rem;
+}
+
+mat-icon {
+    color: #e4a424 !important;
+}
+
 mat-dialog-content {
     max-height: 75vh;
     overflow-y: hidden;

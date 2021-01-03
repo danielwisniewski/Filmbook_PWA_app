@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { first, map, take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { FilmData } from '../shared/Models/film-data.model';
 
 @Injectable({
@@ -25,6 +25,20 @@ export class SerachMoviesService {
             film.id = film.link.replace('/', '_');
             return film;
           });
+        })
+      );
+  }
+
+  serachIdByTitle(title: string) {
+    const BASE_URL =
+      'https://homeautodaniel.eu-gb.mybluemix.net/filmweb-search-film';
+    return this.http
+      .get<any>(BASE_URL, {
+        params: new HttpParams().set('q', title),
+      })
+      .pipe(
+        map((val) => {
+          return (val[0].link = val[0].link.replace('/', '_'));
         })
       );
   }

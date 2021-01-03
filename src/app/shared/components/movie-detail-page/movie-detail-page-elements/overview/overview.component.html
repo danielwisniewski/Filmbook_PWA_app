@@ -1,0 +1,54 @@
+<mat-list>
+  <h6 mat-mat-subheader>Gatunek</h6>
+  <mat-list-item>
+    <div class="secondView__genre">
+      <mat-chip-list>
+        <mat-chip
+          color="accent"
+          selected
+          *ngFor="let genre of filmData.genre"
+          class="mt-2 mb-2"
+          [routerLink]="'/genre/' + genre"
+          >{{ genre }}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </mat-list-item>
+</mat-list>
+<mat-list>
+  <h6 mat-mat-subheader>Fabuła</h6>
+  <mat-list-item>
+    <p class="data-content" mat-line>{{ filmData.plot }}</p>
+  </mat-list-item>
+</mat-list>
+<mat-list *ngIf="filmData.awards">
+  <mat-list-item>
+    <p class="data-content" mat-line>{{ filmData.awards }}</p>
+  </mat-list-item>
+</mat-list> 
+<mat-list *ngIf="filmData.timeAdded">
+  <h6 mat-mat-subheader>Dodano do listy</h6>
+  <mat-list-item>
+    <p class="data-content" mat-line>{{ filmData.timeAdded | date:'fullDate' }}, {{ filmData.timeAdded | date:'shortTime' }}</p>
+  </mat-list-item>
+</mat-list>
+<mat-list *ngIf="filmData.timeSeen">
+  <h6 mat-mat-subheader>Obejrzano</h6>
+  <mat-list-item>
+    <p class="data-content" mat-line>{{ filmData.timeSeen | date:'fullDate' }}, {{ filmData.timeSeen | date:'shortTime' }}</p>
+  </mat-list-item>
+</mat-list>
+<div class="secondView__cast">
+  <h6 class="text-center mt-3">Obsada</h6>
+  <cdk-virtual-scroll-viewport
+    [itemSize]="140"
+    orientation="horizontal"
+    class="cast__scroll-viewport"
+  >
+    <mat-card class="cast-element animate__animated animate__slideInUp" *cdkVirtualFor="let person of filmData.cast">
+      <img mat-card-avatar [src]="person.picture"/>
+      <p class="text-center mt-2">{{ person.actor }}</p>
+    </mat-card>
+  </cdk-virtual-scroll-viewport>
+</div>
+<a [href]="filmData.filmwebUrl" mat-flat-button >Otwórz w Filmweb</a>

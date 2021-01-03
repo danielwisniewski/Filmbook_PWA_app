@@ -1,15 +1,53 @@
-mat-card {
-    background-color: var(--movies-black);
-    box-shadow: none !important;
-    border: none;
+p,
+mat-icon,
+div,
+span,
+h5 {
+  color: var(--movie-dark);
+  font-weight: bold;
 }
 
 .component-content {
-    overflow-y: scroll !important;
+  overflow-y: scroll !important;
+  padding: 0 1.5rem 1rem 1.5rem;
+  background-color: var(--light);
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-mat-card-header {
-    margin: .5rem 0;
-    text-align: center;
-    font-size: 1.5rem;
+.awardsPage__header {
+  position: sticky;
+  padding: 1rem;
+  background-color: var(--light);
+  top: 0;
+  z-index: 10;
+}
+
+::ng-deep .mat-subheader {
+  color: var(--movie-dark) !important;
+  font-weight: bold !important;
+  font-size: 1.1rem !important;
+  font-family: "Karla" !important;
+}
+
+.awardsPage__awardElement {
+  background-color: #e4a424;
+  padding: 0.5rem 0;
+  border-radius: 5px 30px 5px 30px;
+}
+
+.dataValue {
+  font-size: 0.8rem !important;
+  font-weight: bold !important;
+  font-family: "Karla" !important;
+}
+
+.dataDesc {
+  font-size: 0.7rem !important;
+  font-family: "Karla" !important;
+}
+
+mat-list-item {
+  height: auto !important;
 }

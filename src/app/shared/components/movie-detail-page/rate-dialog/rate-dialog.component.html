@@ -14,15 +14,16 @@
       </mat-icon>
     </button>
   </div>
-  <p class="mt-5 text-center">Twoja ocena: {{ rating }}/10</p>
+  <p class="mt-4 text-center">Twoja ocena: {{ rating }}/10</p>
+  <p class="mt-2 text-center">{{ ratingDesc }}</p>
 </mat-dialog-content>
-<mat-dialog-actions class="mt-4 mb-4 justify-content-center">
+<mat-dialog-actions class="mt-2 mb-2 justify-content-center">
     <button
       class="text-center"
       mat-raised-button
       color = "primary"
       (click)="onSaveRating()"
-      [disabled]="!data.myRating"
+      [disabled]="!rating"
     >
       Zapisz ocenę
     </button>

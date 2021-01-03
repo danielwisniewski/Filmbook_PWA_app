@@ -1,8 +1,8 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "appData": {
-    "version": "1.1.1",
-    "changelog": "New features added: Full cast and list of awards. New filter added: minimal rating."
+    "version": "1.2.1",
+    "changelog": "New features added: Similar movies finder."
   },
   "index": "/index.html",
   "assetGroups": [

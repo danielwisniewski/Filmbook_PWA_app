@@ -1,10 +1,30 @@
 img {
     height: 60px;
     width: auto;
-    filter: invert(1);
 }
 
 p {
-    margin-bottom: 0;
+    color: var(--movie-dark);
     font-size: .9rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.tvSeances__content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.tvSeances__seanceRow {
+    margin: 0 0.4rem;
+}
+
+.tvSeances__seanceTile {
+    background-color: white;
+    border-radius: 20px;
+}
+
+mat-grid-list {
+    flex-grow: 10;
 }

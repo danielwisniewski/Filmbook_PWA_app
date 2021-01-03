@@ -17,7 +17,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ScrollingModule as ExperimentalScrollingModule } from '@angular/cdk-experimental/scrolling';
 
 @NgModule({
   imports: [
@@ -39,7 +43,11 @@ import {MatSliderModule} from '@angular/material/slider';
     MatDividerModule,
     MatSlideToggleModule,
     MatMenuModule,
-    MatSliderModule
+    MatSliderModule,
+    ScrollingModule,
+    ExperimentalScrollingModule,
+    MatBadgeModule,
+    MatProgressBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -60,7 +68,11 @@ import {MatSliderModule} from '@angular/material/slider';
     MatDividerModule,
     MatSlideToggleModule,
     MatMenuModule,
-    MatSliderModule
+    MatSliderModule,
+    ScrollingModule,
+    ExperimentalScrollingModule,
+    MatBadgeModule,
+    MatProgressBarModule,
   ],
 })
 export class MaterialModule {}

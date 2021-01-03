@@ -1,4 +1,69 @@
-<div>
-    <img [src]="filmData.poster">
+<div class="initialView__content">
+  <div class="initialView__image-section">
+    <img [src]="filmData.poster"/>
+  </div>
+  <div class="initialView__titleSection">
+    <h5>{{ filmData.title }}</h5>
+    <div class="initialView__subtitleSection">
+      <mat-list *ngIf="filmData.year">
+        <mat-list-item>
+          <div mat-line class="dataValue">{{ filmData.year }}</div>
+          <div mat-line class="dataDesc">Rok produkcji</div>
+        </mat-list-item>
+      </mat-list>
+      <mat-list *ngIf="filmData.duration">
+        <mat-list-item>
+          <div mat-line class="dataValue">{{ filmData.duration }}</div>
+          <div mat-line class="dataDesc">Czas trwania</div>
+        </mat-list-item>
+      </mat-list>
+      <mat-list *ngIf="filmData.country">
+        <mat-list-item>
+          <div mat-line class="dataValue">{{ filmData.country }}</div>
+          <div mat-line class="dataDesc">Kraj produkcji</div>
+        </mat-list-item>
+      </mat-list>
+      <mat-list *ngIf="filmData.director">
+        <mat-list-item>
+          <div mat-line class="dataValue">{{ filmData.director }}</div>
+          <div mat-line class="dataDesc">Reżyser</div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <div class="initialView__ratingLine">
+    <div class="d-flex align-items-center justify-content-center" style="width: 100%">
+      <mat-list>
+        <mat-list-item>
+          <div mat-line class="ratingLine__rating">
+            <mat-icon>star_rating</mat-icon
+            ><span>{{ filmData.rating | number: "1.1-1" }}</span>
+          </div>
+          <div mat-line class="dataDesc">Ocena Filmweb</div>
+        </mat-list-item>
+      </mat-list>
+      <mat-list *ngIf="filmData.myRating" class="animate__animated animate__zoomIn">
+        <mat-list-item>
+          <div mat-line class="ratingLine__rating">
+            <mat-icon>star_rating</mat-icon
+            ><span>{{ filmData.myRating | number: "1.1-1" }}</span>
+          </div>
+          <div mat-line class="dataDesc">Twoja ocena</div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <div class="initialView__buttonSection">
+    <button mat-raised-button (click)="addToSeenClicked()">
+      <mat-icon class="mr-2">star_outline</mat-icon
+      >{{ filmData.seen ? "Oceniony " : "Oceń film!" }}
+    </button>
+    <button
+      mat-raised-button
+      [color]="filmData.watchlist ? 'primary' : 'accent'"
+      (click)="onWatchlist()"
+    >
+      <mat-icon>add_to_queue</mat-icon>
+    </button>
+  </div>
 </div>
-

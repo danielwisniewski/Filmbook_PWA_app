@@ -1,0 +1,13 @@
+<div class="top-bar__content">
+    <form class="form-inline">
+        <div class="input-group mb-2 mr-sm-2">
+          <input
+            #input
+            type="text"
+            class="form-control"
+            placeholder="Znajdź film po tytule"
+            (input)="onTitleChange(input.value)"
+          />
+        </div>
+      </form>
+</div>

@@ -1,0 +1,63 @@
+p,
+span,
+h6,
+div {
+  color: var(--movie-dark);
+  font-weight: bold;
+}
+
+p,
+span,
+div {
+  font-size: 0.8rem;
+}
+
+.data-content {
+  font-size: 0.8rem !important;
+  font-weight: bold !important;
+  font-family: "KARLA" !important;
+  white-space: break-spaces !important;
+}
+
+mat-list-item {
+  height: auto !important;
+}
+
+.secondView__cast .cast__scroll-viewport {
+  height: 170px;
+  width: 100%;
+  overflow-y: hidden;
+}
+
+.secondView__cast
+  .cast__scroll-viewport
+  ::ng-deep
+  .cdk-virtual-scroll-content-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+}
+
+.secondView__cast .cast-element {
+  width: 140px;
+  height: 170px;
+}
+
+.cast-element {
+  display: inline-block;
+  background-color: inherit;
+  margin: 4px;
+  border: hidden;
+  box-shadow: none;
+}
+
+.cast-element > img {
+  width: 100px;
+  height: 100px;
+  filter: grayscale(1);
+}
+
+p,
+div {
+  color: var(--movie-dark);
+}

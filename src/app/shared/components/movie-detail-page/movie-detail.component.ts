@@ -1,12 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FilmData } from '../../Models/film-data.model';
+import { UIService } from '../../services/ui.service';
 import { MovieDetailService } from './movie-detail.service';
-import { RateDialogComponent } from './rate-dialog/rate-dialog.component';
-import { TelevisionSeancesModel } from './televisionSeances.model';
 
 @Component({
   selector: 'app-movie-detail',
@@ -16,47 +23,49 @@ import { TelevisionSeancesModel } from './televisionSeances.model';
 export class MovieDetailPageComponent implements OnInit, OnDestroy {
   isLoading = false;
   filmData: FilmData;
-  sub: Subscription;
-  tvSeances: TelevisionSeancesModel[];
+  subs: Subscription[] = [];
+  selectedTab = 0;
+
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    private ui: UIService,
     private db: MovieDetailService,
-    public dialog: MatDialog
+    public sanitizer: DomSanitizer,
+    public location: Location
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
-    this.sub = this.route.data
-      .pipe(map((val) => val.movies))
-      .subscribe((val) => {
-        this.isLoading = false;
+    this.ui.loading.next(true);
+    this.subs.push(
+      this.route.data.pipe(map((val) => val.movies)).subscribe((val) => {
+        this.ui.loading.next(false);
         this.filmData = val;
-        this.db
-          .checkInTv(this.filmData.filmwebUrl)
-          .subscribe((val) => this.tvSeances = val);
-      });
+        this.db.setLastFilmData(this.filmData);
+        if (!this.filmData.similar) {
+          this.db.findSimilarMovies(this.filmData.title, this.filmData.id);
+        }
+        this.sanitizer.bypassSecurityTrustResourceUrl(this.filmData.poster);
+      })
+    );
+
+    this.subs.push(this.ui.loading.subscribe((val) => (this.isLoading = val)));
   }
 
-  onWatchlist() {
-    this.filmData.watchlist = !this.filmData.watchlist;
-    this.db.updateMovieOnProfile(this.filmData, 'watchlist');
-  }
-
-  onCast() {
-    this.isLoading = true;
-    this.router.navigate(['fullCast'], { relativeTo: this.route });
-  }
-
-  addToSeenClicked() {
-    this.dialog.open(RateDialogComponent, {
-      data: this.filmData,
+  scrollTo(el: HTMLElement) {
+    el.scrollIntoView({
+      behavior: 'smooth',
     });
   }
 
+  changeTab(tabIndex: number) {
+    this.selectedTab = tabIndex;
+  }
+
   ngOnDestroy() {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.subs.forEach((sub) => {
+      if (sub) {
+        sub.unsubscribe();
+      }
+    });
   }
 }

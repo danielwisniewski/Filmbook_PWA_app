@@ -1,3 +1,6 @@
+import { StreamingServicesModel } from "../components/movie-detail-page/streamingServices.model";
+import { TelevisionSeancesModel } from "../components/movie-detail-page/televisionSeances.model";
+
 export class FilmData {
     constructor(
         public link: string,
@@ -22,11 +25,16 @@ export class FilmData {
         public seen?: boolean,
         public watchlist?: boolean,
         public ignore?: boolean,
+        public timeAdded?: number,
+        public timeSeen?: number,
+        public tvSeances?: TelevisionSeancesModel[],
+        public servicesAvailibility?: StreamingServicesModel[],
         public cast?: {
             actor: string,
             link: string,
             picture: string,
             role: string
-        }[]
+        }[],
+        public similar?: FilmData[],
     ) {}
 }

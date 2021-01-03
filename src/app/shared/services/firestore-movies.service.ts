@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, from, Observable, Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { filter, first, map, take, tap, throttleTime } from 'rxjs/operators';
 
 import { FilmData } from '../Models/film-data.model';
 import {
@@ -28,7 +28,7 @@ export class FirestoreMoviesService {
       .doc('/movies/' + id)
       .snapshotChanges()
       .pipe(
-        take(1),
+        first( val => val.payload.data() !== undefined ),
         map((snap) => <FilmData>snap.payload.data()),
         map((snap) => convertMovieDetail(snap, this.watchlist, this.seenMovies))
       );
@@ -104,23 +104,26 @@ export class FirestoreMoviesService {
   }
 
   fetchRecomended() {
-    this.firestore
-      .collection('recommended', (ref) => ref.orderBy('rating', 'desc'))
-      .snapshotChanges()
-      .pipe(
-        map((snaps) => convertSnaps(snaps)),
-        map((snaps) =>
-          checkOnProfileLists(
-            snaps,
-            this.watchlist,
-            this.seenMovies,
-            this.ignore
-          )
+    this.subs.push(
+      this.firestore
+        .collection('recommended', (ref) => ref.orderBy('rating', 'desc'))
+        .snapshotChanges()
+        .pipe(
+          map((snaps) => convertSnaps(snaps)),
+          map((snaps) =>
+            checkOnProfileLists(
+              snaps,
+              this.watchlist,
+              this.seenMovies,
+              this.ignore
+            )
+          ),
+          throttleTime(5000)
         )
-      )
-      .subscribe((val: FilmData[]) => {
-        this.recommended.next(val);
-      });
+        .subscribe((val: FilmData[]) => {
+          this.recommended.next(val);
+        })
+    );
   }
 
   private fetchSeenMovies() {

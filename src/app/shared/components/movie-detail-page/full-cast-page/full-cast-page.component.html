@@ -1,16 +1,18 @@
-<div class="app-content">
-  <div class="top-bar">
-    <app-top-bar [title]="title"> </app-top-bar>
-  </div>
-  <div class="component-content">
-    <div class="actor mt-2 d-flex" *ngFor="let actor of cast">
-      <div class="image">
-        <img [src]="actor.picture ? actor.picture : '../../../../../assets/images/no-user-picture.png'" />
-      </div>
-      <div class="description">
-          <h5>{{ actor.actor }}</h5>
-          <p>{{ actor.role }}</p>
-      </div>
+  <div class="container h-100 d-flex flex-column">
+    <div class="d-flex w-100 mt-2">
+      <mat-icon (click)="location.back()">navigate_before</mat-icon>
+      <h5 class="w-100 text-center">Pełna obasada</h5>
     </div>
+    <cdk-virtual-scroll-viewport [itemSize]="170" [minBufferPx]="340" [maxBufferPx]="680">
+      <div class="actor mt-2 d-flex animate__animated animate__backInRight" *cdkVirtualFor="let actor of cast">
+        <div class="image">
+          <img [src]="actor.picture ? actor.picture : '../../../../../assets/images/no-user-picture.png'" />
+        </div>
+        <div class="description">
+            <h5>{{ actor.actor }}</h5>
+            <p>{{ actor.role }}</p>
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
   </div>
-</div>
+  

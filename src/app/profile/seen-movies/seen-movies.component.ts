@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FilmData } from 'src/app/shared/Models/film-data.model';
-import { FilterModel } from 'src/app/shared/Models/filter.model';
-import { FiltersService } from 'src/app/shared/services/filters.service';
 import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies.service';
 
 @Component({
@@ -13,7 +11,8 @@ import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies
 export class SeenMoviesComponent implements OnInit, OnDestroy {
   filmsData: FilmData[];
   isLoading: boolean;
-  size: string = 'col-4';
+  title: string;
+  size: string = 'col-6';
   sub: Subscription;
   constructor(private db: FirestoreMoviesService) {}
 
@@ -23,6 +22,10 @@ export class SeenMoviesComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       this.filmsData = val;
     });
+  }
+
+  onSearchTitle(title: string) {
+    this.title = title;
   }
 
   ngOnDestroy() {

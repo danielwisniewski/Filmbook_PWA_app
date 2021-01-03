@@ -19,12 +19,18 @@ export function convertMovieDetail<FilmData>(snap, watchlist, seen) {
     myRating: seen.value?.some((val) => val.id === snap.id)
       ? seen.value.find((val) => val.id === snap.id).myRating
       : null,
+    timeAdded: watchlist.value?.some((val) => val.id === snap.id)
+      ? watchlist.value.find((val) => val.id === snap.id).timeAdded
+      : null,
+    timeSeen: seen.value?.some((val) => val.id === snap.id)
+      ? seen.value.find((val) => val.id === snap.id).timeSeen
+      : null,
     ...snap,
   };
 }
 
 export function convertSnaps<FilmData>(snaps) {
-    return snaps.map((snap) => {
-        return <FilmData>snap.payload.doc.data();
-      });
+  return snaps.map((snap) => {
+    return <FilmData>snap.payload.doc.data();
+  });
 }

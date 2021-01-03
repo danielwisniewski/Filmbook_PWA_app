@@ -1,13 +1,40 @@
 .component-content {
-    overflow-y: scroll !important;
+  overflow-y: scroll !important;
 }
 
 img {
-    margin: 0.5rem 1rem;
-    height: 150px;
-    width: 110px;
+  margin: 0.5rem 1rem;
+  height: 150px;
+  width: 110px;
 }
 
 .description {
-    align-self: center;
+  align-self: center;
+}
+
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  height: calc(100vh - 58px);
+}
+
+.actor {
+  height: 170px;
+}
+
+p,
+span,
+h5,
+div {
+  font-weight: bold;
+}
+
+p,
+span,
+div {
+  font-size: 0.8rem;
+  margin-bottom: 0.1rem;
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AwardsModel } from '../awards.model';
 import { MovieDetailService } from '../movie-detail.service';
 import { CastModel } from './cast.model';
 
