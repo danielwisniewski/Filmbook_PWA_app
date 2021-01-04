@@ -1,6 +1,12 @@
 <div class="app-content">
   <div class="top-bar">
     <app-top-bar [title]="title"></app-top-bar>
+    <span *ngIf="rla3.isActive" routerLink="/movies/eveningSeances"
+      >Dziś wieczorem <mat-icon>navigate_next</mat-icon></span
+    >
+    <span *ngIf="!rla1.isActive && !rla2.isActive && !rla3.isActive" routerLink="/movies/tv"
+    >Dziś top <mat-icon>navigate_next</mat-icon></span
+  >
   </div>
 
   <div class="component-content">
@@ -24,7 +30,7 @@
       <a
         mat-tab-link
         routerLink="/movies/tv"
-        [active]="rla3.isActive"
+        [active]="!rla2.isActive && !rla1.isActive"
         routerLinkActive
         #rla3="routerLinkActive"
         >Tv</a

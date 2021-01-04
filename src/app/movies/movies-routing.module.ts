@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { EveningSeancesComponent } from './in-tv-today/evening-seances/evening-seances.component';
 import { InTvTodayComponent } from './in-tv-today/in-tv-today.component';
 import { MoviesComponent } from './movies.component';
 import { RecommendedComponent } from './recommended/recommended.component';
@@ -18,6 +19,7 @@ export const routes: Routes = [
       },
       { path: 'top', component: TopComponent },
       { path: 'tv', component: InTvTodayComponent },
+      { path: 'eveningSeances', component: EveningSeancesComponent },
     ],
   },
 ];

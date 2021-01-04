@@ -15,7 +15,7 @@ export class TopBarComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    if (this.authService.userData.value.photoURL != null) {
+    if (this.authService.userData.value?.photoURL != null) {
       this.userPicture = this.authService.userData.value.photoURL;
     } else {
       this.userPicture = '../../../../assets/images/guest.png';

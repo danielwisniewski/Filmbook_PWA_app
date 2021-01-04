@@ -1,0 +1,12 @@
+.top-bar > span {
+  position: absolute;
+  height: 49px;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep app-evening-seances {
+  height: 100%;
+  overflow-y: scroll;
+}
