@@ -1,24 +1,22 @@
 <mat-expansion-panel hideToggle class="m-3">
   <mat-expansion-panel-header>
-    <mat-panel-title
-      >{{ filmData?.title }}</mat-panel-title
-    >
+    <mat-panel-title><span class="expandableElement__rating" *ngIf="filmData.rating">
+        <mat-icon>star_rate</mat-icon>{{ filmData.rating | number: "1.1-1" }}
+      </span>{{ filmData?.title }}</mat-panel-title>
     <mat-panel-description>
       <span>{{ filmData?.time }}</span>
       <span style="font-size: 0.7rem">{{
         filmData?.channel
-      }}</span>
+        }}</span>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="row">
     <div class="col-12">
-      <mat-icon>star_rate</mat-icon
-      ><span style="vertical-align: super">{{
-        filmData?.rating | number: "1.1-1"
-      }}</span>
-      <mat-icon [routerLink]="'/detailView/' + filmData?.id">navigate_next</mat-icon>
+      <p class="expandableElement__small-title">Gatuenk</p>
       <p>{{ filmData?.genre }}</p>
+      <p class="expandableElement__small-title">Fabuła</p>
       <p>{{ filmData?.plot }}</p>
+      <button class="w-100" mat-stroked-button [routerLink]="'/detailView/' + filmData?.id">Szczegóły filmu <mat-icon>navigate_next</mat-icon></button>
     </div>
   </div>
 </mat-expansion-panel>
