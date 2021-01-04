@@ -12,7 +12,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private authSrevice: AuthService,
-    private db: FirestoreMoviesService
+    private db: FirestoreMoviesService,
   ) {}
 
   ngOnInit() {

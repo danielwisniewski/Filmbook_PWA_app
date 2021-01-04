@@ -13,12 +13,11 @@ import { ResolveGenreService } from './shared/services/resolve-genre.service';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'movies', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'search',
     component: SearchComponent,
-    canActivate: [AuthGuard],
     children: [{ path: 'view/:id', component: MovieDetailPageComponent }],
   },
   {
@@ -35,7 +34,6 @@ const routes: Routes = [
   {
     path: 'genre/:id',
     component: GenreListComponent,
-    canActivate: [AuthGuard],
     resolve: {
       movies: ResolveGenreService,
     },

@@ -12,7 +12,6 @@ export class ProfileComponent implements OnInit {
   constructor(private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void { 
-    
   }
 
   userImageClicked() {
