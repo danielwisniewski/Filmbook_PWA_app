@@ -16,13 +16,14 @@ export class ProfileDetailBottomSheetComponent implements OnInit {
     photoURL: string,
     uid: string,
   }
+  version: string;
   constructor(private authService: AuthService, public _bottomSheetRef: MatBottomSheetRef<ProfileDetailBottomSheetComponent>) { }
 
   ngOnInit(): void {
-
+    this.version = JSON.parse(localStorage.getItem("version"));
     this.userData = this.authService.userData.value;
-    
   }
+
 
   onLogout() {
     this.authService.logout();

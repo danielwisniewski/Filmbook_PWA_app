@@ -16,8 +16,15 @@
     width: 90px;
 }
 
+.profile__footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
 .profile__footer > button {
-    width: 128px;
+    width: 50%;
+    margin: 0 1rem;
 }
 
 mat-list-item a {
