@@ -18,6 +18,7 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent,
+    canActivate: [AuthGuard],
     children: [{ path: 'view/:id', component: MovieDetailPageComponent }],
   },
   {

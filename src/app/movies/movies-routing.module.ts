@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../auth/auth.guard';
 import { SharedModule } from '../shared/shared.module';
 import { EveningSeancesComponent } from './in-tv-today/evening-seances/evening-seances.component';
 import { InTvTodayComponent } from './in-tv-today/in-tv-today.component';
@@ -11,6 +12,7 @@ export const routes: Routes = [
   {
     path: 'movies',
     component: MoviesComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'recommended', pathMatch: 'full' },
       {
