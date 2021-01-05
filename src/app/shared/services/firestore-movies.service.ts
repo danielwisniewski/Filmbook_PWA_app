@@ -72,7 +72,8 @@ export class FirestoreMoviesService {
             this.seenMovies,
             this.ignore
           )
-        )
+        ),
+        throttleTime(5000)
       )
       .subscribe((val) => {
         this.topMovies.next(val);
@@ -92,7 +93,8 @@ export class FirestoreMoviesService {
             this.seenMovies,
             this.ignore
           )
-        )
+        ),
+        throttleTime(5000)
       )
       .subscribe((val) => {
         this.topSerials.next(val);
@@ -134,7 +136,7 @@ export class FirestoreMoviesService {
           (ref) => ref.orderBy('myRating', 'desc')
         )
         .snapshotChanges()
-        .pipe(map((snaps) => convertSnaps(snaps)))
+        .pipe(map((snaps) => convertSnaps(snaps)), throttleTime(1000))
         .subscribe((val: FilmData[]) => {
           this.seenMovies.next(val);
         })
@@ -149,7 +151,7 @@ export class FirestoreMoviesService {
           (ref) => ref.orderBy('rating', 'desc')
         )
         .snapshotChanges()
-        .pipe(map((snaps) => convertSnaps(snaps)))
+        .pipe(map((snaps) => convertSnaps(snaps)), throttleTime(1000))
         .subscribe((val: FilmData[]) => {
           this.watchlist.next(val);
         })
@@ -161,7 +163,7 @@ export class FirestoreMoviesService {
       this.firestore
         .collection('users/' + localStorage.getItem('userId') + '/ignore')
         .snapshotChanges()
-        .pipe(map((snaps) => convertSnaps(snaps)))
+        .pipe(map((snaps) => convertSnaps(snaps)), throttleTime(5000))
         .subscribe((val: FilmData[]) => {
           this.ignore.next(val);
         })

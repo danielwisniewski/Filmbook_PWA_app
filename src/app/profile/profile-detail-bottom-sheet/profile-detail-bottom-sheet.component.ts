@@ -17,18 +17,13 @@ export class ProfileDetailBottomSheetComponent implements OnInit {
     uid: string,
   }
   version: string;
-  updateAvailable: boolean;
   constructor(private authService: AuthService, public _bottomSheetRef: MatBottomSheetRef<ProfileDetailBottomSheetComponent>) { }
 
   ngOnInit(): void {
-    this.version = JSON.parse(localStorage.getItem("version")).current.appData.version;
-    this.updateAvailable = JSON.parse(localStorage.getItem("version")).type === "UPDATE_AVAILABLE" ? true : false;
+    this.version = JSON.parse(localStorage.getItem("version"));
     this.userData = this.authService.userData.value;
   }
 
-  onUpdate() {
-    document.location.reload();
-  }
 
   onLogout() {
     this.authService.logout();

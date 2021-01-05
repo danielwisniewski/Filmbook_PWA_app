@@ -29,9 +29,14 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authSrevice.initAuthListener();
     this.updates.available.subscribe(
-      event => {
-        localStorage.setItem("version", JSON.stringify(event))
+      (event) => {
+        localStorage.setItem("version", JSON.stringify(event.current.appData["version"]))
         this.updates.activateUpdate().then( () => document.location.reload() )
+      }
+    )
+    this.updates.activated.subscribe(
+      event => {
+        localStorage.setItem("version", JSON.stringify(event.current.appData["version"]))
       }
     )
   }
