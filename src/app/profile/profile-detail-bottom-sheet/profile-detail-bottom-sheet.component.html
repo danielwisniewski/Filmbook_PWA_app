@@ -17,23 +17,18 @@
       }}
     </h4>
   </div>
-  <div class="profile__content_buttons">
+  <div class="profile__content_buttons mt-5">
     <mat-list>
       <mat-list-item>
         <a routerLink="/ignore" (click)="_bottomSheetRef.dismiss()">
           <mat-icon>thumb_down</mat-icon> <span>Nie interesujące mnie</span>
         </a>
       </mat-list-item>
-      <mat-divider></mat-divider>
-      <!-- <mat-list-item>
-                <button mat-icon-button>
-                    <mat-icon>info</mat-icon>
-                 </button>
-            </mat-list-item>
-            <mat-divider></mat-divider> -->
     </mat-list>
   </div>
   <div class="profile__footer text-center mt-4">
     <button mat-raised-button color="warn" (click)="onLogout()">Wyloguj</button>
+    <button mat-raised-button color="accent" (click)="onUpdate()" *ngIf="updateAvailable">Aktualizuj</button>
   </div>
+  <span class="text-center mt-4" style="font-size: .8rem;" *ngIf="version"> Wersja {{version}} </span>
 </div>
