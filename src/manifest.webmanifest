@@ -4,6 +4,8 @@
   "theme_color": "#1976d2",
   "background_color": "#111112",
   "display": "standalone",
+  "orientation": "portrait",
+  "default_locale": "pl",
   "scope": "./",
   "start_url": "./",
   "icons": [
