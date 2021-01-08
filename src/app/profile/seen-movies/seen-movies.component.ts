@@ -12,7 +12,6 @@ export class SeenMoviesComponent implements OnInit, OnDestroy {
   filmsData: FilmData[];
   isLoading: boolean;
   title: string;
-  size: string = 'col-6';
   sub: Subscription;
   constructor(private db: FirestoreMoviesService) {}
 

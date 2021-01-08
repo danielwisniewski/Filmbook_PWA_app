@@ -9,7 +9,6 @@ import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies
 })
 export class TopComponent implements OnInit {
   filmsData: FilmData[];
-  size: string = 'col-6';
 
   constructor(private db: FirestoreMoviesService) {}
 

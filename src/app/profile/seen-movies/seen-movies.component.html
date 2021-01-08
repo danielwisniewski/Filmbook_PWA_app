@@ -1,4 +1,4 @@
-<div class="container h-100 d-flex flex-column" *ngIf="!isLoading">
+<div appTopBarElementContent *ngIf="!isLoading">
   <app-search-in-list (titleChanged)="onSearchTitle($event)"></app-search-in-list>
   <app-movie-miniatures-list #s
     [filmData]="filmsData | search: title"

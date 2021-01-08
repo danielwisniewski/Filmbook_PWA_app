@@ -8,6 +8,7 @@ import { MoviesInTvService } from './movies-in-tv.service';
   selector: 'app-in-tv-today',
   templateUrl: './in-tv-today.component.html',
   styleUrls: ['./in-tv-today.component.css'],
+  providers: [MoviesInTvService]
 })
 export class InTvTodayComponent implements OnInit, OnDestroy {
   filmsData: FilmData[];

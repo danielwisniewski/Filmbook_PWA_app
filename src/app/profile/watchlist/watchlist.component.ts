@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FilmData } from 'src/app/shared/Models/film-data.model';
-import { FilterModel } from 'src/app/shared/Models/filter.model';
-import { FiltersService } from 'src/app/shared/services/filters.service';
 import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies.service';
 
 @Component({
@@ -13,7 +11,6 @@ import { FirestoreMoviesService } from 'src/app/shared/services/firestore-movies
 export class WatchlistComponent implements OnInit, OnDestroy {
   filmsData: FilmData[];
   isLoading: boolean;
-  size: string = 'col-12';
   sub: Subscription;
   constructor(private db: FirestoreMoviesService) {}
 

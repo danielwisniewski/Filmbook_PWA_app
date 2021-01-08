@@ -19,7 +19,6 @@ export class IgnoreMoviesListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.sub = this.db.ignore.subscribe((val) => {
       this.isLoading = false;
-      console.log(val);
       this.filmsData = val;
     });
   }

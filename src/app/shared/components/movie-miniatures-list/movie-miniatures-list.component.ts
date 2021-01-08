@@ -1,8 +1,6 @@
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Location } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SerachMoviesService } from 'src/app/search/serach-movies.service';
@@ -10,8 +8,6 @@ import { FilmData } from '../../Models/film-data.model';
 import { FilterModel } from '../../Models/filter.model';
 import { FiltersService } from '../../services/filters.service';
 import { UIService } from '../../services/ui.service';
-import { MovieDetailService } from '../movie-detail-page/movie-detail.service';
-import { RateDialogComponent } from '../movie-detail-page/rate-dialog/rate-dialog.component';
 
 @Component({
   selector: 'app-movie-miniatures-list',
@@ -24,22 +20,17 @@ export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
   filter: FilterModel;
   subs: Subscription[] = [];
   noImageUrl = '../../../assets/images/No-image-available.png';
-  @ViewChild(MatMenuTrigger)
-  contextMenu: MatMenuTrigger;
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
-  contextMenuPosition = { x: '0px', y: '0px' };
   lastIndex: number;
   changeCounter: number = 0;
   isIgnore: boolean;
 
   constructor(
-    private db: MovieDetailService,
     private filterService: FiltersService,
     private ui: UIService,
     public location: Location,
     private router: Router,
     private searchService: SerachMoviesService,
-    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -95,31 +86,6 @@ export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
     this.changeCounter++;
 
     this.lastIndex = event;
-  }
-
-  onWatchlist(film: FilmData) {
-    film.watchlist = !film.watchlist;
-    this.db.updateMovieOnProfile(film, 'watchlist');
-  }
-
-  onSeen(film: FilmData) {
-    this.dialog.open(RateDialogComponent, {
-      data: film,
-    });
-  }
-
-  onIgnore(film: FilmData) {
-    film.ignore = !film.ignore;
-    this.db.updateMovieOnProfile(film, 'ignore');
-  }
-
-  onRightClick(event: MouseEvent, data: FilmData) {
-    event.preventDefault();
-    this.contextMenuPosition.x = event.clientX + 'px';
-    this.contextMenuPosition.y = event.clientY + 'px';
-    this.contextMenu.menuData = { film: data };
-    this.contextMenu.menu.focusFirstItem('mouse');
-    this.contextMenu.openMenu();
   }
 
   ngOnDestroy() {

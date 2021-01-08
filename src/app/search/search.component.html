@@ -21,8 +21,17 @@
 
     <div class="serach-result h-100" *ngIf="!isLoading">
       <div class="container h-100">
-        <div class="row flex-column" *ngIf="lastResult">
-          <p class="last-result-title">Ostatnie wyniki</p>
+        <div
+          class="row flex-column ml-2 mr-2"
+          *ngIf="lastResult && searchResult.length === 0"
+        >
+          <p class="last-result-title">
+            {{
+              lastResult.length > 0
+                ? "Ostatnie wyniki"
+                : "Brak ostatnich wyników"
+            }}
+          </p>
           <div class="last-result-img">
             <img
               [src]="result.poster"
@@ -31,17 +40,11 @@
             />
           </div>
         </div>
-        <div class="container h-100 d-flex flex-column" *ngIf="!isLoading">
-          <app-movie-miniatures-list [filmData]="searchResult"></app-movie-miniatures-list>
-        </div>
-        <!-- <div class="router-outlet">
-          <div class="container h-100 d-flex flex-column">
-            <app-movie-miniatures-list
+        <div appTopBarElementContent *ngIf="!isLoading">
+          <app-movie-miniatures-list
             [filmData]="searchResult"
           ></app-movie-miniatures-list>
-          </div>
-
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

@@ -29,6 +29,9 @@ import { SearchInListComponent } from './components/nav-bars/search-in-list/sear
 import { SimilarMoviesComponent } from './components/movie-detail-page/movie-detail-page-elements/similar-movies/similar-movies.component';
 import { SharedRoutingModule } from './shared-routing.module';
 import { FactsPageComponent } from './components/movie-detail-page/movie-detail-page-elements/facts-page/facts-page.component';
+import { TopBarElementContentDirective } from './directives/top-bar-element-content.directive';
+import { ContextMenuActionsComponent } from './directives/context-menu-actions/context-menu-actions.component';
+import { MiniatureListContextMenuDirective } from './directives/context-menu-actions/miniature-list-context-menu.directive';
 
 
 @NgModule({
@@ -64,6 +67,9 @@ import { FactsPageComponent } from './components/movie-detail-page/movie-detail-
     FilterPipe,
     SearchPipe,
     SearchInListComponent,
+    TopBarElementContentDirective,
+    MiniatureListContextMenuDirective,
+    ContextMenuActionsComponent
   ],
   declarations: [
     BottomBarComponent,
@@ -86,11 +92,14 @@ import { FactsPageComponent } from './components/movie-detail-page/movie-detail-
     SearchPipe,
     SearchInListComponent,
     SimilarMoviesComponent,
-    FactsPageComponent
+    FactsPageComponent,
+    TopBarElementContentDirective,
+    MiniatureListContextMenuDirective,
+    ContextMenuActionsComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
   ],
-  entryComponents: [FilterBottomSheetComponent, RateDialogComponent]
+  entryComponents: [FilterBottomSheetComponent, RateDialogComponent, ContextMenuActionsComponent]
 })
 export class SharedModule {}

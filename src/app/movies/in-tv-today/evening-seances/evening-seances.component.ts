@@ -7,6 +7,7 @@ import { MoviesInTvService } from '../movies-in-tv.service';
   selector: 'app-evening-seances',
   templateUrl: './evening-seances.component.html',
   styleUrls: ['./evening-seances.component.css'],
+  providers: [MoviesInTvService]
 })
 export class EveningSeancesComponent implements OnInit, OnDestroy {
   filmsData: FilmData[];

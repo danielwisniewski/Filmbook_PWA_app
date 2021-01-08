@@ -28,7 +28,4 @@ export class FilterBottomSheetComponent implements OnInit {
     this._bottomSheet.dismiss();
   }
 
-  onSliderChange(event) {
-    console.log(event);
-  }
 }

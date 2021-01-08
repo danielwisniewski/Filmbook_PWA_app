@@ -1,16 +1,16 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { FilmData } from '../shared/Models/film-data.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SerachMoviesService {
-  lastSearchResult = new BehaviorSubject<FilmData[]>(null);
-  constructor(private http: HttpClient, private db: AngularFirestore) {}
+  private lastSearchResult: FilmData[];
+  constructor(private http: HttpClient) {
+    this.lastSearchResult = [];
+  }
 
   searchByTitle(title: string) {
     const BASE_URL =
@@ -43,49 +43,14 @@ export class SerachMoviesService {
       );
   }
 
-  fetchSearchResult() {
-    this.db
-      .collection(
-        'users/' + localStorage.getItem('userId') + '/lastSearchResult'
-      )
-      .snapshotChanges()
-      .pipe(
-        take(1),
-        map((snaps) => {
-          return snaps.map((snap) => {
-            return <FilmData>snap.payload.doc.data();
-          });
-        })
-      )
-      .subscribe((val: FilmData[]) => {
-        this.lastSearchResult.next(val);
-      });
+  getLastResult(): FilmData[] {
+    return this.lastSearchResult.slice();
   }
 
-  setLastSearchResult(result: FilmData[]) {
-    this.lastSearchResult.next(result);
-    const batchDelete = this.db.firestore.batch();
-    const batchSet = this.db.firestore.batch();
-    let lastResult = this.db
-      .collection(
-        'users/' + localStorage.getItem('userId') + '/lastSearchResult'
-      )
-      .ref.get();
-
-    lastResult
-      .then((docs) => docs.forEach((doc) => batchDelete.delete(doc.ref)))
-      .then(() => batchDelete.commit())
-      .then(() => {
-        result.forEach((film: FilmData, index) => {
-          const firebaseRef = this.db.doc(
-            'users/' +
-              localStorage.getItem('userId') +
-              '/lastSearchResult/' +
-              index
-          ).ref;
-          batchSet.set(firebaseRef, film);
-        });
-        batchSet.commit();
-      });
+  setLastResults(results: FilmData[]): void {
+    results.forEach((result) => {
+      this.lastSearchResult.unshift(result);
+    });
+    this.lastSearchResult = this.lastSearchResult.slice(0, 5);
   }
 }
