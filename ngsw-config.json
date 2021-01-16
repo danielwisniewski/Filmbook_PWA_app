@@ -1,8 +1,8 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "appData": {
-    "version": "1.3.4",
-    "changelog": "Small changes in firebase communication."
+    "version": "2.0.0",
+    "changelog": "Complete reorganization of application structure."
   },
   "index": "/index.html",
   "assetGroups": [

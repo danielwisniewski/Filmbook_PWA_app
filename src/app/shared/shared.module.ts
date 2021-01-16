@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { MovieMiniaturesListComponent } from './components/movie-miniatures-list/movie-miniatures-list.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
-import { GenreListComponent } from './components/genre-list/genre-list.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RateDialogComponent } from './components/movie-detail-page/rate-dialog/rate-dialog.component';
 import { ViewSelectionMenuComponent } from './components/nav-bars/view-selection-menu/view-selection-menu.component';
@@ -57,7 +56,6 @@ import { RouterModule } from '@angular/router';
   declarations: [
     MovieMiniaturesListComponent,
     LoadingSpinnerComponent,
-    GenreListComponent,
     RateDialogComponent,
     ViewSelectionMenuComponent,
     FilterBottomSheetComponent,
@@ -69,7 +67,7 @@ import { RouterModule } from '@angular/router';
     ContextMenuActionsComponent,
     IsOnListsPipe,
     TopTitlePanelComponent,
-    BottomTabsMenuComponent
+    BottomTabsMenuComponent,
   ],
   providers: [],
   entryComponents: [

@@ -1,14 +1,11 @@
 import { Location } from '@angular/common';
 import {
   Component,
-  ElementRef,
-  HostListener,
   OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FilmData } from '../../core/models/film-data.model';
@@ -32,7 +29,8 @@ export class MovieDetailPageComponent implements OnInit, OnDestroy {
     private ui: UIService,
     private db: MovieDetailService,
     public sanitizer: DomSanitizer,
-    public location: Location
+    public location: Location,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +47,6 @@ export class MovieDetailPageComponent implements OnInit, OnDestroy {
         this.sanitizer.bypassSecurityTrustResourceUrl(this.filmData.poster);
       })
     );
-
     this.subs.push(this.ui.loading.subscribe((val) => (this.isLoading = val)));
   }
 
@@ -57,6 +54,10 @@ export class MovieDetailPageComponent implements OnInit, OnDestroy {
     el.scrollIntoView({
       behavior: 'smooth',
     });
+  }
+
+  navigateBack() : void {
+    this.router.navigate([localStorage.getItem('previousUrl')])
   }
 
   changeTab(tabIndex: number) {

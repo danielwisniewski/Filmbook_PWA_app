@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, tap, throttleTime } from 'rxjs/operators';
+import { map, throttleTime } from 'rxjs/operators';
 import { FilmData } from 'src/app/core/models/film-data.model';
 import { EveningTvSeancesModel } from '../models/evening-tv-seances.model';
 import { TopTvSeancesModel } from '../models/top-tv-seances.model';

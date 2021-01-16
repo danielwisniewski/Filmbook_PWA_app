@@ -53,5 +53,6 @@ export class TopMoviesService {
     if ( this.topMovies && this.topSerials ) {
       this.topRated$.next(this.topMovies.concat(this.topSerials));
     }
+    
   }
 }

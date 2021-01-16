@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
-import { LoginPageComponent } from './features/login-page/login-page.component';
-import { GenreListComponent } from './shared/components/genre-list/genre-list.component';
-import { ResolveGenreService } from './shared/services/resolve-genre.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginPageComponent },
+  { path: '', redirectTo: 'movies', pathMatch: 'full' },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./features/login-page/login-page.module').then(
+        (m) => m.LoginPageModule
+      ),
+  },
   {
     path: 'movies',
     loadChildren: () =>
@@ -22,6 +25,7 @@ const routes: Routes = [
       import('./features/main-search-page/main-search-page.module').then(
         (m) => m.MainSearchPageModule
       ),
+    canLoad: [AuthGuard],
   },
   {
     path: 'profile',
@@ -29,7 +33,7 @@ const routes: Routes = [
       import('./features/main-profile-page/main-profile-page.module').then(
         (m) => m.MainProfilePageModule
       ),
-    // canLoad: [AuthGuard],
+    canLoad: [AuthGuard],
   },
   {
     path: 'detailView',
@@ -37,13 +41,15 @@ const routes: Routes = [
       import(
         './features/shared-movie-detail-page/movie-detail-page.module'
       ).then((m) => m.MovieDetailPageModule),
+    canLoad: [AuthGuard],
   },
   {
-    path: 'genre/:id',
-    component: GenreListComponent,
-    resolve: {
-      movies: ResolveGenreService,
-    },
+    path: 'genre',
+    loadChildren: () =>
+      import(
+        './features/shared-movies-by-genre-page/MoviesByGenre/MoviesByGenre.module'
+      ).then((m) => m.MoviesByGenreModule),
+    canLoad: [AuthGuard],
   },
 ];
 
@@ -51,6 +57,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       preloadingStrategy: PreloadAllModules,
+      onSameUrlNavigation: 'reload',
     }),
   ],
   exports: [RouterModule],

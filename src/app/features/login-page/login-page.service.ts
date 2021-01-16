@@ -24,8 +24,9 @@ export class AuthService {
         localStorage.setItem('userId', user.uid);
         this.userId.next(user.uid);
         this.userData.next(user);
-        if ( localStorage.getItem('lastUrl') && localStorage.getItem('lastUrl') !== '/login' ) {
-          this.router.navigate([localStorage.getItem('lastUrl')])
+        if ( localStorage.getItem('lastUrl') && localStorage.getItem('lastUrl') !== '/login' && localStorage.getItem('lastUrl') !== '/' ) {
+          const LAST_URL = localStorage.getItem('lastUrl').toString()
+          this.router.navigateByUrl(LAST_URL)
         } else {
           this.router.navigate(['/movies']);
         }

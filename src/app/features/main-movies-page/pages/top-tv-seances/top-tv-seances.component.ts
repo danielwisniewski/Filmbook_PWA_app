@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FilmData } from 'src/app/core/models/film-data.model';
 import { MainMoviesPageFacadeService } from '../../main-movies-page-facade.service';
 import { TopTvSeancesModel } from '../../models/top-tv-seances.model';
 

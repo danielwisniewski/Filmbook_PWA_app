@@ -13,8 +13,10 @@ export class RouterLoggerService {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        pluck('url')
+        pluck('url'),
       )
-      .subscribe((url: string) => localStorage.setItem('lastUrl', url));
+      .subscribe((url: string) => {
+        localStorage.setItem('lastUrl', url)
+      });
   }
 }
