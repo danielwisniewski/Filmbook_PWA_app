@@ -1,34 +1,32 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
 import { SharedModule } from './shared/shared.module';
-import { MoviesModule } from './movies/movies.module';
-import { SearchModule } from './search/search.module';
-import { ProfileModule } from './profile/profile.module'
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { CoreModule } from './core/core.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { LoginPageModule } from './features/login-page/login-page.module';
+import { MovieDetailPageModule } from './features/shared-movie-detail-page/movie-detail-page.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
+    CoreModule,
     SharedModule,
-    MoviesModule,
-    SearchModule,
-    ProfileModule,
+    AppRoutingModule,
+    MovieDetailPageModule,
+    LoginPageModule,
     AngularFireModule.initializeApp(environment.firebase),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

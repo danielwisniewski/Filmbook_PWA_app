@@ -1,8 +1,0 @@
-<div appTopBarElementContent *ngIf="!isLoading">
-  <app-search-in-list (titleChanged)="onSearchTitle($event)"></app-search-in-list>
-  <app-movie-miniatures-list #s
-    [filmData]="filmsData | search: title"
-  ></app-movie-miniatures-list>
-</div>
-
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>

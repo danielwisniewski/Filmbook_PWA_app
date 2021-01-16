@@ -3,9 +3,9 @@ import { Location } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SerachMoviesService } from 'src/app/search/serach-movies.service';
-import { FilmData } from '../../Models/film-data.model';
-import { FilterModel } from '../../Models/filter.model';
+import { MainSearchPageFacadeService } from 'src/app/features/main-search-page/main-search-page-facade.service';
+import { FilmData } from '../../../core/models/film-data.model';
+import { FilterModel } from '../../models/filter.model';
 import { FiltersService } from '../../services/filters.service';
 import { UIService } from '../../services/ui.service';
 
@@ -30,7 +30,7 @@ export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
     private ui: UIService,
     public location: Location,
     private router: Router,
-    private searchService: SerachMoviesService,
+    private searchService: MainSearchPageFacadeService,
   ) {}
 
   ngOnInit(): void {

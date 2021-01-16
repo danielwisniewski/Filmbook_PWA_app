@@ -1,0 +1,37 @@
+<div class="app-content">
+  <div class="top-bar">
+    <app-top-title-panel
+      showUserPicture="true"
+      (userImageClicked)="userImageClicked()"
+    >Mój profil</app-top-title-panel>
+  </div>
+
+  <div class="component-content">
+    <nav mat-tab-nav-bar mat-align-tabs="center" mat-stretch-tabs>
+      <a
+        mat-tab-link
+        routerLink="/profile/watchlist"
+        [active]="rla1.isActive"
+        routerLinkActive
+        #rla1="routerLinkActive"
+        >Do obejrzenia</a
+      >
+      <a
+        mat-tab-link
+        routerLink="/profile/seen"
+        [active]="rla2.isActive"
+        routerLinkActive
+        #rla2="routerLinkActive"
+        >Obejrzane</a
+      >
+    </nav>
+    <div class="router-outlet">
+      <router-outlet></router-outlet>
+    </div>
+    
+  </div>
+
+  <div class="bottom-bar">
+    <app-bottom-tabs-menu></app-bottom-tabs-menu>
+  </div>
+</div>

@@ -7,7 +7,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 
-import { FilmData } from '../../Models/film-data.model';
+import { FilmData } from '../../../core/models/film-data.model';
 import { ContextMenuActionsComponent } from './context-menu-actions.component'
 
 @Directive({

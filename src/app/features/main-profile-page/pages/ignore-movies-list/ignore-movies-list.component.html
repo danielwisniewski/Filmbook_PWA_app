@@ -1,0 +1,12 @@
+<div appTopBarElementContent *ngIf="filmsData$ | async">
+  <h2 class="text-center mt-3 mb-3 d-flex align-items-center">
+    <mat-icon (click)="location.back()">navigate_before</mat-icon>Nie
+    interesujące
+  </h2>
+  <app-view-selection-menu></app-view-selection-menu>
+  <app-movie-miniatures-list
+    [filmData]="filmsData$ | async"
+  ></app-movie-miniatures-list>
+</div>
+
+<app-loading-spinner *ngIf="!(filmsData$ | async)"></app-loading-spinner>

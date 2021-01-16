@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { FilmData } from '../Models/film-data.model';
+import { FilmData } from '../../core/models/film-data.model';
 import { FirestoreMoviesService } from './firestore-movies.service';
 
 @Injectable({

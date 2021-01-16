@@ -1,0 +1,33 @@
+<div class="profile__page-content">
+  <div class="profile__header text-center">
+    <img
+      [src]="
+        userData.photoURL
+          ? userData.photoURL
+          : '../../../assets/images/guest.png'
+      "
+    />
+    <h4>
+      {{
+        userData.displayName
+          ? userData.displayName
+          : userData.email
+          ? userData.email
+          : "Anonimowy użytkownik"
+      }}
+    </h4>
+  </div>
+  <div class="profile__content_buttons mt-5">
+    <mat-list>
+      <mat-list-item>
+        <a routerLink="/ignore" (click)="_bottomSheetRef.dismiss()">
+          <mat-icon svgIcon="add_ignore"></mat-icon> <span>Nie interesujące mnie</span>
+        </a>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="profile__footer text-center mt-4">
+    <button mat-raised-button color="warn" (click)="onLogout()">Wyloguj</button>
+  </div>
+  <span class="text-center mt-4" style="font-size: .8rem;" *ngIf="version"> Wersja {{version}} </span>
+</div>

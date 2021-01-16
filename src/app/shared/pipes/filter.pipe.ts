@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FilmData } from '../Models/film-data.model';
-import { FilterModel } from '../Models/filter.model';
+import { FilmData } from '../../core/models/film-data.model';
+import { FilterModel } from '../models/filter.model';
 import { FiltersService } from '../services/filters.service';
 
 @Pipe({

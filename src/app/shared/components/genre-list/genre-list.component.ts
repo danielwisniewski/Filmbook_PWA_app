@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FilmData } from '../../Models/film-data.model';
+import { FilmData } from '../../../core/models/film-data.model';
 
 @Component({
   selector: 'app-genre-list',

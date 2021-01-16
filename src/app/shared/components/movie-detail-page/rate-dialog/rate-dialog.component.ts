@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FilmData } from 'src/app/shared/Models/film-data.model';
-import { MovieDetailService } from '../movie-detail.service';
+import { FilmData } from 'src/app/core/models/film-data.model';
+import { MovieDetailService } from '../../../../features/shared-movie-detail-page/movie-detail.service';
 
 @Component({
   selector: 'app-rate-dialog',

@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { FilmData } from 'src/app/shared/Models/film-data.model';
-import { MovieDetailService } from '../../components/movie-detail-page/movie-detail.service';
+import { FilmData } from 'src/app/core/models/film-data.model';
+import { MovieDetailService } from '../../../features/shared-movie-detail-page/movie-detail.service';
 import { RateDialogComponent } from '../../components/movie-detail-page/rate-dialog/rate-dialog.component';
 
 

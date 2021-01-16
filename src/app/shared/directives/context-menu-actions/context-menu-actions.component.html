@@ -1,22 +1,20 @@
 <mat-menu #contextMenu="matMenu" aria-label="Wybierz akcję">
     <ng-template matMenuContent let-film="film">
       <button mat-menu-item (click)="onSeen(film)">
-        <mat-icon>{{ film.seen ? "delete" : "done_outline" }}</mat-icon>
+        <mat-icon [svgIcon]=" !film.seen ? 'add_seen' : 'remove_from_list' "></mat-icon>
         <span>{{
           film.seen ? "Usuń z obejrzanych" : "Oznacz jako obejrzany"
         }}</span>
       </button>
       <button mat-menu-item (click)="onWatchlist(film)" *ngIf="!film.seen">
-        <mat-icon>{{
-          film.watchlist ? "visibility_off" : "visibility"
-        }}</mat-icon>
+        <mat-icon [svgIcon]=" !film.watchlist ? 'add_watchlist' : 'remove_from_list' "></mat-icon>
         <span>{{
           film.watchlist ? "Usuń z listy do obejrzenia" : "Chcę obejrzeć!"
         }}</span>
       </button>
       <button mat-menu-item (click)="onIgnore(film)">
-        <mat-icon>{{ film.ignore ? "thumb_up" : "thumb_down" }}</mat-icon>
-        <span>{{ film.ignore ? "Pokaż na liście" : "Nie interesuje mnie" }}</span>
+        <mat-icon [svgIcon]=" !film.ignore ? 'add_ignore' : 'remove_from_list' "></mat-icon>
+        <span>{{ film.ignore ? "Interesuje mnie" : "Nie interesuje mnie" }}</span>
       </button>
     </ng-template>
   </mat-menu>

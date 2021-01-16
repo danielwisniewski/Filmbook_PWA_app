@@ -1,9 +1,0 @@
-<div appTopBarElementContent *ngIf="!isLoading">
-  <app-choose-view-bar
-  ></app-choose-view-bar>
-  <app-movie-miniatures-list
-    [filmData]="filmsData"
-  ></app-movie-miniatures-list>
-</div>
-
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>

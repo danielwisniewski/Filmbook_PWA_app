@@ -1,21 +1,24 @@
-import { ApplicationRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ApplicationRef, Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { concat, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { AuthService } from './auth/auth.service';
+import { RouterLoggerService } from './core/services/router-logger.service';
+import { AuthService } from './features/login-page/login-page.service';
 import { FirestoreMoviesService } from './shared/services/firestore-movies.service';
+import { IconSantizerService } from './shared/services/icon-santizer.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   title = 'MovieApp';
 
   constructor(
     private authSrevice: AuthService,
-    private db: FirestoreMoviesService,
+    private RouterLoggerService: RouterLoggerService,
+    private iconSantizer: IconSantizerService,
     public updates: SwUpdate,
     public appRef: ApplicationRef
   ) {
@@ -39,9 +42,5 @@ export class AppComponent implements OnInit, OnDestroy {
         localStorage.setItem("version", JSON.stringify(event.current.appData["version"]))
       }
     )
-  }
-
-  ngOnDestroy() {
-    this.db.cancelSubscriptions();
   }
 }

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FilmData } from '../Models/film-data.model';
+import { FilmData } from '../../core/models/film-data.model';
 
 @Pipe({
   name: 'search'
