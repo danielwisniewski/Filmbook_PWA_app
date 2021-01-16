@@ -1,9 +1,8 @@
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Location } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TopTvSeancesModel } from 'src/app/features/main-movies-page/models/top-tv-seances.model';
 import { MainSearchPageFacadeService } from 'src/app/features/main-search-page/main-search-page-facade.service';
 import { FilmData } from '../../../core/models/film-data.model';
 import { FilterModel } from '../../models/filter.model';
@@ -16,7 +15,7 @@ import { UIService } from '../../services/ui.service';
   styleUrls: ['./movie-miniatures-list.component.css'],
 })
 export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
-  @Input() filmData: FilmData[] | TopTvSeancesModel[] ;
+  @Input() filmData: FilmData[] ;
   size: string;
   filter: FilterModel;
   subs: Subscription[] = [];
