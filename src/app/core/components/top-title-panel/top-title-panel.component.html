@@ -1,0 +1,6 @@
+<div class="container">
+    <h3>
+        <ng-content></ng-content>
+    </h3>
+    <img [src]="userPicture" (click)="onUserImage()" *ngIf="showUserPicture">
+</div>

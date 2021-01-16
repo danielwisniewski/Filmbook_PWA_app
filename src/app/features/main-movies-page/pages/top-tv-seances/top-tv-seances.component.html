@@ -1,0 +1,5 @@
+<div appTopBarElementContent *ngIf="(filmsData$ | async)">
+  <app-movie-miniatures-list [filmData]="filmsData$ | async"></app-movie-miniatures-list>
+</div>
+
+<app-loading-spinner *ngIf="!(filmsData$ | async)"></app-loading-spinner>

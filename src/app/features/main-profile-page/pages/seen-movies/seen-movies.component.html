@@ -1,0 +1,8 @@
+<div appTopBarElementContent *ngIf="(filmsData$ | async)">
+  <app-search-in-list (titleChanged)="onSearchTitle($event)"></app-search-in-list>
+  <app-movie-miniatures-list #s
+    [filmData]="filmsData$ | async | search: titleToFind"
+  ></app-movie-miniatures-list>
+</div>
+
+<app-loading-spinner *ngIf="!(filmsData$ | async)"></app-loading-spinner>

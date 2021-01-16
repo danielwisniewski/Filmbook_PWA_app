@@ -1,0 +1,7 @@
+<div class="eveningSeances__content">
+  <app-evening-seance-element
+    *ngFor="let filmData of this.eveningTvSeances$ | async"
+    [filmData]="filmData"
+  >
+  </app-evening-seance-element>
+</div>

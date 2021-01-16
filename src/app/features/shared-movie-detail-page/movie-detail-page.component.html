@@ -1,0 +1,69 @@
+  <div
+  *ngIf="!isLoading"
+  class="movie-detail"
+  [attr.style]="
+    sanitizer.bypassSecurityTrustStyle(
+      '--movie-detail:url(' + filmData.poster + ')'
+    )
+  "
+>
+  <div class="initialView__top-banner">
+    <mat-icon (click)="location.back()">navigate_before</mat-icon>
+  </div>
+  <div class="movieDetail__initial-view">
+    <app-initial-view [filmData]="filmData$ | async | isOnLists"></app-initial-view>
+  </div>
+  <div class="movieDetail__second-view" #target>
+    <mat-tab-group
+      (click)="scrollTo(target)"
+      [selectedIndex]="selectedTab"
+      [disablePagination]="true"
+    >
+      <mat-tab label="Opis">
+        <app-overview [filmData]="filmData | isOnLists"></app-overview>
+      </mat-tab>
+      <mat-tab label="Fabuła" *ngIf="filmData.longPlot">
+        <p class="long-plot">{{ filmData.longPlot }}</p>
+      </mat-tab>
+      <mat-tab label="Online">
+        <ng-template matTabContent>
+          <app-streaming-services
+            [filmTitle]="filmData.title"
+          ></app-streaming-services>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Tv">
+        <ng-template matTabContent>
+          <app-tv-seances [url]="this.filmData.filmwebUrl"></app-tv-seances>
+        </ng-template>
+      </mat-tab>
+      <mat-tab disabled>
+        <ng-template mat-tab-label>
+          <button mat-icon-button [mat-menu-trigger-for]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button
+              mat-menu-item
+              [routerLink]="'awards'"
+              *ngIf="filmData.awards.length > 0"
+            >
+              Nagrody
+            </button>
+            <button mat-menu-item [routerLink]="'fullCast'">
+              Pełna obsada
+            </button>
+            <button mat-menu-item [routerLink]="'facts'" *ngIf="filmData.facts.length > 0">
+              Ciekawostki
+            </button>
+            <button mat-menu-item [routerLink]="'similar'">
+              Podobne filmy
+            </button>
+          </mat-menu>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
