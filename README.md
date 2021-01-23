@@ -27,11 +27,11 @@ Application is split into three main tabs:
   + Top rated movies available in tv today
   + Movies in tv available beetween 19 and 21
   
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(1).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(3).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(5).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(6).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(1).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(3).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(5).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(6).png" height="732" width="392">
 </details>
 
 <details>
@@ -41,9 +41,9 @@ Application is split into three main tabs:
   + List of movies aligned with search criteria
   + History of last 5 search results
   
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(7).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(8).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(9).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(7).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(8).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(9).png" height="732" width="392">
 </details>
 
 <details>
@@ -54,8 +54,8 @@ Application is split into three main tabs:
   + List of seen movies with possibility to sort by your rate or by time when watched
   + Input field to filter movies by part of title
   
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(10).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(11).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(10).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_movies_recommended(Nexus%205X)%20(11).png" height="732" width="392">
 </details>
 
 #### Application has also shared detailed movie view. Features available in detailed view:
@@ -71,14 +71,14 @@ Application is split into three main tabs:
 <details>
   <summary>Detailed view screenshots</summary>
   
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(1).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(2).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(3).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(4).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(5).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(6).png" height="732" width="392">
-  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(7).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(1).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(2).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(3).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(4).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(5).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(6).png" height="732" width="392">
+  <img src="https://github.com/danielwisniewski/Filmbook_PWA_app/blob/main/screenshots/movieapp-36b81.web.app_detailView_film_300-2006-163597(Nexus%205X)%20(7).png" height="732" width="392">
 </details>
 
 # Contact data
