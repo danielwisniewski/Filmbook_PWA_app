@@ -1,8 +1,8 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "appData": {
-    "version": "2.0.0",
-    "changelog": "Complete reorganization of application structure."
+    "version": "2.1.1",
+    "changelog": "Further code refactoring."
   },
   "index": "/index.html",
   "assetGroups": [

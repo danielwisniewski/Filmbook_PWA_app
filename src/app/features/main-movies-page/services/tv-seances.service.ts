@@ -17,7 +17,6 @@ export class TvSeancesService {
       .collection('television')
       .valueChanges()
       .pipe(
-        throttleTime(1000),
         map((films: FilmData[]) => {
           return films.map((film: FilmData) => {
             return <TopTvSeancesModel>{
@@ -40,6 +39,5 @@ export class TvSeancesService {
     return this.firestore
       .collection('eveningSeances')
       .valueChanges()
-      .pipe(throttleTime(5000))
   }
 }

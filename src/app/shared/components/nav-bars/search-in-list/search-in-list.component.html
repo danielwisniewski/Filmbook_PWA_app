@@ -1,13 +1,17 @@
 <div class="top-bar__content">
-    <form class="form-inline">
-        <div class="input-group mb-2 mr-sm-2">
-          <input
-            #input
-            type="text"
-            class="form-control"
-            placeholder="Znajdź film po tytule"
-            (input)="onTitleChange(input.value)"
-          />
-        </div>
-      </form>
+  <p class="d-flex m-0">
+    <mat-icon svgIcon="movie_counter"></mat-icon
+    ><span class="ml-2">{{ moviesCounter }}</span>
+  </p>
+  <form class="form-inline">
+    <div class="input-group mb-2 mr-sm-2">
+      <input
+        #titleInput
+        type="text"
+        class="form-control"
+        placeholder="Znajdź film po tytule"
+      />
+    </div>
+  </form>
+    <mat-icon (click)="onSortIcon()">{{ sortByTimeAdded ? 'history' : 'star' }}</mat-icon>
 </div>

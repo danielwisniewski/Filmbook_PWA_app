@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FilmData } from 'src/app/core/models/film-data.model';
 import { MainProfilePageFacadeService } from '../../main-profile-page-facade.service';
 
@@ -10,13 +10,24 @@ import { MainProfilePageFacadeService } from '../../main-profile-page-facade.ser
   styleUrls: ['./ignore-movies-list.component.css'],
 })
 export class IgnoreMoviesListComponent implements OnInit {
-  filmsData$: Observable<FilmData[]>;
+  sub: Subscription;
   constructor(
     private facadeService: MainProfilePageFacadeService,
     public location: Location
   ) {}
 
   ngOnInit(): void {
-    this.filmsData$ = this.facadeService.getMoviesOnIgnoreList();
+    this.sub = this.facadeService
+      .getMoviesOnIgnoreList()
+      .subscribe((result: FilmData[]) => {
+        this.facadeService.changeCurrentList(result);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.facadeService.closeMiniaturesSub();
+      this.sub.unsubscribe();
+    }
   }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FilmData } from 'src/app/core/models/film-data.model';
 import { MainProfilePageFacadeService } from '../../main-profile-page-facade.service';
 
@@ -8,11 +8,22 @@ import { MainProfilePageFacadeService } from '../../main-profile-page-facade.ser
   templateUrl: './watchlist.component.html',
   styleUrls: ['./watchlist.component.css'],
 })
-export class WatchlistComponent implements OnInit {
-  filmsData$: Observable<FilmData[]>;
+export class WatchlistComponent implements OnInit, OnDestroy {
+  sub: Subscription;
   constructor(private facadeService: MainProfilePageFacadeService) {}
 
   ngOnInit(): void {
-    this.filmsData$ = this.facadeService.getMoviesOnWatchList();
+    this.sub = this.facadeService
+      .getMoviesOnWatchList()
+      .subscribe((result: FilmData[]) => {
+        this.facadeService.changeCurrentList(result);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.facadeService.closeMiniaturesSub();
+      this.sub.unsubscribe();
+    }
   }
 }

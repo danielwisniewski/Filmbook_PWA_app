@@ -1,7 +1,7 @@
 .top-bar__content {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
   }
 
   .form-inline {
@@ -14,4 +14,10 @@
     background-color: var(--movie-dark-gray);
     border: none;
     color: var(--light);
+}
+
+@media only screen and (min-width: 550px) {
+  .input-group {
+      width: 100%;
+  }
 }

@@ -12,3 +12,9 @@ img {
     margin-right: 1rem;
     border: var(--gray) solid 0.5px;
 }
+
+@media only screen and (min-width: 550px) {
+    .container {
+        width: 412px;
+    }
+}

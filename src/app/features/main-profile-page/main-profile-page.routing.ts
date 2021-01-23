@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainProfilePageComponent } from './main-profile-page.component';
-import { IgnoreMoviesListComponent } from './pages/ignore-movies-list/ignore-movies-list.component';
 import { SeenMoviesComponent } from './pages/seen-movies/seen-movies.component';
 import { WatchlistComponent } from './pages/watchlist/watchlist.component';
 
@@ -15,7 +14,6 @@ const routes: Routes = [
       { path: 'seen', component: SeenMoviesComponent },
     ],
   },
-  // { path: 'ignore', component: IgnoreMoviesListComponent },
 ];
 
 @NgModule({

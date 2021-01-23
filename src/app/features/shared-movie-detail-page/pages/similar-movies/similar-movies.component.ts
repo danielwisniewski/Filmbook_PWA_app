@@ -28,7 +28,7 @@ export class SimilarMoviesComponent implements OnInit, OnDestroy {
     this.sub = this.ui.loading.subscribe((val) => (this.isLoading = val));
     const ID = this.route.snapshot.paramMap.get('id');
     const DATA = this.db.getLastFilmsData(ID);
-    this.filmData = DATA.similar;
+    this.db.changeCurrentList(DATA.similar);
     this.title = DATA.title;
   }
 

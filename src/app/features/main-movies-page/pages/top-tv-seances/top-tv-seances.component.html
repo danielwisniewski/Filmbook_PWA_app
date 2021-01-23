@@ -1,8 +1,4 @@
-<div appTopBarElementContent *ngIf="(filmsData$ | async)">
-  <app-view-selection-menu style="display: none;"></app-view-selection-menu>
-  <app-movie-miniatures-list
-    [filmData]="filmsData$ | async | isOnLists"
-  ></app-movie-miniatures-list>
+<div appTopBarElementContent>
+  <app-view-selection-menu style="display: none"></app-view-selection-menu>
+  <app-movie-miniatures-list></app-movie-miniatures-list>
 </div>
-
-<app-loading-spinner *ngIf="!(filmsData$ | async)"></app-loading-spinner>

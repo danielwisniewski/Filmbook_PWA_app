@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MainMoviesPageFacadeService } from '../../main-movies-page-facade.service';
 import { TopTvSeancesModel } from '../../models/top-tv-seances.model';
 
@@ -9,12 +9,21 @@ import { TopTvSeancesModel } from '../../models/top-tv-seances.model';
   styleUrls: ['./top-tv-seances.component.css'],
 })
 export class TopTvSeancesComponent implements OnInit {
-  filmsData$: Observable<TopTvSeancesModel[]>;
-  constructor(
-    private mainMoviesPageFacadeService: MainMoviesPageFacadeService
-  ) {}
+  sub: Subscription;
+  constructor(private facadeService: MainMoviesPageFacadeService) {}
 
   ngOnInit(): void {
-    this.filmsData$ = this.mainMoviesPageFacadeService.getTopTvSeances();
+    this.sub = this.facadeService
+      .getTopTvSeances()
+      .subscribe((result: TopTvSeancesModel[]) => {
+        this.facadeService.changeCurrentList(result);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.facadeService.closeMiniaturesSub();
+      this.sub.unsubscribe();
+    }
   }
 }

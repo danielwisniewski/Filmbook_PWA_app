@@ -1,13 +1,14 @@
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MainSearchPageFacadeService } from 'src/app/features/main-search-page/main-search-page-facade.service';
 import { FilmData } from '../../../core/models/film-data.model';
 import { FilterModel } from '../../models/filter.model';
 import { FiltersService } from '../../services/filters.service';
 import { UIService } from '../../services/ui.service';
+import { MovieMiniatureListService } from './movie-miniature-list.service';
 
 @Component({
   selector: 'app-movie-miniatures-list',
@@ -15,7 +16,8 @@ import { UIService } from '../../services/ui.service';
   styleUrls: ['./movie-miniatures-list.component.css'],
 })
 export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
-  @Input() filmData: FilmData[] ;
+  filmData: Observable<FilmData[]> ;
+  isLoading$ : Observable<boolean>;
   size: string;
   filter: FilterModel;
   subs: Subscription[] = [];
@@ -27,6 +29,7 @@ export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
 
   constructor(
     private filterService: FiltersService,
+    private movieMiniaturesService: MovieMiniatureListService,
     private ui: UIService,
     public location: Location,
     private router: Router,
@@ -34,6 +37,8 @@ export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.filmData = this.movieMiniaturesService.movies$.asObservable();
+    this.isLoading$ = this.movieMiniaturesService.isLoading$.asObservable();
     this.isIgnore = this.location.path().includes('ignore');
     this.subs.push(
       this.filterService.activeFilter.subscribe((val) => {
@@ -89,6 +94,7 @@ export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.movieMiniaturesService.closeSub$.next(true);
     if (this.subs != []) {
       this.subs.forEach((sub) => sub.unsubscribe());
     }

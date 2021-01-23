@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { UIService } from 'src/app/shared/services/ui.service';
 import { AwardsModel } from '../../models/awards.model';
 
@@ -25,6 +25,7 @@ export class AwardsPageComponent implements OnInit, OnDestroy {
     this.sub = this.route.data
       .pipe(map((val) => val.awards))
       .subscribe((val) => {
+        console.log(val);
         this.ui.loading.next(false);
         this.awards = val;
       });
@@ -32,7 +33,7 @@ export class AwardsPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.sub) {
-      this.sub.unsubscribe()
+      this.sub.unsubscribe();
     }
   }
 }

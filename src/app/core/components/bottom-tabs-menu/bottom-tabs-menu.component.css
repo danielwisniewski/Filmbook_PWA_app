@@ -9,8 +9,12 @@ div.col-4 > mat-icon {
     color: #e83e8c;
 }
 nav {
-    width: 100vw;
+    width: 100%;
     text-align: center;
     padding-bottom: 8px;
     background-color: var(--movie-dark);
+}
+
+::ng-deep .mat-tab-link {
+    min-width: 80px;
 }

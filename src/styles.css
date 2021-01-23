@@ -28,7 +28,8 @@ app-top {
   height: 100%;
 }
 
-app-movie-miniatures-list, app-in-tv-today {
+app-movie-miniatures-list,
+app-in-tv-today {
   overflow-y: auto;
   overflow-x: hidden;
   display: contents;
@@ -93,4 +94,44 @@ body {
 }
 body {
   margin: 0;
+}
+
+@media only screen and (min-width: 550px) {
+  html {
+    width: 100vw;
+    height: 100vh;
+    z-index: -5;
+    background: #0f2027; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #2c5364,
+      #203a43,
+      #0f2027
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #2c5364,
+      #203a43,
+      #0f2027
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
+  body {
+    height: 732px;
+    width: 412px;
+    position: relative;
+    left: calc(50% - 211px);
+    top: calc(50% - 366px);
+    z-index: 10;
+    border-radius: 20px;
+  }
+
+  div.app-content {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 1px;
+  }
 }

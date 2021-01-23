@@ -11,7 +11,7 @@
     <mat-icon (click)="location.back()">navigate_before</mat-icon>
   </div>
   <div class="movieDetail__initial-view">
-    <app-initial-view [filmData]="filmData$ | async | isOnLists"></app-initial-view>
+    <app-initial-view [filmData]="filmData$ | async "></app-initial-view>
   </div>
   <div class="movieDetail__second-view" #target>
     <mat-tab-group
@@ -20,7 +20,7 @@
       [disablePagination]="true"
     >
       <mat-tab label="Opis">
-        <app-overview [filmData]="filmData | isOnLists"></app-overview>
+        <app-overview [filmData]="filmData$ | async "></app-overview>
       </mat-tab>
       <mat-tab label="Fabuła" *ngIf="filmData.longPlot">
         <p class="long-plot">{{ filmData.longPlot }}</p>

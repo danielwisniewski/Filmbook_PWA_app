@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { IgnoreMoviesListComponent } from './features/main-profile-page/pages/ignore-movies-list/ignore-movies-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'movies', pathMatch: 'full' },
@@ -51,6 +52,7 @@ const routes: Routes = [
       ).then((m) => m.MoviesByGenreModule),
     canLoad: [AuthGuard],
   },
+  { path: 'ignore', component: IgnoreMoviesListComponent },
 ];
 
 @NgModule({

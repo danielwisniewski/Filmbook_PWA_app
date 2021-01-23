@@ -4,7 +4,7 @@ import { concat, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { RouterLoggerService } from './core/services/router-logger.service';
 import { AuthService } from './features/login-page/login-page.service';
-import { FirestoreMoviesService } from './shared/services/firestore-movies.service';
+import { MainProfilePageFacadeService } from './features/main-profile-page/main-profile-page-facade.service';
 import { IconSantizerService } from './shared/services/icon-santizer.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
     private authSrevice: AuthService,
     private RouterLoggerService: RouterLoggerService,
     private iconSantizer: IconSantizerService,
+    private profileService: MainProfilePageFacadeService,
     public updates: SwUpdate,
     public appRef: ApplicationRef
   ) {

@@ -2,34 +2,43 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { first, withLatestFrom } from 'rxjs/operators';
+import { MovieMiniatureListService } from 'src/app/shared/components/movie-miniatures-list/movie-miniature-list.service';
 import { FilmData } from '../../core/models/film-data.model';
 import { UIService } from '../../shared/services/ui.service';
+import { FetchUserMoviesListsService } from '../main-profile-page/services/fetch-user-movies-lists.service';
 import { AwardsModel } from './models/awards.model';
 import { TelevisionSeancesModel } from './models/televisionSeances.model';
+import { completeMovieData } from '../../shared/services/db.utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieDetailService {
   filmData: FilmData;
-  lastFilmData: {[key: string] : FilmData} = {};
+  lastFilmData: { [key: string]: FilmData } = {};
   constructor(
     private firestore: AngularFirestore,
     private ui: UIService,
-    private http: HttpClient
+    private http: HttpClient,
+    private miniatureList: MovieMiniatureListService,
+    private profileLists: FetchUserMoviesListsService
   ) {}
 
-  fetchMovieDetailData(id: string) : Observable<FilmData> {
+  fetchMovieDetailData(id: string): Observable<FilmData> {
     return this.firestore
       .doc('/movies/' + id)
       .valueChanges()
       .pipe(
-        first( (val : FilmData) => val !== undefined ),
+        first((val: FilmData) => val !== undefined),
+        withLatestFrom(this.profileLists.profileList$, (cur, list) => {
+          const index = list.findIndex((film) => cur.id === film.id);
+          return completeMovieData(cur, index, list);
+        })
       );
   }
 
-  getLastFilmsData(id:string): FilmData {
+  getLastFilmsData(id: string): FilmData {
     return this.lastFilmData[id];
   }
 
@@ -38,7 +47,6 @@ export class MovieDetailService {
   }
 
   updateMovieOnProfile(film: FilmData, collection: string) {
-    
     if (!film[collection]) {
       this.firestore
         .doc(
@@ -54,10 +62,10 @@ export class MovieDetailService {
           this.ui.showTopSnackbar('Usunięto z listy');
         });
     } else {
-      if ( collection === 'watchlist' ) {
+      if (collection === 'watchlist') {
         film.timeAdded = Date.now();
       } else {
-        film.timeSeen = Date.now()
+        film.timeSeen = Date.now();
       }
       this.firestore
         .doc(
@@ -112,7 +120,7 @@ export class MovieDetailService {
 
   private addSimilarMoviesToDb(id: string, movies: FilmData[]) {
     this.firestore.doc('movies/' + id).update({ similar: movies });
-    const filmData = { similar: movies, ...this.getLastFilmsData(id) }
+    const filmData = { similar: movies, ...this.getLastFilmsData(id) };
     this.setLastFilmData(filmData);
   }
 
@@ -124,6 +132,16 @@ export class MovieDetailService {
       .get<any>(BASE_URL, {
         params: new HttpParams().set('q', title),
       })
-      .subscribe((val) => this.addSimilarMoviesToDb(id, val));
+      .subscribe((val) => {
+        this.addSimilarMoviesToDb(id, val);
+      });
+  }
+
+  changeCurrentList(list: FilmData[]): void {
+    if (list) this.miniatureList.currentList$.next(list);
+  }
+
+  closeMiniaturesSub() {
+    this.miniatureList.currentList$.next(null);
   }
 }

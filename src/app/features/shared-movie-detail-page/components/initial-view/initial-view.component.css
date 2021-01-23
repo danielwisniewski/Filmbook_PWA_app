@@ -114,3 +114,15 @@ div.initialView__buttonSection > button:nth-child(1) {
   margin-right: 1rem;
   background-color: #e4a424;
 }
+
+@media only screen and (min-width: 550px) {
+  .initialView__content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 692px;
+    margin: 0 1rem;
+    overflow: hidden;
+  }
+}

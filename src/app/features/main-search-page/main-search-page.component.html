@@ -19,43 +19,44 @@
       </div>
     </form>
 
-      <div class="serach-result h-100" *ngIf="!(isLoading$ | async) else loading">
-        <div class="container h-100">
-          <div
-            class="row flex-column ml-2 mr-2"
-            *ngIf="!f.submitted"
-          >
-            <p class="last-result-title">
-              {{
-                (lastSearchResults$ | async)
-                  ? "Ostatnie wyniki"
-                  : "Brak ostatnich wyników"
-              }}
-            </p>
-            <div class="last-result-img">
-              <img
-                [src]="result.poster"
-                *ngFor="let result of lastSearchResults$ | async"
-                [routerLink]="'/detailView/' + result.id"
-              />
-            </div>
-          </div>
-          <div appTopBarElementContent>
-            <app-movie-miniatures-list
-              [filmData]="searchResult$ | async"
-            ></app-movie-miniatures-list>
+    <div class="serach-result h-100">
+      <div class="container h-100">
+        <div class="row flex-column ml-2 mr-2" *ngIf="!f.submitted">
+          <p class="last-result-title">
+            {{
+              (lastSearchResults$ | async)
+                ? "Ostatnie wyniki"
+                : "Brak ostatnich wyników"
+            }}
+          </p>
+          <div class="last-result-img">
+            <img
+              [src]="result.poster"
+              *ngFor="let result of lastSearchResults$ | async"
+              [routerLink]="'/detailView/' + result.id"
+            />
           </div>
         </div>
+        <div appTopBarElementContent>
+          <app-view-selection-menu
+            style="display: none"
+          ></app-view-selection-menu>
+          <app-movie-miniatures-list
+            *ngIf="f.submitted"
+          ></app-movie-miniatures-list>
+          <img
+            src="../../../assets/icons/empty-watchlist.svg"
+            alt=""
+            srcset=""
+            *ngIf="!f.submitted && !(lastSearchResults$ | async)"
+            style="height: 50%; width: 100%; margin-top: 2rem"
+          />
+        </div>
       </div>
-
+    </div>
   </div>
 
   <div class="bottom-bar">
     <app-bottom-tabs-menu></app-bottom-tabs-menu>
   </div>
 </div>
-
-<ng-template #loading>
-  <app-loading-spinner> </app-loading-spinner>
-</ng-template>
-

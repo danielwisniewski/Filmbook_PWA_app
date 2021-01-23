@@ -14,6 +14,7 @@ export class RouterLoggerService {
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         pluck('url'),
+        filter( (url:string) => !url.includes('detailView') )
       )
       .subscribe((url: string) => {
         localStorage.setItem('lastUrl', url)

@@ -103,3 +103,28 @@ mat-tab-group {
   padding: 1rem;
   font-family: 'Karla';
 }
+
+@media only screen and (min-width: 550px) {
+  .movie-detail {
+    min-height: 732px;
+    max-height: 1464px;
+  }
+
+  .movie-detail:after {
+    height: calc(1464px - 300px);
+  }
+
+  .movieDetail__initial-view {
+    min-height: 700px;
+  }
+
+  mat-tab-group {
+    height: 732px;
+    overflow: hidden;
+  }
+
+  ::ng-deep .mat-tab-labels {
+    justify-content: space-between;
+    max-width: 412px !important;
+  }
+}

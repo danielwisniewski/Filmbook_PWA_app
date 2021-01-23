@@ -11,16 +11,12 @@ import { SearchResultModel } from './models/search-result.model';
   
 })
 export class MainSearchPageComponent implements OnInit, OnDestroy {
-  searchResult$: Observable<SearchResultModel[]>;
   lastSearchResults$: Observable<SearchResultModel[]>;
-  isLoading$ : Observable<boolean> ;
   constructor(private facadeService: MainSearchPageFacadeService) {
   }
 
   ngOnInit(): void {
-    this.searchResult$ = this.facadeService.getSearchResult();
     this.lastSearchResults$ = this.facadeService.getLastSearchResults();
-    this.isLoading$ = this.facadeService.getLoadingStatus();
   }
 
   onKeydown(form: NgForm) {

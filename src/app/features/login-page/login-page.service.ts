@@ -11,11 +11,7 @@ export class AuthService {
   userId = new BehaviorSubject<string>(null);
   userData = new BehaviorSubject<any>(null);
   authChange = new BehaviorSubject<boolean>(null);
-  constructor(
-    private afAuth: AngularFireAuth,
-    private router: Router,
-    
-  ) {}
+  constructor(private afAuth: AngularFireAuth, private router: Router) {}
 
   initAuthListener() {
     this.afAuth.authState.subscribe((user) => {
@@ -24,12 +20,12 @@ export class AuthService {
         localStorage.setItem('userId', user.uid);
         this.userId.next(user.uid);
         this.userData.next(user);
-        if ( localStorage.getItem('lastUrl') && localStorage.getItem('lastUrl') !== '/login' && localStorage.getItem('lastUrl') !== '/' ) {
-          const LAST_URL = localStorage.getItem('lastUrl').toString()
-          this.router.navigateByUrl(LAST_URL)
-        } else {
-          this.router.navigate(['/movies']);
-        }
+        // if ( localStorage.getItem('lastUrl') && localStorage.getItem('lastUrl') !== '/login' && localStorage.getItem('lastUrl') !== '/' ) {
+        //   const LAST_URL = localStorage.getItem('lastUrl').toString()
+        //   this.router.navigateByUrl(LAST_URL)
+        // } else {
+        this.router.navigate(['/movies']);
+        // }
       } else {
         this.authChange.next(false);
         this.router.navigate(['/login']);
