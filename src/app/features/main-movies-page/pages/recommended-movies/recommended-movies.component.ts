@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { FilmData } from 'src/app/core/models/film-data.model';
 import { MainMoviesPageFacadeService } from '../../main-movies-page-facade.service';
 
@@ -7,23 +7,9 @@ import { MainMoviesPageFacadeService } from '../../main-movies-page-facade.servi
   selector: 'app-recommended-movies',
   templateUrl: './recommended-movies.component.html',
   styleUrls: ['./recommended-movies.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecommendedMoviesComponent implements OnInit, OnDestroy {
-  sub: Subscription;
+export class RecommendedMoviesComponent {
   constructor(private facadeService: MainMoviesPageFacadeService) {}
-
-  ngOnInit(): void {
-    this.sub = this.facadeService
-      .getRecommenedMovies()
-      .subscribe((result: FilmData[]) => {
-        this.facadeService.changeCurrentList(result);
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.facadeService.closeMiniaturesSub();
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
-  }
+  filmData: Observable<FilmData[]> = this.facadeService.getRecommendedMovies();
 }

@@ -4,7 +4,7 @@
     <h5 class="w-100 text-center">Ciekawostki</h5>
   </div>
   <mat-list class="mt-2">
-    <mat-list-item *ngFor="let fact of facts">
+    <mat-list-item *ngFor="let fact of (filmData$ | async).facts">
       <p class="data-content">{{ fact }}</p>
     </mat-list-item>
   </mat-list>

@@ -1,49 +1,71 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { first, withLatestFrom } from 'rxjs/operators';
-import { MovieMiniatureListService } from 'src/app/shared/components/movie-miniatures-list/movie-miniature-list.service';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { FilmData } from '../../core/models/film-data.model';
 import { UIService } from '../../shared/services/ui.service';
 import { FetchUserMoviesListsService } from '../main-profile-page/services/fetch-user-movies-lists.service';
 import { AwardsModel } from './models/awards.model';
 import { TelevisionSeancesModel } from './models/televisionSeances.model';
-import { completeMovieData } from '../../shared/services/db.utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieDetailService {
   filmData: FilmData;
-  lastFilmData: { [key: string]: FilmData } = {};
+  private lastFilmData = new BehaviorSubject<FilmData>(null);
+    
   constructor(
     private firestore: AngularFirestore,
     private ui: UIService,
     private http: HttpClient,
-    private miniatureList: MovieMiniatureListService,
     private profileLists: FetchUserMoviesListsService
   ) {}
 
-  fetchMovieDetailData(id: string): Observable<FilmData> {
-    return this.firestore
-      .doc('/movies/' + id)
-      .valueChanges()
-      .pipe(
-        first((val: FilmData) => val !== undefined),
-        withLatestFrom(this.profileLists.profileList$, (cur, list) => {
-          const index = list.findIndex((film) => cur.id === film.id);
-          return completeMovieData(cur, index, list);
-        })
-      );
+  fetchMovieDetailData(reqId: string): Observable<FilmData> {
+    return of(reqId).pipe(
+      switchMap((id) => {
+        return this.firestore
+          .doc('/movies/' + id)
+          .valueChanges()
+          .pipe(
+            first((val: FilmData) => val !== undefined),
+            withLatestFrom(this.profileLists.getProfileMoviesLists()),
+            map(([movie, profileList]) => {
+              return {
+                ...movie,
+                watchlist:
+                  profileList.find((profileFilm) => movie.id === profileFilm.id)
+                    ?.watchlist || false,
+                timeAdded:
+                  profileList.find((profileFilm) => movie.id === profileFilm.id)
+                    ?.timeAdded || null,
+                seen:
+                  profileList.find((profileFilm) => movie.id === profileFilm.id)
+                    ?.seen || false,
+                timeSeen:
+                  profileList.find((profileFilm) => movie.id === profileFilm.id)
+                    ?.timeSeen || null,
+                myRating:
+                  profileList.find((profileFilm) => movie.id === profileFilm.id)
+                    ?.myRating || null,
+                ignore:
+                  profileList.find((profileFilm) => movie.id === profileFilm.id)
+                    ?.ignore || false,
+              } as FilmData;
+            })
+          );
+      })
+    )
   }
 
-  getLastFilmsData(id: string): FilmData {
-    return this.lastFilmData[id];
+  getLastFilmsData(): Observable<FilmData> {
+    return this.lastFilmData.asObservable()
   }
 
   setLastFilmData(filmData: FilmData) {
-    this.lastFilmData[filmData.id] = filmData;
+    this.lastFilmData.next(filmData)
   }
 
   updateMovieOnProfile(film: FilmData, collection: string) {
@@ -112,6 +134,7 @@ export class MovieDetailService {
   }
 
   checkInServices(title: string) {
+    console.log(title)
     const BASE_URL = 'https://homeautodaniel.eu-gb.mybluemix.net/getServices';
     return this.http.get<any>(BASE_URL, {
       params: new HttpParams().set('q', title),
@@ -120,7 +143,7 @@ export class MovieDetailService {
 
   private addSimilarMoviesToDb(id: string, movies: FilmData[]) {
     this.firestore.doc('movies/' + id).update({ similar: movies });
-    const filmData = { similar: movies, ...this.getLastFilmsData(id) };
+    const filmData = { similar: movies, ...this.lastFilmData.value };
     this.setLastFilmData(filmData);
   }
 
@@ -135,13 +158,5 @@ export class MovieDetailService {
       .subscribe((val) => {
         this.addSimilarMoviesToDb(id, val);
       });
-  }
-
-  changeCurrentList(list: FilmData[]): void {
-    if (list) this.miniatureList.currentList$.next(list);
-  }
-
-  closeMiniaturesSub() {
-    this.miniatureList.currentList$.next(null);
   }
 }

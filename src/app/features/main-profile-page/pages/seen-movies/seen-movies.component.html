@@ -1,6 +1,8 @@
 <div appTopBarElementContent>
   <app-search-in-list
-    (titleChanged)="onSearchTitle($event)" (sortByTimeAddedChanged)="sortingChanged($event)"
+    (titleChanged)="onSearchTitle($event)"
+    (sortByTimeAddedChanged)="sortingChanged($event)"
+    [moviesCounter]="(filmData$ | async)?.length"
   ></app-search-in-list>
-  <app-movie-miniatures-list></app-movie-miniatures-list>
+  <app-movie-miniatures-list [filmData]="filmData$"></app-movie-miniatures-list>
 </div>

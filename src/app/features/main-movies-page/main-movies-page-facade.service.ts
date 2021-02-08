@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilmData } from 'src/app/core/models/film-data.model';
-import { MovieMiniatureListService } from 'src/app/shared/components/movie-miniatures-list/movie-miniature-list.service';
+import { FilmsStateService } from 'src/app/shared/state/films-state.service';
 import { EveningTvSeancesModel } from './models/evening-tv-seances.model';
 import { TopTvSeancesModel } from './models/top-tv-seances.model';
 import { RecommenedMoviesService } from './services/recommened-movies.service';
@@ -40,11 +40,11 @@ export class MainMoviesPageFacadeService {
 
   constructor(
     private injector: Injector,
-    private MiniatureList: MovieMiniatureListService
+    private FilmState: FilmsStateService
   ) {}
 
-  getRecommenedMovies(): Observable<FilmData[]> {
-    return this.recommenedMoviesService.fetchRecommendedMovies();
+  getRecommendedMovies(): Observable<FilmData[]> {
+    return this.FilmState.getRecommendedMovies();
   }
 
   getTopTvSeances(): Observable<TopTvSeancesModel[]> {
@@ -56,14 +56,7 @@ export class MainMoviesPageFacadeService {
   }
 
   getTopRated(): Observable<FilmData[]> {
-    return this.topMoviesService.topRated$.asObservable();
+    return this.FilmState.getTopMovies();
   }
 
-  changeCurrentList(list: FilmData[]): void {
-    if ( list ) this.MiniatureList.currentList$.next(list);
-  }
-
-  closeMiniaturesSub() {
-    this.MiniatureList.currentList$.next(null);
-  }
 }

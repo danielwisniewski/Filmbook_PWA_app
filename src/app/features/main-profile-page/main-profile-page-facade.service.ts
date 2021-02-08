@@ -1,15 +1,18 @@
 import { Injectable, Injector } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/features/login-page/login-page.service';
 import { FilmData } from 'src/app/core/models/film-data.model';
 import { FetchUserMoviesListsService } from './services/fetch-user-movies-lists.service';
-import { MovieMiniatureListService } from 'src/app/shared/components/movie-miniatures-list/movie-miniature-list.service';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MainProfilePageFacadeService {
   subs: Subscription[] = [];
+  titleToFind$ = new BehaviorSubject<string>('');
+  sortedByTime$ = new BehaviorSubject<boolean>(null);
   private _fetchUserMoviesListsService: FetchUserMoviesListsService;
 
   public get fetchUserMoviesListsService(): FetchUserMoviesListsService {
@@ -21,11 +24,7 @@ export class MainProfilePageFacadeService {
     return this._fetchUserMoviesListsService;
   }
 
-  constructor(
-    private injector: Injector,
-    private authService: AuthService,
-    private movieMiniatures: MovieMiniatureListService
-  ) {
+  constructor(private injector: Injector, private authService: AuthService) {
     this.onAuthChange();
   }
 
@@ -33,12 +32,31 @@ export class MainProfilePageFacadeService {
     return this.fetchUserMoviesListsService.fetchWatchlist();
   }
 
-  getMoviesOnSeenList(): Observable<FilmData[]> {
+  private _getMoviesOnSeenList(): Observable<FilmData[]> {
     return this.fetchUserMoviesListsService.fetchSeenMovies();
   }
 
   getMoviesOnIgnoreList(): Observable<FilmData[]> {
     return this.fetchUserMoviesListsService.fetchIgnore();
+  }
+
+  getMoviesOnSeenList(): Observable<FilmData[]> {
+    return combineLatest([
+      this._getMoviesOnSeenList(),
+      this.titleToFind$.asObservable(),
+      this.sortedByTime$.asObservable(),
+    ]).pipe(
+      map(([seenMovies, titleToFind, sortedByTime]) => {
+        return seenMovies
+          .filter((movie) =>
+            movie.title.toLowerCase().includes(titleToFind.toLowerCase())
+          )
+          .sort((a, b) => {
+            if (sortedByTime) return (b.timeSeen || 0) - (a.timeSeen || 0);
+            else return b.myRating - a.myRating;
+          });
+      })
+    );
   }
 
   private onAuthChange(): void {
@@ -56,14 +74,5 @@ export class MainProfilePageFacadeService {
         this.subs = [];
       }
     });
-  }
-
-  changeCurrentList(list: FilmData[]): void {
-    if (list) this.movieMiniatures.currentList$.next(list);
-  }
-
-  closeMiniaturesSub() {
-    this.movieMiniatures.currentList$.next(null);
-    this.movieMiniatures.closeSub$.next(true);
   }
 }

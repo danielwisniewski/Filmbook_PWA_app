@@ -19,7 +19,7 @@ export class ResolveMovieDetailService implements Resolve<FilmData> {
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<any> | Promise<any> | any {
+  ): Observable<any> {
     return this.firebaseDb.fetchMovieDetailData(route.paramMap.get('id'))
   }
 

@@ -28,13 +28,13 @@
       <mat-tab label="Online">
         <ng-template matTabContent>
           <app-streaming-services
-            [filmTitle]="filmData.title"
+            [filmTitle]="(filmData$ |async)?.title"
           ></app-streaming-services>
         </ng-template>
       </mat-tab>
       <mat-tab label="Tv">
         <ng-template matTabContent>
-          <app-tv-seances [url]="this.filmData.filmwebUrl"></app-tv-seances>
+          <app-tv-seances [url]="(filmData$ |async)?.filmwebUrl"></app-tv-seances>
         </ng-template>
       </mat-tab>
       <mat-tab disabled>
@@ -46,14 +46,14 @@
             <button
               mat-menu-item
               [routerLink]="'awards'"
-              *ngIf="filmData.awards.length > 0"
+              *ngIf="(filmData$ |async)?.awards.length > 0"
             >
               Nagrody
             </button>
             <button mat-menu-item [routerLink]="'fullCast'">
               Pełna obsada
             </button>
-            <button mat-menu-item [routerLink]="'facts'" *ngIf="filmData.facts.length > 0">
+            <button mat-menu-item [routerLink]="'facts'" *ngIf="(filmData$ |async)?.facts.length > 0">
               Ciekawostki
             </button>
             <button mat-menu-item [routerLink]="'similar'">

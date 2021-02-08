@@ -5,13 +5,19 @@
     (change)="valueChanged($event)"
   >
     <mat-button-toggle value="col-6">
-      <mat-icon svgIcon="small_view" [color]="size === 'col-6' ? 'primary' : ''"></mat-icon>
+      <mat-icon
+        svgIcon="small_view"
+        [color]="(size | async) === 'col-6' ? 'primary' : ''"
+      ></mat-icon>
     </mat-button-toggle>
     <mat-button-toggle value="col-12">
-      <mat-icon svgIcon="large_view" [color]="size === 'col-12' ? 'primary' : ''"></mat-icon>
+      <mat-icon
+        svgIcon="large_view"
+        [color]="(size | async) === 'col-12' ? 'primary' : ''"
+      ></mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>
-  <button mat-icon-button (click)="onFilterButton()">
+  <button mat-icon-button (click)="onFilterButton()" [ngStyle]="{ 'visibility': isFilterAvailable ? 'inherit' : 'hidden' }">
     <mat-icon svgIcon="filter_button"></mat-icon>
   </button>
 </div>

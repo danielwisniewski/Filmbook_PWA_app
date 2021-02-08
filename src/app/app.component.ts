@@ -2,10 +2,10 @@ import { ApplicationRef, Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { concat, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { RouterLoggerService } from './core/services/router-logger.service';
 import { AuthService } from './features/login-page/login-page.service';
 import { MainProfilePageFacadeService } from './features/main-profile-page/main-profile-page-facade.service';
 import { IconSantizerService } from './shared/services/icon-santizer.service';
+import { FilmsStateService } from './shared/state/films-state.service';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +17,9 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authSrevice: AuthService,
-    private RouterLoggerService: RouterLoggerService,
     private iconSantizer: IconSantizerService,
     private profileService: MainProfilePageFacadeService,
+    private filmsState: FilmsStateService,
     public updates: SwUpdate,
     public appRef: ApplicationRef
   ) {

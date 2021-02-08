@@ -1,6 +1,6 @@
 <div appTopBarElementContent>
-  <app-view-selection-menu></app-view-selection-menu>
-  <app-movie-miniatures-list
-  ></app-movie-miniatures-list>
+  <app-view-selection-menu
+    [moviesCounter]="(filmData | async)?.length"
+  ></app-view-selection-menu>
+  <app-movie-miniatures-list [filmData]="filmData"></app-movie-miniatures-list>
 </div>
-

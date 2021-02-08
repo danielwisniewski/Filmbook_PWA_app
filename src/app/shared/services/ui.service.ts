@@ -7,7 +7,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class UIService {
   loading = new Subject<boolean>()
-  lastIndex = new BehaviorSubject<number>(0)
+  lastIndex = new BehaviorSubject<string>('')
   constructor(private _snackBar: MatSnackBar) { }
 
 

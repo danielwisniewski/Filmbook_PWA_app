@@ -1,67 +1,48 @@
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Location } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Location, ViewportScroller } from '@angular/common';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MainSearchPageFacadeService } from 'src/app/features/main-search-page/main-search-page-facade.service';
 import { FilmData } from '../../../core/models/film-data.model';
-import { FilterModel } from '../../models/filter.model';
 import { FiltersService } from '../../services/filters.service';
 import { UIService } from '../../services/ui.service';
-import { MovieMiniatureListService } from './movie-miniature-list.service';
 
 @Component({
   selector: 'app-movie-miniatures-list',
   templateUrl: './movie-miniatures-list.component.html',
   styleUrls: ['./movie-miniatures-list.component.css'],
 })
-export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
-  filmData: Observable<FilmData[]> ;
-  isLoading$ : Observable<boolean>;
-  size: string;
-  filter: FilterModel;
-  subs: Subscription[] = [];
+export class MovieMiniaturesListComponent implements OnDestroy, AfterViewInit, AfterViewChecked {
+  @Input() filmData: Observable<FilmData[]>;
+  size: Observable<string> = this.filterService.activeMoviesElementsSize.asObservable();
   noImageUrl = '../../../assets/images/No-image-available.png';
-  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
-  lastIndex: number;
-  changeCounter: number = 0;
-  isIgnore: boolean;
+  private lastId: string;
 
   constructor(
     private filterService: FiltersService,
-    private movieMiniaturesService: MovieMiniatureListService,
     private ui: UIService,
     public location: Location,
     private router: Router,
     private searchService: MainSearchPageFacadeService,
+    private viewportScroller: ViewportScroller
   ) {}
 
-  ngOnInit(): void {
-    this.filmData = this.movieMiniaturesService.movies$.asObservable();
-    this.isLoading$ = this.movieMiniaturesService.isLoading$.asObservable();
-    this.isIgnore = this.location.path().includes('ignore');
-    this.subs.push(
-      this.filterService.activeFilter.subscribe((val) => {
-        this.filter = val;
-      })
-    );
-    if (
-      this.location.path().includes('tv') ||
-      this.location.path().includes('similar')
-    ) {
-      this.size = 'col-12';
-    } else if (this.location.path().includes('seen')) {
-      this.size = 'col-6';
-    } else {
-      this.subs.push(
-        this.filterService.activeMoviesElementsSize.subscribe(
-          (val) => (this.size = val || 'col-12')
-        )
-      );
-    }
+  ngAfterViewInit(): void {
   }
 
-  navigateTo(id: string, title: string, year: string) {
+  ngAfterViewChecked() : void {
+  }
+
+  navigateTo(id: string, title: string, year: string, index) {
+    this.lastId = index;
     if (id) {
       this.router.navigate(['/detailView/' + id]);
     } else {
@@ -69,39 +50,21 @@ export class MovieMiniaturesListComponent implements OnInit, OnDestroy {
       this.searchService
         .serachIdByTitle(title + '+' + year)
         .toPromise()
-        .then((val) => this.router.navigate(['/detailView/' + val]), (err) => {
-          this.ui.loading.next(false);
-          this.ui.showTopSnackbar("Nie udało się znaleźć filmu")
-        });
+        .then(
+          (val) => this.router.navigate(['/detailView/' + val]),
+          (err) => {
+            this.ui.loading.next(false);
+            this.ui.showTopSnackbar('Nie udało się znaleźć filmu');
+          }
+        );
     }
-  }
-
-  indexChanged(event) {
-    if (this.changeCounter === 0 && !this.location.path().includes('similar')) {
-      this.viewport.scrollToIndex(this.ui.lastIndex.value, 'smooth');
-    }
-    if (this.size != 'col-12') {
-      const dataLength = this.viewport.getDataLength();
-      const nextStep = event + 6;
-      this.viewport.setRenderedRange({
-        start: 0,
-        end: nextStep < dataLength ? nextStep : dataLength,
-      });
-    }
-    this.changeCounter++;
-
-    this.lastIndex = event;
   }
 
   ngOnDestroy() {
-    this.movieMiniaturesService.closeSub$.next(true);
-    if (this.subs != []) {
-      this.subs.forEach((sub) => sub.unsubscribe());
-    }
     if (this.location.path().includes('detailView')) {
-      this.ui.lastIndex.next(this.lastIndex);
+      this.ui.lastIndex.next(this.lastId);
     } else {
-      this.ui.lastIndex.next(0);
+      this.ui.lastIndex.next('');
     }
   }
 }

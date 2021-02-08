@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { throttleTime, map, takeUntil } from 'rxjs/operators';
 import { FilmData } from 'src/app/core/models/film-data.model';
 
@@ -8,16 +8,20 @@ import { FilmData } from 'src/app/core/models/film-data.model';
   providedIn: 'root',
 })
 export class FetchUserMoviesListsService {
-  profileList$ = new BehaviorSubject<FilmData[]>(null);
   cancelSub$ = new Subject<boolean>();
-  constructor(private firestore: AngularFirestore) {}
+  
+  constructor(private firestore: AngularFirestore) {
+    this.fetchWatchlist();
+    this.fetchSeenMovies();
+    this.fetchIgnore();
+  }
 
   fetchSeenMovies(): Observable<FilmData[]> {
     return this.firestore
       .collection('users/' + localStorage.getItem('userId') + '/seen'
       )
       .valueChanges()
-      .pipe(throttleTime(1000));
+      .pipe(throttleTime(5000));
   }
 
   fetchWatchlist(): Observable<FilmData[]> {
@@ -36,22 +40,21 @@ export class FetchUserMoviesListsService {
     return this.firestore
       .collection('users/' + localStorage.getItem('userId') + '/ignore')
       .valueChanges()
-      .pipe(throttleTime(1000));
+      .pipe(throttleTime(5000));
   }
 
-  private getProfileMoviesLists(): void {
-    combineLatest([
+  getProfileMoviesLists(): Observable<FilmData[]> {
+    return combineLatest([
       this.fetchWatchlist(),
       this.fetchSeenMovies(),
       this.fetchIgnore(),
     ])
       .pipe(
         takeUntil(this.cancelSub$),
-        map((val) => {
-          this.profileList$.next(val[0].concat(val[1]).concat(val[2]));
+        map(([watchlist, seen, ignore]) => {
+          return [...watchlist, ...seen, ...ignore]
         })
       )
-      .subscribe();
   }
 
   onLogin(): void {

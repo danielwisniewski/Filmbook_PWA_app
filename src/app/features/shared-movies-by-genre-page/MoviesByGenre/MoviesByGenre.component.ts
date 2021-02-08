@@ -1,26 +1,25 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { FilmData } from 'src/app/core/models/film-data.model';
+import { MoviesByGenreFacadeService } from './MoviesByGenreFacade.service';
 
 @Component({
   selector: 'app-MoviesByGenre',
   templateUrl: './MoviesByGenre.component.html',
-  styleUrls: ['./MoviesByGenre.component.scss']
+  styleUrls: ['./MoviesByGenre.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MoviesByGenreComponent implements OnInit {
-  filmsData$ : Observable<FilmData[]>;
-  id : string;
-  constructor(private route: ActivatedRoute, public location: Location) { }
-
-  ngOnInit() {
-    this.filmsData$ = this.route.data
-      .pipe(
-        map( response => response.movies )
-      );
-    this.id = this.route.snapshot.params['id']
+export class MoviesByGenreComponent {
+  filmsData$: Observable<FilmData[]> = this.facadeService.getFilmsData();
+  id: string;
+  constructor(
+    private route: ActivatedRoute,
+    private facadeService: MoviesByGenreFacadeService,
+    public location: Location
+  ) {
+    this.id = this.route.snapshot.params['id'];
+    this.facadeService.changeId(this.id);
   }
-
 }

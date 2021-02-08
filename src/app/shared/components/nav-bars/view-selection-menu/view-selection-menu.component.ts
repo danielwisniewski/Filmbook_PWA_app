@@ -1,12 +1,12 @@
 import {
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Input,
   OnInit,
 } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FiltersService } from 'src/app/shared/services/filters.service';
 import { FilterBottomSheetComponent } from '../../filter-bottom-sheet/filter-bottom-sheet.component';
 
@@ -14,33 +14,21 @@ import { FilterBottomSheetComponent } from '../../filter-bottom-sheet/filter-bot
   selector: 'app-view-selection-menu',
   templateUrl: './view-selection-menu.component.html',
   styleUrls: ['./view-selection-menu.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewSelectionMenuComponent implements OnInit, OnDestroy {
-  moviesCounter: Number;
-  subs: Subscription[] = [];
-  activeFilter: string;
-  size: string;
+export class ViewSelectionMenuComponent implements OnInit {
+  @Input() moviesCounter: Number;
+  @Input() isFilterAvailable : boolean = true;
+  size: Observable<string> = this.filterService.activeMoviesElementsSize.asObservable()
   constructor(
     private _bottomSheet: MatBottomSheet,
     private router: Router,
     private filterService: FiltersService,
-    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.filterService.getFilter(this.router.url);
     this.filterService.getMoviesElementsSize(this.router.url);
-    this.subs.push(
-      this.filterService.elementCounter.subscribe((val) => {
-        this.moviesCounter = val;
-        this.changeDetector.detectChanges();
-      })
-    );
-    this.subs.push(
-      this.filterService.activeMoviesElementsSize.subscribe(
-        (val) => (this.size = val)
-      )
-    );
   }
 
   valueChanged(event) {
@@ -53,9 +41,4 @@ export class ViewSelectionMenuComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    if (this.subs.length > 0) {
-      this.subs.forEach((sub) => sub.unsubscribe());
-    }
-  }
 }

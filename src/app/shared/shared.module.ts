@@ -8,13 +8,10 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RateDialogComponent } from './components/movie-detail-page/rate-dialog/rate-dialog.component';
 import { ViewSelectionMenuComponent } from './components/nav-bars/view-selection-menu/view-selection-menu.component';
 import { FilterBottomSheetComponent } from './components/filter-bottom-sheet/filter-bottom-sheet.component';
-import { FilterPipe } from './pipes/filter.pipe';
-import { SearchPipe } from './pipes/search.pipe';
 import { SearchInListComponent } from './components/nav-bars/search-in-list/search-in-list.component';
 import { TopBarElementContentDirective } from './directives/top-bar-element-content.directive';
 import { ContextMenuActionsComponent } from './directives/context-menu-actions/context-menu-actions.component';
 import { MiniatureListContextMenuDirective } from './directives/context-menu-actions/miniature-list-context-menu.directive';
-import { IsOnListsPipe } from './pipes/is-on-lists.pipe';
 import { TopTitlePanelComponent } from '../core/components/top-title-panel/top-title-panel.component';
 import { CommonModule } from '@angular/common';
 import { BottomTabsMenuComponent } from '../core/components/bottom-tabs-menu/bottom-tabs-menu.component';
@@ -43,15 +40,12 @@ import { RouterModule } from '@angular/router';
     RateDialogComponent,
     ViewSelectionMenuComponent,
     FilterBottomSheetComponent,
-    FilterPipe,
-    SearchPipe,
     SearchInListComponent,
     TopBarElementContentDirective,
     MiniatureListContextMenuDirective,
     ContextMenuActionsComponent,
-    IsOnListsPipe,
     TopTitlePanelComponent,
-    BottomTabsMenuComponent
+    BottomTabsMenuComponent,
   ],
   declarations: [
     MovieMiniaturesListComponent,
@@ -59,13 +53,10 @@ import { RouterModule } from '@angular/router';
     RateDialogComponent,
     ViewSelectionMenuComponent,
     FilterBottomSheetComponent,
-    FilterPipe,
-    SearchPipe,
     SearchInListComponent,
     TopBarElementContentDirective,
     MiniatureListContextMenuDirective,
     ContextMenuActionsComponent,
-    IsOnListsPipe,
     TopTitlePanelComponent,
     BottomTabsMenuComponent,
   ],

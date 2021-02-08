@@ -1,8 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MovieMiniatureListService } from 'src/app/shared/components/movie-miniatures-list/movie-miniature-list.service';
 import { SearchResultModel } from './models/search-result.model';
 import { LastResultsHandlerService } from './services/last-results-handler.service';
 import { SearchMovieApiService } from './services/search-movie-api.service';
@@ -29,16 +28,16 @@ export class MainSearchPageFacadeService {
     return this._lastResultHandlerService;
   }
 
-  constructor(
-    private injector: Injector,
-    private http: HttpClient,
-    private miniatureList: MovieMiniatureListService
-  ) {
+  constructor(private injector: Injector, private http: HttpClient) {
     this.updateLastSearchResults();
   }
 
   searchMovieByTitle(title: string): void {
     this.searchMovieApiService.searchMovieByTitle(title);
+  }
+
+  getSearchResult() : Observable<SearchResultModel[]> {
+    return this._searchMovieApiService.searchResult.asObservable()
   }
 
   getLastSearchResults(): Observable<SearchResultModel[]> {
@@ -48,7 +47,6 @@ export class MainSearchPageFacadeService {
   getLoadingStatus(): void {
     this.searchMovieApiService.isLoading$
       .asObservable()
-      .subscribe((value) => this.miniatureList.isLoading$.next(value));
   }
 
   clearSearchResult(): void {
@@ -58,7 +56,6 @@ export class MainSearchPageFacadeService {
   private updateLastSearchResults(): void {
     this.searchMovieApiService.searchResult.subscribe(
       (searchResult: SearchResultModel[]) => {
-        this.changeCurrentList(searchResult)
         this.lastResultHandlerService.updateLastSearchResult(searchResult);
       }
     );
@@ -76,9 +73,5 @@ export class MainSearchPageFacadeService {
           return (val[0].link = val[0].link.replace('/', '_'));
         })
       );
-  }
-
-  private changeCurrentList(list: SearchResultModel[]): void {
-    if (list) this.miniatureList.currentList$.next(list);
   }
 }

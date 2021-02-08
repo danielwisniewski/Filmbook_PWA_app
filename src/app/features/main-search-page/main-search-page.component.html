@@ -38,10 +38,8 @@
           </div>
         </div>
         <div appTopBarElementContent>
-          <app-view-selection-menu
-            style="display: none"
-          ></app-view-selection-menu>
           <app-movie-miniatures-list
+            [filmData]="searchResult$"
             *ngIf="f.submitted"
           ></app-movie-miniatures-list>
           <img

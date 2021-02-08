@@ -1,10 +1,13 @@
-<div class="container h-100 d-flex flex-column" *ngIf="!isLoading">
-    <div class="d-flex flex-column w-100 mt-2">
-        <mat-icon class="position-absolute" (click)="location.back()">navigate_before</mat-icon>
-        <h5 class="w-100 text-center">Filmy podobne do</h5><br>
-        <h5 class="w-100 text-center">{{ title }}</h5>
-      </div>
-    <app-view-selection-menu style="display: none;"></app-view-selection-menu>
-    <app-movie-miniatures-list></app-movie-miniatures-list>
+<div class="container h-100 d-flex flex-column">
+  <div class="d-flex flex-column w-100 mt-2">
+    <mat-icon class="position-absolute" (click)="location.back()"
+      >navigate_before</mat-icon
+    >
+    <h5 class="w-100 text-center">Filmy podobne do</h5>
+    <br />
+    <h5 class="w-100 text-center">{{ title$ | async }}</h5>
+  </div>
+  <app-movie-miniatures-list
+    [filmData]="filmData$"
+  ></app-movie-miniatures-list>
 </div>
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>

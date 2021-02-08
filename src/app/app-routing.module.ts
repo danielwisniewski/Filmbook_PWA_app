@@ -18,7 +18,7 @@ const routes: Routes = [
       import('./features/main-movies-page/main-movies-page.module').then(
         (m) => m.MainMoviesPageModule
       ),
-    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'search',
@@ -26,7 +26,7 @@ const routes: Routes = [
       import('./features/main-search-page/main-search-page.module').then(
         (m) => m.MainSearchPageModule
       ),
-    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'profile',
@@ -34,7 +34,7 @@ const routes: Routes = [
       import('./features/main-profile-page/main-profile-page.module').then(
         (m) => m.MainProfilePageModule
       ),
-    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'detailView',
@@ -42,7 +42,7 @@ const routes: Routes = [
       import(
         './features/shared-movie-detail-page/movie-detail-page.module'
       ).then((m) => m.MovieDetailPageModule),
-    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'genre',
@@ -50,7 +50,7 @@ const routes: Routes = [
       import(
         './features/shared-movies-by-genre-page/MoviesByGenre/MoviesByGenre.module'
       ).then((m) => m.MoviesByGenreModule),
-    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   { path: 'ignore', component: IgnoreMoviesListComponent },
 ];
@@ -60,6 +60,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       preloadingStrategy: PreloadAllModules,
       onSameUrlNavigation: 'reload',
+      anchorScrolling: 'enabled',
+      scrollPositionRestoration: 'enabled'
     }),
   ],
   exports: [RouterModule],

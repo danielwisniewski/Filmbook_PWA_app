@@ -7,24 +7,23 @@ import { FilterModel } from '../models/filter.model';
 })
 export class FiltersService {
   activeFilter = new BehaviorSubject<FilterModel>(null);
-  elementCounter = new BehaviorSubject<Number>(0);
   activeMoviesElementsSize = new BehaviorSubject<string>('col-6')
   constructor() {}
 
   setFilters(filter: FilterModel, path: string) {
-    let userFIlters = JSON.parse(localStorage.getItem('userFilters'));
-    userFIlters[path] = filter;
-    localStorage.setItem('userFilters', JSON.stringify(userFIlters));
-    this.activeFilter.next(userFIlters[path]);
+    let userFilters = JSON.parse(localStorage.getItem('userFilters'));
+    userFilters[path] = filter;
+    localStorage.setItem('userFilters', JSON.stringify(userFilters));
+    this.activeFilter.next(userFilters[path]);
   }
 
   getFilter(path: string) {
-    let userFIlters = JSON.parse(localStorage.getItem('userFilters')) || {};
-    if (!userFIlters[path]) {
-      userFIlters[path] = new FilterModel();
-      localStorage.setItem('userFilters', JSON.stringify(userFIlters));
+    let userFilters = JSON.parse(localStorage.getItem('userFilters')) || {};
+    if (!userFilters[path]) {
+      userFilters[path] = new FilterModel();
+      localStorage.setItem('userFilters', JSON.stringify(userFilters));
     }
-    this.activeFilter.next(userFIlters[path]);
+    this.activeFilter.next(userFilters[path]);
   }
 
   getMoviesElementsSize( path: string ) {

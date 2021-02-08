@@ -2,16 +2,15 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Input,
   OnDestroy,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { fromEvent } from 'rxjs';
-import { debounceTime, filter, map, tap } from 'rxjs/operators';
-import { MovieMiniatureListService } from '../../movie-miniatures-list/movie-miniature-list.service';
+import { debounceTime, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-in-list',
@@ -19,30 +18,20 @@ import { MovieMiniatureListService } from '../../movie-miniatures-list/movie-min
   styleUrls: ['./search-in-list.component.css'],
 })
 export class SearchInListComponent implements OnDestroy, AfterViewInit {
-  title: string = '';
-  moviesCounter: number;
-  sortByTimeAdded : boolean;
-  subs: Subscription[] = [];
+  @Input() moviesCounter: number;
   @Output() public titleChanged = new EventEmitter();
   @Output() public sortByTimeAddedChanged = new EventEmitter();
   @ViewChild('titleInput') titleInput: ElementRef;
-  constructor(private movieMiniatures: MovieMiniatureListService) {}
+  sortByTimeAdded: boolean;
+  private sub: Subscription;
 
   ngAfterViewInit() {
-    this.subs.push(
-      fromEvent(this.titleInput.nativeElement, 'keyup')
-        .pipe(
-          map((e: any) => e.target.value.toLowerCase()),
-          debounceTime(500),
-        )
-        .subscribe((val) => this.titleChanged.emit(val))
-    );
-
-    this.subs.push(
-      this.movieMiniatures.currentList$
-        .pipe(filter((val) => val !== null))
-        .subscribe((result) => (this.moviesCounter = result.length))
-    );
+    this.sub = fromEvent(this.titleInput.nativeElement, 'keyup')
+      .pipe(
+        map((e: any) => e.target.value.toLowerCase()),
+        debounceTime(500)
+      )
+      .subscribe((val) => this.titleChanged.emit(val));
   }
 
   onSortIcon() {
@@ -51,8 +40,6 @@ export class SearchInListComponent implements OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    if (this.subs.length > 0) {
-      this.subs.forEach((sub) => sub.unsubscribe());
-    }
+    if (this.sub) this.sub.unsubscribe();
   }
 }

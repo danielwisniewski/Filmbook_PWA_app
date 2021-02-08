@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { FilterModel } from 'src/app/shared/models/filter.model';
+import { FiltersService } from 'src/app/shared/services/filters.service';
 import { MainSearchPageFacadeService } from './main-search-page-facade.service';
 import { SearchResultModel } from './models/search-result.model';
 
@@ -8,15 +10,22 @@ import { SearchResultModel } from './models/search-result.model';
   selector: 'app-search',
   templateUrl: './main-search-page.component.html',
   styleUrls: ['./main-search-page.component.css'],
-  
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainSearchPageComponent implements OnInit, OnDestroy {
-  lastSearchResults$: Observable<SearchResultModel[]>;
-  constructor(private facadeService: MainSearchPageFacadeService) {
-  }
+export class MainSearchPageComponent implements OnDestroy {
+  lastSearchResults$: Observable<
+    SearchResultModel[]
+  > = this.facadeService.getLastSearchResults();
+  searchResult$: Observable<
+    SearchResultModel[]
+  > = this.facadeService.getSearchResult();
 
-  ngOnInit(): void {
-    this.lastSearchResults$ = this.facadeService.getLastSearchResults();
+  constructor(
+    private facadeService: MainSearchPageFacadeService,
+    private filterService: FiltersService
+  ) {
+    this.filterService.activeFilter.next(new FilterModel());
+    this.filterService.activeMoviesElementsSize.next('col-6');
   }
 
   onKeydown(form: NgForm) {
@@ -24,8 +33,7 @@ export class MainSearchPageComponent implements OnInit, OnDestroy {
     form.reset();
   }
 
-  ngOnDestroy() : void {
+  ngOnDestroy(): void {
     this.facadeService.clearSearchResult();
   }
-
 }

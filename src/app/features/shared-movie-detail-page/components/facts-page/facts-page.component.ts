@@ -1,20 +1,19 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FilmData } from 'src/app/core/models/film-data.model';
 import { MovieDetailService } from '../../movie-detail.service';
 
 @Component({
   selector: 'app-facts-page',
   templateUrl: './facts-page.component.html',
-  styleUrls: ['./facts-page.component.css']
+  styleUrls: ['./facts-page.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FactsPageComponent implements OnInit {
-  facts: string[];
-  constructor(public location: Location, private db: MovieDetailService, private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    const ID = this.route.snapshot.paramMap.get('id');
-    this.facts = this.db.getLastFilmsData(ID).facts;
-  }
-
+export class FactsPageComponent {
+  filmData$: Observable<FilmData> = this.db.getLastFilmsData();
+  constructor(
+    public location: Location,
+    private db: MovieDetailService,
+  ) {}
 }

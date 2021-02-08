@@ -1,58 +1,40 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { tap, throttleTime } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { map, shareReplay, throttleTime } from 'rxjs/operators';
 import { FilmData } from 'src/app/core/models/film-data.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TopMoviesService {
-  private topMovies: FilmData[];
-  private topSerials: FilmData[];
-  topRated$ = new BehaviorSubject<FilmData[]>(null);
 
   constructor(private firestore: AngularFirestore) {
     this.fetchTopMovies();
     this.fetchTopSerials();
   }
 
-  private fetchTopMovies(): void {
-    this.firestore
+  fetchTopRated(): Observable<FilmData[]> {
+    return combineLatest([this.fetchTopMovies(), this.fetchTopSerials()]).pipe(
+      map(([movies, serials]) => [...movies, ...serials] as FilmData[])
+    );
+  }
+
+  private fetchTopMovies(): Observable<FilmData[]> {
+    return this.firestore
       .collection('movies', (ref) =>
         ref.where('type', '==', 'film').orderBy('rating', 'desc').limit(100)
       )
       .valueChanges()
-      .pipe(
-        throttleTime(5000),
-        tap((topMovies: FilmData[]) => {
-          this.topMovies = topMovies;
-          this.updateTopRated();
-        })
-      )
-      .subscribe();
+      .pipe(throttleTime(5000), shareReplay(1));
   }
 
-  private fetchTopSerials(): void {
-    this.firestore
+  private fetchTopSerials(): Observable<FilmData[]> {
+    return this.firestore
       .collection('movies', (ref) =>
         ref.where('type', '==', 'serial').orderBy('rating', 'desc').limit(100)
       )
       .valueChanges()
-      .pipe(
-        throttleTime(5000),
-        tap((topSerials: FilmData[]) => {
-          this.topSerials = topSerials;
-          this.updateTopRated();
-        })
-      )
-      .subscribe();
-  }
-
-  private updateTopRated(): void {
-    if ( this.topMovies && this.topSerials ) {
-      this.topRated$.next(this.topMovies.concat(this.topSerials));
-    }
-    
+      .pipe(throttleTime(5000), shareReplay(1));
   }
 }

@@ -25,7 +25,6 @@ export class AwardsPageComponent implements OnInit, OnDestroy {
     this.sub = this.route.data
       .pipe(map((val) => val.awards))
       .subscribe((val) => {
-        console.log(val);
         this.ui.loading.next(false);
         this.awards = val;
       });
